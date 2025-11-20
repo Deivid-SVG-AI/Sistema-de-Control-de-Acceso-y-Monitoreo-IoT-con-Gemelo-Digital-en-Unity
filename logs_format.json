@@ -1,0 +1,7 @@
+{
+  "device_id": "access_control_01",
+  "door_status": "new_status",
+  "access_method": "method",
+  "access_granted": true,
+  "timestamp": "2025-11-19T10:00:00"
+}
