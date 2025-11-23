@@ -37,12 +37,17 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/event_groups.h"
+#include "freertos/semphr.h"
 #include "esp_log.h"
 #include "esp_timer.h"
 #include "driver/gpio.h"
 #include "driver/ledc.h"
 #include "driver/i2c.h"
 #include "rom/ets_sys.h"
+#include "esp_spiffs.h"
+#include "esp_vfs.h"
+#include "sys/time.h"
+#include <time.h>
 
 // =============================================================
 // ===============   CONFIGURACIÓN (EDITABLE)   ================
@@ -77,11 +82,14 @@
 
 // Electroimán (cerradura) controlado por un MOSFET/Relay externo
 #define LOCK_GPIO                 GPIO_NUM_25
-#define LOCK_ACTIVE_HIGH          1            // 1 si “1 lógico” ENERGIZA el imán (lock). 0 si al revés.
+// Nivel lógico que ACTIVA el relay (energiza el electroimán). Muchos módulos relay son activos en LOW.
+// Ajusta a 1 si tu módulo requiere nivel alto para activarse.
+#define RELAY_ACTIVE_LEVEL        0  // Transistor NPN: nivel alto en GPIO activa la bobina
+#define LOCK_ACTIVE_HIGH          1            // Conservado para compatibilidad, ya no se usa en la función principal.
 
 // Alternativa: Servo como cerradura (selección por compilación)
 // 0 = electroimán (LOCK_GPIO), 1 = servo (SERVO_GPIO)
-#define LOCK_USE_SERVO            1
+#define LOCK_USE_SERVO            0
 #define SERVO_GPIO                GPIO_NUM_25   // Cambia según tu hardware
 #define SERVO_LEDC_MODE           LEDC_LOW_SPEED_MODE
 #define SERVO_LEDC_TIMER          LEDC_TIMER_1
@@ -120,7 +128,7 @@ static const int COMBO_TARGET[COMBO_LEN] = {3, 6, 4};
 #define RFID_SPI_MISO_GPIO        GPIO_NUM_19
 #define RFID_RST_GPIO             GPIO_NUM_13
 
-#define USE_MFRC522               1
+#define USE_MFRC522               1  // Desactivado por defecto para compilar sin librería externa
 
 #if USE_MFRC522
 static const uint8_t AUTH_UIDS[][4] = {
@@ -137,6 +145,64 @@ static const size_t AUTH_UIDS_COUNT = sizeof(AUTH_UIDS)/sizeof(AUTH_UIDS[0]);
 // =============================================================
 
 static const char *TAG = "ACCESS";
+static const char *DEVICE_ID = "access_control_01";
+
+// Ruta de archivo de logs (JSON lines)
+#define LOG_FILE_PATH "/spiffs/events.jsonl"
+
+static SemaphoreHandle_t g_log_mutex; // Protege escritura concurrente
+
+static void fs_init(void)
+{
+	esp_vfs_spiffs_conf_t conf = {
+		.base_path = "/spiffs",
+		.partition_label = "storage", // etiqueta explícita según partitions.csv
+		.max_files = 5,
+		.format_if_mount_failed = true
+	};
+	esp_err_t ret = esp_vfs_spiffs_register(&conf);
+	if (ret != ESP_OK) {
+		ESP_LOGE(TAG, "Error montando SPIFFS (%s)", esp_err_to_name(ret));
+	} else {
+		size_t total=0, used=0; esp_spiffs_info("storage", &total, &used);
+		ESP_LOGI(TAG, "SPIFFS montado. Total=%u Used=%u", (unsigned)total, (unsigned)used);
+	}
+	g_log_mutex = xSemaphoreCreateMutex();
+}
+
+static void format_timestamp(char *buf, size_t sz)
+{
+	time_t now = 0; time(&now);
+	if (now <= 1000) { // Si no hay RTC/SNTP, usar tiempo desde arranque
+		now = esp_timer_get_time()/1000000; // segundos desde boot
+	}
+	struct tm tm_info; localtime_r(&now, &tm_info);
+	strftime(buf, sz, "%Y-%m-%dT%H:%M:%S", &tm_info);
+}
+
+// access_method: "password", "rfid" o "door"; door_status: "open"/"close"; access_granted: true/false
+static void log_event(const char *access_method, bool access_granted, const char *door_status)
+{
+	if (!g_log_mutex) return;
+	xSemaphoreTake(g_log_mutex, portMAX_DELAY);
+	FILE *f = fopen(LOG_FILE_PATH, "a");
+	if (!f) {
+		ESP_LOGE(TAG, "No se pudo abrir log %s", LOG_FILE_PATH);
+		xSemaphoreGive(g_log_mutex);
+		return;
+	}
+	char ts[32]; format_timestamp(ts, sizeof(ts));
+	// Construimos JSON (sin librería externa para minimizar dependencias)
+	fprintf(f,
+			"{\"device_id\":\"%s\",\"door_status\":\"%s\",\"access_method\":\"%s\",\"access_granted\":%s,\"timestamp\":\"%s\"}\n",
+			DEVICE_ID,
+			door_status ? door_status : "unknown",
+			access_method ? access_method : "door",
+			access_granted ? "true" : "false",
+			ts);
+	fclose(f);
+	xSemaphoreGive(g_log_mutex);
+}
 
 typedef enum {
 	DOOR_UNKNOWN = 0,
@@ -746,15 +812,20 @@ static void lock_hw_init(void)
 		.intr_type = GPIO_INTR_DISABLE
 	};
 	gpio_config(&io);
+	// Estado inicial: activo (energizado) excepto cuando la puerta se abra.
+	gpio_set_level(LOCK_GPIO, RELAY_ACTIVE_LEVEL);
 #endif
 }
 
 #if !LOCK_USE_SERVO
 static void lock_apply_level(bool lock_on)
 {
-	// lock_on = true significa “energizar imán” (cerrado), según LOCK_ACTIVE_HIGH
-	int level = (LOCK_ACTIVE_HIGH ? (lock_on ? 1 : 0) : (lock_on ? 0 : 1));
+	// lock_on = true => energizar electroimán (cerrar). Mapear directo con RELAY_ACTIVE_LEVEL.
+	// Si RELAY_ACTIVE_LEVEL == 0 (relay activo en LOW): lock_on -> 0, unlock -> 1.
+	// Si RELAY_ACTIVE_LEVEL == 1 (relay activo en HIGH): lock_on -> 1, unlock -> 0.
+	int level = lock_on ? RELAY_ACTIVE_LEVEL : (RELAY_ACTIVE_LEVEL ^ 1);
 	gpio_set_level(LOCK_GPIO, level);
+	ESP_LOGD(TAG, "Relay GPIO25 nivel=%d (lock_on=%d)", level, lock_on);
 }
 #endif
 
@@ -797,13 +868,12 @@ static void lock_door(void)
 		ESP_LOGW(TAG, "Intento de lock ignorado: puerta no está cerrada");
 		return;
 	}
-	lock_apply_locked_hw(true);
+	// Lock: desenergizar bobina (relay inactivo) para cerrar (estado reposo seguro)
+	lock_apply_locked_hw(false);
 	set_locked_state(true);
 	g_pending_relock = false;
-	// Al volver a cerrar la cerradura, reiniciar la captura de combinación
 	combo_reset();
-	ESP_LOGI(TAG, "Cerradura BLOQUEADA (lock)");
-	// Mostrar LOCKING... por 1 segundo y luego volver a idle (no bloqueante)
+	ESP_LOGI(TAG, "Cerradura BLOQUEADA (bobina OFF)");
 	lcd_set_message("LOCKING...", "");
 	touch_activity();
 	g_locking_until_us = esp_timer_get_time() + 1000000; // 1s
@@ -811,10 +881,11 @@ static void lock_door(void)
 
 static void unlock_door(void)
 {
-	lock_apply_locked_hw(false);
+	// Unlock: energizar bobina para liberar
+	lock_apply_locked_hw(true);
 	set_locked_state(false);
-	g_pending_relock = true;  // Se re-bloqueará cuando detectemos la puerta cerrada
-	ESP_LOGI(TAG, "Cerradura DESBLOQUEADA (unlock)");
+	g_pending_relock = true;  // Se re-bloqueará (bobina OFF) al cerrar puerta
+	ESP_LOGI(TAG, "Cerradura DESBLOQUEADA (bobina ON)");
 }
 
 // =============================================================
@@ -856,6 +927,9 @@ static void door_monitor_task(void *arg)
 			if (now == DOOR_CLOSED) {
 				xEventGroupSetBits(g_events, EVT_DOOR_CLOSED);
 				ESP_LOGI(TAG, "Puerta: CERRADA");
+				log_event("door", false, "close");
+				// Mantener relay activo mientras esté cerrada
+				lock_apply_level(true);
 				// Si hay un re-bloqueo pendiente, armar bloqueo con retardo de 1s
 				if (g_pending_relock) {
 					g_relock_arm_time_us = now_us + 1000000; // 1 segundo
@@ -864,7 +938,10 @@ static void door_monitor_task(void *arg)
 			} else {
 				xEventGroupClearBits(g_events, EVT_DOOR_CLOSED);
 				ESP_LOGI(TAG, "Puerta: ABIERTA");
-				// Si reabre, cancelar cualquier re-bloqueo armado
+				log_event("door", false, "open");
+				// Desactivar relay mientras esté abierta (sin señal)
+				lock_apply_level(false);
+				// Cancelar cualquier re-bloqueo armado previo
 				g_relock_arm_time_us = 0;
 			}
 		}
@@ -1011,6 +1088,7 @@ static void pot_task(void *arg)
 							beep_ok();
 							lcd_set_message("ACCESS GRANTED!", "WELCOME HOME");
 							touch_activity();
+							log_event("password", true, (g_door_state==DOOR_CLOSED?"close":"open"));
 							xEventGroupSetBits(g_events, EVT_COMBO_OK);
 						} else {
 							ESP_LOGW(TAG, "Combinación INCORRECTA (%d %d %d != %d %d %d)",
@@ -1021,6 +1099,7 @@ static void pot_task(void *arg)
 							led_show_denied();
 							lcd_set_message("ACCESS DENIED!", "");
 							touch_activity();
+							log_event("password", false, (g_door_state==DOOR_CLOSED?"close":"open"));
 							combo_reset();
 							moved_since_last_capture = false; // Se exigirá movimiento antes de capturar de nuevo
 						}
@@ -1090,12 +1169,14 @@ static void rfid_task(void *arg)
 						ESP_LOGI(TAG, "RFID autorizado (whitelist)");
 						lcd_set_message("ACCESS GRANTED!", "WELCOME HOME");
 						touch_activity();
+						log_event("rfid", true, (g_door_state==DOOR_CLOSED?"close":"open"));
 						xEventGroupSetBits(g_events, EVT_RFID_OK);
 					} else {
 						ESP_LOGW(TAG, "RFID NO autorizado");
 						led_show_denied();
 						lcd_set_message("ACCESS DENIED!", "");
 						touch_activity();
+						log_event("rfid", false, (g_door_state==DOOR_CLOSED?"close":"open"));
 					}
 					memcpy(last_uid, uid, uid_len);
 					last_uid_len = uid_len;
@@ -1182,6 +1263,7 @@ void app_main(void)
 
 	gpio_basic_init();
 	leds_init();
+	fs_init(); // Montar SPIFFS antes de posibles logs
 	buzzer_init();
 #if LCD_AUTOPROBE
 	// Ejecuta auto-probe visual antes de usar el driver LCD normal
@@ -1201,8 +1283,10 @@ void app_main(void)
 	g_door_state = read_door_state();
 	if (g_door_state == DOOR_CLOSED) {
 		xEventGroupSetBits(g_events, EVT_DOOR_CLOSED);
+		log_event("door", false, "close");
 	} else {
 		xEventGroupClearBits(g_events, EVT_DOOR_CLOSED);
+		log_event("door", false, "open");
 	}
 
 	// Tareas
