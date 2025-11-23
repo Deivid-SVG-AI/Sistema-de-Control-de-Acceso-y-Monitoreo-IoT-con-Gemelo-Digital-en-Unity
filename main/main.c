@@ -112,8 +112,16 @@
 #define POT_ADC_MAX_RAW           4095
 // Mapeo lineal: 0 voltaje -> dígito 0, máximo -> dígito 10 (11 niveles)
 #define POT_MAX_DIGIT             10
+// Deadzones simétricas (en cuentas ADC) al inicio y final (5% cada extremo).
+// Si el potenciómetro se detiene dentro de estas zonas no se considera input válido.
+#define POT_DEADZONE_RAW           ((POT_ADC_MAX_RAW * 5)/100)   // 5% en cada extremo (10% total excluido)
+// Desplazamiento manual del mapeo hacia la izquierda/derecha (en cuentas ADC)
+// Valor positivo desplaza los rangos hacia la izquierda (más cercanos a 0),
+// valor negativo hacia la derecha. Ajusta fino para alinear con el dial físico.
+#define POT_MAP_SHIFT_RAW          1500
+#define POT_INVALID_DIGIT          -1    // Sentinela para indicar deadzone
 // Tiempo que debe permanecer estable el valor para considerar un dígito (ms)
-#define POT_SETTLE_MS             1200
+#define POT_SETTLE_MS             2000  // Aumentado para mayor estabilidad antes de capturar dígito
 // Mínimo tiempo entre logs del potenciómetro mientras se mueve (ms)
 #define POT_LOG_MIN_MS            300
 // Longitud de la combinación (número de dígitos a ingresar)
@@ -1004,13 +1012,22 @@ static int pot_raw_to_digit(int raw)
 {
     if (raw < 0) raw = 0;
     if (raw > POT_ADC_MAX_RAW) raw = POT_ADC_MAX_RAW;
-    // Redondeo: distribuye 0..4095 en 11 segmentos para 0..10
-    // digit = round(raw / (POT_ADC_MAX_RAW / POT_MAX_DIGIT))
-    // Avoid float: (raw * POT_MAX_DIGIT + POT_ADC_MAX_RAW/2) / POT_ADC_MAX_RAW
-    int digit = (raw * POT_MAX_DIGIT + POT_ADC_MAX_RAW/2) / POT_ADC_MAX_RAW;
-    if (digit < 0) digit = 0;
-    if (digit > POT_MAX_DIGIT) digit = POT_MAX_DIGIT;
-    return digit;
+	// Deadzones: 5% al inicio y 5% al final (no válidos para input)
+	if (raw < POT_DEADZONE_RAW || raw >= (POT_ADC_MAX_RAW - POT_DEADZONE_RAW)) {
+		return POT_INVALID_DIGIT;
+	}
+	// Rango efectivo sin deadzones
+	int effective_range = POT_ADC_MAX_RAW - 2 * POT_DEADZONE_RAW; // valor > 0
+	int adjusted = raw - POT_DEADZONE_RAW; // 0 .. effective_range-1
+	// Aplicar desplazamiento manual del mapeo (positivo = hacia la izquierda)
+	int shifted = adjusted + POT_MAP_SHIFT_RAW;
+	if (shifted < 0) shifted = 0;
+	if (shifted >= effective_range) shifted = effective_range - 1;
+	// Dividir el rango efectivo en 11 partes iguales -> índices 0..10
+	// Cada parte corresponde a un número, pero el índice 10 también es deadzone.
+	int digit = (shifted * 11) / effective_range; // 0..10
+	if (digit >= 10) return POT_INVALID_DIGIT; // Última sección considerada deadzone
+	return digit; // Devuelve 0..9
 }
 
 static void combo_reset(void)
@@ -1042,6 +1059,12 @@ static void pot_task(void *arg)
 		if (adc_oneshot_read(g_adc_handle, g_adc_channel, &raw) == ESP_OK) {
 			int digit = pot_raw_to_digit(raw);
 			int64_t now_us = esp_timer_get_time();
+
+			// Ignorar si estamos en deadzone (no considerar como input válido)
+			if (digit == POT_INVALID_DIGIT) {
+				vTaskDelay(pdMS_TO_TICKS(40));
+				continue; // No procesar captura ni logs
+			}
 
 			if (digit != g_current_digit) {
 				// Movimiento detectado

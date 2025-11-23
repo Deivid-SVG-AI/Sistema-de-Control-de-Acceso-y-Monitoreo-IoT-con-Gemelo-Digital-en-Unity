@@ -18,7 +18,7 @@ end
 
 # Load bootloader symbols
 set confirm off
-    # Bootloader elf was not found
+    add-symbol-file C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/bootloader/bootloader.elf
 set confirm on
 
 # Load application symbols

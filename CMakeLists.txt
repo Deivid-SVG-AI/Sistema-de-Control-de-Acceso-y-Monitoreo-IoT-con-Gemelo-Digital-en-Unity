@@ -6,6 +6,7 @@ cmake_minimum_required(VERSION 3.16)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
-# "Trim" the build. Include the minimal set of components, main, and anything it depends on.
-idf_build_set_property(MINIMAL_BUILD ON)
+# MINIMAL_BUILD desactivado para permitir todos los menús Kconfig y aplicar sdkconfig.defaults sin warnings.
+# Si deseas volver al build mínimo, descomenta la siguiente línea.
+# idf_build_set_property(MINIMAL_BUILD ON)
 project(projectv1)
