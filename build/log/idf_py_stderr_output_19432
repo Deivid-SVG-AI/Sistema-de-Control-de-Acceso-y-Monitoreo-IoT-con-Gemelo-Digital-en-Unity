@@ -1,2 +1,0 @@
-Command: cmake -G Ninja -DPYTHON_DEPS_CHECKED=1 -DPYTHON=C:\Users\LEONI\.espressif\python_env\idf5.5_py3.13_env\Scripts\python.exe -DESP_PLATFORM=1 -DCCACHE_ENABLE=1 C:\Users\LEONI\Documents\Maestria\Codigos\IoT\ESP-IDF\projectv1
-C:\Users\LEONI\AppData\Local\Temp\kconfgen_tmpm0_ta6sr:3: warning: malformed string literal in assignment to PARTITION_TABLE_CUSTOM_FILENAME (defined at C:/Users/LEONI/esp/v5.5.1/esp-idf/components/partition_table/Kconfig.projbuild:129). Assignment ignored.

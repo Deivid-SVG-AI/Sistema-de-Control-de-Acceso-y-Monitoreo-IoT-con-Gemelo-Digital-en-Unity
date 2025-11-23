@@ -1,2 +1,0 @@
-Command: ninja all
-C:\Users\LEONI\AppData\Local\Temp\kconfgen_tmpi0gq064q:3: warning: malformed string literal in assignment to PARTITION_TABLE_CUSTOM_FILENAME (defined at C:/Users/LEONI/esp/v5.5.1/esp-idf/components/partition_table/Kconfig.projbuild:129). Assignment ignored.

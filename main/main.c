@@ -50,6 +50,201 @@
 #include <time.h>
 
 // =============================================================
+// ==================   WIFI / MQTT SUPPORT   ==================
+// =============================================================
+// Agregado para publicar los eventos JSON en el topic MQTT solicitado.
+// Mantiene estilo y lógica existente sin alterar otras funcionalidades.
+
+#include "nvs_flash.h"
+#include "esp_event.h"
+#include "esp_netif.h"
+#include "esp_wifi.h"
+#include "mqtt_client.h"
+#include "lwip/inet.h"
+
+// Credenciales Wi-Fi (STA)
+#define WIFI_SSID               "HUAWEI WIFI 6 Plus"
+#define WIFI_PASS               "NYValencia120"
+
+// Opción para usar localhost como broker (127.0.0.1). En un ESP32 normalmente
+// no tendrá un broker local, pero se agrega la opción solicitada. Si se activa,
+// deberá existir un broker corriendo en el propio dispositivo (poco usual) o
+// redirigir 127.0.0.1 mediante algún mecanismo avanzado. Para uso normal con
+// Mosquitto en una PC, ajuste MQTT_BROKER_URI a la IP de la PC.
+#ifndef MQTT_USE_LOCALHOST
+#define MQTT_USE_LOCALHOST 0
+#endif
+
+#if MQTT_USE_LOCALHOST
+#define MQTT_BROKER_URI          "mqtt://127.0.0.1"
+#else
+// Cambiar a la IP de tu servidor Mosquitto en la LAN, por ejemplo:
+// "mqtt://192.168.0.50". Se deja un broker público por defecto para evitar fallo.
+#define MQTT_BROKER_URI          "mqtt://192.168.3.176"
+#endif
+
+#define MQTT_TOPIC_EVENTS        "/clase/IoT"
+
+static esp_mqtt_client_handle_t g_mqtt_client = NULL;
+static volatile bool g_mqtt_ready = false; // true una vez conectado
+static volatile bool g_wifi_connected = false; // IP obtenida
+
+static void mqtt_publish_line(const char *line)
+{
+	if (!g_mqtt_ready || !g_mqtt_client || !line) {
+		ESP_LOGW(TAG, "MQTT publish omitido: cliente no listo o cadena nula");
+		return;
+	}
+	int msg_id = esp_mqtt_client_publish(g_mqtt_client, MQTT_TOPIC_EVENTS, line, 0, 0, 0);
+	if (msg_id >= 0) {
+		ESP_LOGI(TAG, "MQTT publish OK (id=%d) topic='%s'", msg_id, MQTT_TOPIC_EVENTS);
+	} else {
+		ESP_LOGE(TAG, "MQTT publish FAILED (ret=%d) topic='%s'", msg_id, MQTT_TOPIC_EVENTS);
+	}
+}
+
+static void mqtt_publish_existing_logs(void)
+{
+	if (!g_mqtt_ready) return;
+	FILE *f = fopen(LOG_FILE_PATH, "r");
+	if (!f) {
+		ESP_LOGW(TAG, "No existe log previo para publicar (%s)", LOG_FILE_PATH);
+		return;
+	}
+	char buf[256];
+	while (fgets(buf, sizeof(buf), f)) {
+		size_t len = strlen(buf);
+		if (len>0 && buf[len-1]=='\n') buf[len-1]=0; // quitar salto de línea
+		mqtt_publish_line(buf);
+	}
+	fclose(f);
+	ESP_LOGI(TAG, "Log histórico publicado a MQTT");
+}
+
+static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
+{
+	if (event_base == WIFI_EVENT) {
+		ESP_LOGI(TAG, "[WIFI EVENT] id=%ld", (long)event_id);
+		if (event_id == WIFI_EVENT_STA_START) {
+			ESP_LOGI(TAG, "WIFI_EVENT_STA_START: iniciando conexión a '%s'", WIFI_SSID);
+			esp_wifi_connect();
+		} else if (event_id == WIFI_EVENT_STA_CONNECTED) {
+			ESP_LOGI(TAG, "WIFI_EVENT_STA_CONNECTED: asociado al AP '%s'", WIFI_SSID);
+		} else if (event_id == WIFI_EVENT_STA_DISCONNECTED) {
+			wifi_event_sta_disconnected_t *disc = (wifi_event_sta_disconnected_t*)event_data;
+			ESP_LOGW(TAG, "WIFI_EVENT_STA_DISCONNECTED: reason=%d (0x%02X) retry connect", disc ? disc->reason : -1, disc ? disc->reason : -1);
+			esp_wifi_connect();
+		} else if (event_id == WIFI_EVENT_STA_STOP) {
+			ESP_LOGW(TAG, "WIFI_EVENT_STA_STOP");
+		} else if (event_id == WIFI_EVENT_STA_AUTHMODE_CHANGE) {
+			ESP_LOGW(TAG, "WIFI_EVENT_STA_AUTHMODE_CHANGE");
+		} else if (event_id == WIFI_EVENT_STA_BSS_RSSI_LOW) {
+			ESP_LOGW(TAG, "WIFI_EVENT_STA_BSS_RSSI_LOW: señal débil");
+		}
+	} else if (event_base == IP_EVENT) {
+		ESP_LOGI(TAG, "[IP EVENT] id=%ld", (long)event_id);
+		if (event_id == IP_EVENT_STA_GOT_IP) {
+			ip_event_got_ip_t *e = (ip_event_got_ip_t *)event_data;
+			ESP_LOGI(TAG, "IP_EVENT_STA_GOT_IP: IP=%s MASK=%s GW=%s", ip4addr_ntoa(&e->ip_info.ip), ip4addr_ntoa(&e->ip_info.netmask), ip4addr_ntoa(&e->ip_info.gw));
+		} else if (event_id == IP_EVENT_STA_LOST_IP) {
+			ESP_LOGW(TAG, "IP_EVENT_STA_LOST_IP: se perdió la IP");
+					g_wifi_connected = true;
+		}
+	}
+}
+
+static void wifi_init_sta(void)
+{
+	ESP_ERROR_CHECK(esp_netif_init());
+	ESP_ERROR_CHECK(esp_event_loop_create_default());
+	esp_netif_create_default_wifi_sta();
+	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+	ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+	ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL));
+	ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler, NULL));
+	wifi_config_t wifi_config = {0};
+	strncpy((char*)wifi_config.sta.ssid, WIFI_SSID, sizeof(wifi_config.sta.ssid));
+	strncpy((char*)wifi_config.sta.password, WIFI_PASS, sizeof(wifi_config.sta.password));
+	wifi_config.sta.threshold.authmode = WIFI_AUTH_WPA2_PSK;
+	wifi_config.sta.pmf_cfg.capable = true;
+	wifi_config.sta.pmf_cfg.required = false;
+	ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+	ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
+	ESP_ERROR_CHECK(esp_wifi_start());
+	ESP_LOGI(TAG, "wifi_init_sta: iniciada conexión a SSID '%s'", WIFI_SSID);
+}
+
+static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
+{
+	esp_mqtt_event_handle_t event = event_data;
+	switch (event_id) {
+		case MQTT_EVENT_CONNECTED:
+			ESP_LOGI(TAG, "MQTT conectado al broker %s", MQTT_BROKER_URI);
+			g_mqtt_ready = true;
+			mqtt_publish_existing_logs();
+			break;
+		case MQTT_EVENT_DISCONNECTED:
+			ESP_LOGW(TAG, "MQTT desconectado");
+			g_mqtt_ready = false;
+			break;
+		case MQTT_EVENT_ERROR:
+			if (event->error_handle) {
+				ESP_LOGE(TAG, "MQTT EVENT ERROR: type=%d transport_rc=%d conn_rc=%d", event->error_handle->error_type, event->error_handle->esp_transport_sock_errno, event->error_handle->connect_return_code);
+			} else {
+				ESP_LOGE(TAG, "MQTT EVENT ERROR sin detalle");
+			}
+			break;
+		case MQTT_EVENT_BEFORE_CONNECT:
+			ESP_LOGI(TAG, "MQTT intentando conectar (MQTT_EVENT_BEFORE_CONNECT) URI=%s", MQTT_BROKER_URI);
+			break;
+		case MQTT_EVENT_DELETED:
+			ESP_LOGW(TAG, "MQTT cliente eliminado (MQTT_EVENT_DELETED)");
+			break;
+		case MQTT_EVENT_DATA:
+			ESP_LOGI(TAG, "MQTT_EVENT_DATA recibido (topic len=%d, data len=%d)", event->topic_len, event->data_len);
+			break;
+		case MQTT_EVENT_PUBLISHED:
+			ESP_LOGI(TAG, "MQTT_EVENT_PUBLISHED msg_id=%d", event->msg_id);
+			break;
+		default:
+			ESP_LOGI(TAG, "MQTT evento id=%ld no específico", (long)event_id);
+			break;
+	}
+}
+
+static void mqtt_init(void)
+{
+	esp_mqtt_client_config_t mqtt_cfg = {
+		.uri = MQTT_BROKER_URI,
+		.disable_auto_reconnect = false,
+	};
+	g_mqtt_client = esp_mqtt_client_init(&mqtt_cfg);
+	ESP_LOGI(TAG, "Inicializando cliente MQTT URI=%s", MQTT_BROKER_URI);
+	esp_mqtt_client_register_event(g_mqtt_client, ESP_EVENT_ANY_ID, mqtt_event_handler, NULL);
+	esp_mqtt_client_start(g_mqtt_client);
+	ESP_LOGI(TAG, "Cliente MQTT start solicitado");
+}
+
+// Bloquea hasta obtener IP. Reintenta indefinidamente.
+static void wait_for_wifi_ip(void)
+{
+	int attempt = 0;
+	while (!g_wifi_connected) {
+		attempt++;
+		ESP_LOGW(TAG, "Esperando IP (intento %d)...", attempt);
+		// Forzar reconexión cada ciertos intentos si sigue sin IP
+		if (attempt % 5 == 0) {
+			ESP_LOGI(TAG, "Forzando reconexión WiFi (intento %d)", attempt);
+			esp_wifi_disconnect();
+			vTaskDelay(pdMS_TO_TICKS(500));
+			esp_wifi_connect();
+		}
+		vTaskDelay(pdMS_TO_TICKS(2000));
+	}
+	ESP_LOGI(TAG, "WiFi listo, IP obtenida. Continuando inicialización.");
+}
+
+// =============================================================
 // ===============   CONFIGURACIÓN (EDITABLE)   ================
 // =============================================================
 
@@ -185,22 +380,24 @@ static void log_event(const char *access_method, bool access_granted, const char
 {
 	if (!g_log_mutex) return;
 	xSemaphoreTake(g_log_mutex, portMAX_DELAY);
-	FILE *f = fopen(LOG_FILE_PATH, "a");
-	if (!f) {
-		ESP_LOGE(TAG, "No se pudo abrir log %s", LOG_FILE_PATH);
-		xSemaphoreGive(g_log_mutex);
-		return;
-	}
 	char ts[32]; format_timestamp(ts, sizeof(ts));
-	// Construimos JSON (sin librería externa para minimizar dependencias)
-	fprintf(f,
-			"{\"device_id\":\"%s\",\"door_status\":\"%s\",\"access_method\":\"%s\",\"access_granted\":%s,\"timestamp\":\"%s\"}\n",
+	char json_line[256];
+	snprintf(json_line, sizeof(json_line),
+			"{\"device_id\":\"%s\",\"door_status\":\"%s\",\"access_method\":\"%s\",\"access_granted\":%s,\"timestamp\":\"%s\"}",
 			DEVICE_ID,
 			door_status ? door_status : "unknown",
 			access_method ? access_method : "door",
 			access_granted ? "true" : "false",
 			ts);
-	fclose(f);
+	FILE *f = fopen(LOG_FILE_PATH, "a");
+	if (!f) {
+		ESP_LOGE(TAG, "No se pudo abrir log %s", LOG_FILE_PATH);
+	} else {
+		fprintf(f, "%s\n", json_line);
+		fclose(f);
+	}
+	// Publicar inmediatamente cada evento nuevo
+	mqtt_publish_line(json_line);
 	xSemaphoreGive(g_log_mutex);
 }
 
@@ -1258,6 +1455,20 @@ static void gpio_basic_init(void)
 void app_main(void)
 {
 	ESP_LOGI(TAG, "Sistema de Acceso y Monitoreo de Seguridad");
+	// Forzar nivel de log INFO global y salida sin buffering
+	esp_log_level_set("*", ESP_LOG_INFO);
+	setvbuf(stdout, NULL, _IONBF, 0);
+	fflush(stdout);
+
+	// NVS necesario para WiFi
+	esp_err_t nvs_ret = nvs_flash_init();
+	ESP_LOGI(TAG, "NVS init retorno=%s", esp_err_to_name(nvs_ret));
+	fflush(stdout);
+	if (nvs_ret != ESP_OK) ESP_ERROR_CHECK(nvs_ret);
+	wifi_init_sta();
+	// Esperar conexión WiFi antes de continuar con resto del sistema
+	wait_for_wifi_ip();
+	mqtt_init();
 
 	g_events = xEventGroupCreate();
 
