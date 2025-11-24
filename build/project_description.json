@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "projectv1",
-    "project_version":    "215bdda-dirty",
+    "project_version":    "4661bb3-dirty",
     "project_path":       "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1",
     "idf_path":           "C:/Users/LEONI/esp/v5.5.1/esp-idf",
     "build_dir":          "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build",

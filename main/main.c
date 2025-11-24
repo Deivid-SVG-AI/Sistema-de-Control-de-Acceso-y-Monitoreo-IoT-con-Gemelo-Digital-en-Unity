@@ -198,30 +198,30 @@ static void format_timestamp(char *buf, size_t sz)
 // access_method: "password", "rfid" o "door"; door_status: "open"/"close"; access_granted: true/false
 static void log_event(const char *access_method, bool access_granted, const char *door_status)
 {
-	if (!g_log_mutex) return;
-	xSemaphoreTake(g_log_mutex, portMAX_DELAY);
-	FILE *f = fopen(LOG_FILE_PATH, "a");
-	if (!f) {
-		ESP_LOGE(TAG, "No se pudo abrir log %s", LOG_FILE_PATH);
-		xSemaphoreGive(g_log_mutex);
-		return;
-	}
-	char ts[32]; format_timestamp(ts, sizeof(ts));
-	char json_line[256];
-	snprintf(json_line, sizeof(json_line),
-		 "{\"device_id\":\"%s\",\"door_status\":\"%s\",\"access_method\":\"%s\",\"access_granted\":%s,\"timestamp\":\"%s\"}",
-		 DEVICE_ID,
-		 door_status ? door_status : "unknown",
-		 access_method ? access_method : "door",
-		 access_granted ? "true" : "false",
-		 ts);
-	fprintf(f, "%s\n", json_line);
-	fclose(f);
-	// Publicar por MQTT (usa llamada presente en main_mqtt.c)
-	if (g_mqtt_client) {
-		esp_mqtt_client_publish(g_mqtt_client, MQTT_TOPIC, json_line, 0, 1, 0);
-	}
-	xSemaphoreGive(g_log_mutex);
+    if (!g_log_mutex) return;
+    xSemaphoreTake(g_log_mutex, portMAX_DELAY);
+    FILE *f = fopen(LOG_FILE_PATH, "a");
+    if (!f) {
+        ESP_LOGE(TAG, "No se pudo abrir log %s", LOG_FILE_PATH);
+        xSemaphoreGive(g_log_mutex);
+        return;
+    }
+    // Timestamp vacío solicitado por requerimiento ("timestamp":"")
+    const char *ts_empty = "";
+    char json_line[256];
+    snprintf(json_line, sizeof(json_line),
+             "{\"device_id\":\"%s\",\"door_status\":\"%s\",\"access_method\":\"%s\",\"access_granted\":%s,\"timestamp\":\"%s\"}",
+             DEVICE_ID,
+             door_status ? door_status : "unknown",
+             access_method ? access_method : "door",
+             access_granted ? "true" : "false",
+             ts_empty);
+    fprintf(f, "%s\n", json_line);
+    fclose(f);
+    if (g_mqtt_client) {
+        esp_mqtt_client_publish(g_mqtt_client, MQTT_TOPIC, json_line, 0, 1, 0);
+    }
+    xSemaphoreGive(g_log_mutex);
 }
 
 typedef enum {
@@ -242,6 +242,7 @@ static EventGroupHandle_t g_events;
 #define EVT_COMBO_OK     (1<<1)
 #define EVT_DOOR_CLOSED  (1<<2)
 #define EVT_LOCKED       (1<<3)
+#define EVT_REMOTE_OK    (1<<4) // Nuevo método de acceso remoto vía MQTT
 
 // Estado de alto nivel
 static volatile door_state_t g_door_state = DOOR_UNKNOWN;
@@ -1232,37 +1233,42 @@ static void rfid_task(void *arg)
 
 static void control_task(void *arg)
 {
-	// Arrancamos bloqueados si la puerta está cerrada
+	// Arranque: establecer estado bloqueado coherente
 	if (read_door_state() == DOOR_CLOSED) {
 		lock_door();
 	} else {
-		// Si por cableado la puerta arranca abierta, bloqueamos igual pero 
-		// recordando que no podremos lock hasta cerrarla; por seguridad, mantenemos nivel de lock activo.
 		lock_apply_locked_hw(true);
 		set_locked_state(true);
 	}
 
+	const EventBits_t ACCESS_ALL_BITS = EVT_RFID_OK | EVT_COMBO_OK | EVT_REMOTE_OK;
+
 	for (;;) {
-		EventBits_t bits = 0;
-		if (ACCESS_MODE == ACCESS_MODE_AND) {
-			ESP_LOGI(TAG, "Modo AND: esperando RFID y combinación...");
-			bits = xEventGroupWaitBits(g_events, EVT_RFID_OK | EVT_COMBO_OK, pdTRUE, pdTRUE, portMAX_DELAY);
-		} else {
-			ESP_LOGI(TAG, "Modo OR: esperando RFID o combinación...");
-			bits = xEventGroupWaitBits(g_events, EVT_RFID_OK | EVT_COMBO_OK, pdTRUE, pdFALSE, portMAX_DELAY);
+		ESP_LOGI(TAG, "Esperando métodos de acceso (RFID, combo, remoto)...");
+		EventBits_t bits = xEventGroupWaitBits(g_events, ACCESS_ALL_BITS, pdTRUE, pdFALSE, portMAX_DELAY);
+
+		bool granted = false;
+		if (bits & EVT_REMOTE_OK) {
+			granted = true; // Acceso remoto siempre concede
+			ESP_LOGI(TAG, "Acceso remoto recibido (MQTT)");
+		} else if (ACCESS_MODE == ACCESS_MODE_AND) {
+			granted = ((bits & (EVT_RFID_OK | EVT_COMBO_OK)) == (EVT_RFID_OK | EVT_COMBO_OK));
+		} else { // OR
+			granted = (bits & (EVT_RFID_OK | EVT_COMBO_OK)) != 0;
 		}
 
-		// Si llegó aquí, se ha cumplido la condición de acceso
-		(void)bits;
-		// Desbloquear solo si la puerta está CERRADA; si no, esperar a que se cierre
+		if (!granted) {
+			// Bits recibidos pero no cumplen condición (p.ej. solo RFID en modo AND). Continúa esperando.
+			continue;
+		}
+
 		if (g_door_state != DOOR_CLOSED) {
 			ESP_LOGW(TAG, "Acceso listo pero puerta ABIERTA; esperando cierre para desbloquear");
 			xEventGroupWaitBits(g_events, EVT_DOOR_CLOSED, pdFALSE, pdTRUE, portMAX_DELAY);
 		}
 		unlock_door();
-
-		// Tras conceder acceso, limpiamos cualquier otro “OK” pendiente para el siguiente ciclo.
-		xEventGroupClearBits(g_events, EVT_RFID_OK | EVT_COMBO_OK);
+		// Limpieza de bits de acceso para siguiente ciclo (los ya consumidos fueron clear por pdTRUE)
+		xEventGroupClearBits(g_events, EVT_RFID_OK | EVT_COMBO_OK | EVT_REMOTE_OK);
 	}
 }
 
@@ -1307,9 +1313,9 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
 static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
 {
 	esp_mqtt_event_handle_t event = event_data;
-	if (event_id == MQTT_EVENT_CONNECTED) {
+	switch (event_id) {
+	case MQTT_EVENT_CONNECTED: {
 		ESP_LOGI(TAG, "MQTT Connected. Enviando payload inicial...");
-		// Crear JSON inicial (idéntico al ejemplo de main_mqtt.c)
 		cJSON *root = cJSON_CreateObject();
 		cJSON_AddStringToObject(root, "device", get_chip_model());
 		cJSON_AddNumberToObject(root, "uptime_sec", esp_timer_get_time() / 1000000);
@@ -1319,6 +1325,48 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 		ESP_LOGI(TAG, "Published init: %s", payload);
 		cJSON_Delete(root);
 		free(payload);
+		// Suscribir al topic de comandos remoto
+		esp_mqtt_client_subscribe(event->client, "iot/commands", 1);
+		ESP_LOGI(TAG, "Suscrito a iot/commands para comandos remotos");
+		break;
+	}
+	case MQTT_EVENT_DATA: {
+		// Verificar topic
+		if (event->topic_len == (int)strlen("iot/commands") && strncmp(event->topic, "iot/commands", event->topic_len) == 0) {
+			ESP_LOGI(TAG, "Comando remoto MQTT recibido (len=%d)", event->data_len);
+			// Copiar y terminar payload para parseo JSON
+			char buf[256];
+			int copy_len = event->data_len < (int)(sizeof(buf)-1) ? event->data_len : (int)(sizeof(buf)-1);
+			memcpy(buf, event->data, copy_len);
+			buf[copy_len] = '\0';
+			bool unlock_request = false;
+			cJSON *json = cJSON_Parse(buf);
+			if (json) {
+				// Aceptar si hay campo action="unlock" o unlock=true; si no, cualquier JSON concede
+				cJSON *action = cJSON_GetObjectItem(json, "action");
+				cJSON *unlock_flag = cJSON_GetObjectItem(json, "open");
+				if ((cJSON_IsString(action) && strcmp(action->valuestring, "open") == 0) ||
+					(cJSON_IsBool(unlock_flag) && cJSON_IsTrue(unlock_flag))) {
+					unlock_request = true;
+				} else if (!action && !unlock_flag) {
+					// Sin claves específicas: interpretar cualquier JSON como solicitud
+					unlock_request = true;
+				}
+			}
+			if (unlock_request) {
+				log_event("remote", true, (g_door_state==DOOR_CLOSED?"close":"open"));
+				xEventGroupSetBits(g_events, EVT_REMOTE_OK);
+				ESP_LOGI(TAG, "Solicitud remota de desbloqueo aceptada");
+			} else {
+				log_event("remote", false, (g_door_state==DOOR_CLOSED?"close":"open"));
+				ESP_LOGW(TAG, "JSON remoto no contiene accion de desbloqueo");
+			}
+			if (json) cJSON_Delete(json);
+		}
+		break;
+	}
+	default:
+		break;
 	}
 }
 
