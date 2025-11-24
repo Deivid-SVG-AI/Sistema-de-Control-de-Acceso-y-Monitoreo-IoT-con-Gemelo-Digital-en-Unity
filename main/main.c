@@ -949,8 +949,7 @@ static void door_monitor_task(void *arg)
 				xEventGroupSetBits(g_events, EVT_DOOR_CLOSED);
 				ESP_LOGI(TAG, "Puerta: CERRADA");
 				log_event("door", false, "close");
-				// Mantener relay activo mientras esté cerrada
-				lock_apply_level(true);
+				// (Removido cambio directo de estado del relay al cerrar para cumplir nueva regla)
 				// Si hay un re-bloqueo pendiente, armar bloqueo con retardo de 1s
 				if (g_pending_relock) {
 					g_relock_arm_time_us = now_us + 1000000; // 1 segundo
@@ -960,8 +959,7 @@ static void door_monitor_task(void *arg)
 				xEventGroupClearBits(g_events, EVT_DOOR_CLOSED);
 				ESP_LOGI(TAG, "Puerta: ABIERTA");
 				log_event("door", false, "open");
-				// Desactivar relay mientras esté abierta (sin señal)
-				lock_apply_level(false);
+				// (Removido cambio directo de estado del relay al abrir para cumplir nueva regla)
 				// Cancelar cualquier re-bloqueo armado previo
 				g_relock_arm_time_us = 0;
 			}
