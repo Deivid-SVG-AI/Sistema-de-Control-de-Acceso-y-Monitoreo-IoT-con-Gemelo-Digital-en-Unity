@@ -18,7 +18,7 @@ set(HEAD_HASH)
 file(READ "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/CMakeFiles/git-data/HEAD" HEAD_CONTENTS LIMIT 1024)
 
 string(STRIP "${HEAD_CONTENTS}" HEAD_CONTENTS)
-set(GIT_DIR "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/.git")
+set(GIT_DIR "C:/Users/LEONI/esp/v5.5.1/esp-idf/.git")
 # handle git-worktree
 if(EXISTS "${GIT_DIR}/commondir")
 	file(READ "${GIT_DIR}/commondir" GIT_DIR_NEW LIMIT 1024)

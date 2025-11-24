@@ -1,8 +1,0 @@
-[
-{
-  "directory": "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build",
-  "command": "C:\\Users\\LEONI\\.espressif\\tools\\xtensa-esp-elf\\esp-14.2.0_20241119\\xtensa-esp-elf\\bin\\xtensa-esp32-elf-gcc.exe -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -fdiagnostics-color=always -o CMakeFiles\\projectv1.elf.dir\\project_elf_src_esp32.c.obj -c C:\\Users\\LEONI\\Documents\\Maestria\\Codigos\\IoT\\ESP-IDF\\projectv1\\build\\project_elf_src_esp32.c",
-  "file": "C:\\Users\\LEONI\\Documents\\Maestria\\Codigos\\IoT\\ESP-IDF\\projectv1\\build\\project_elf_src_esp32.c",
-  "output": "CMakeFiles\\projectv1.elf.dir\\project_elf_src_esp32.c.obj"
-}
-]

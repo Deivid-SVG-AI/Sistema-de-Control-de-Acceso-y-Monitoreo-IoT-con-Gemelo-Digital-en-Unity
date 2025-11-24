@@ -46,6 +46,13 @@
 #include "rom/ets_sys.h"
 #include "esp_spiffs.h"
 #include "esp_vfs.h"
+// ===== Añadidos para WiFi/MQTT (reutilizando código existente en main_mqtt.c) =====
+#include "nvs_flash.h"
+#include "esp_wifi.h"
+#include "esp_event.h"
+#include "esp_chip_info.h"
+#include "mqtt_client.h"
+#include "cJSON.h"
 #include "sys/time.h"
 #include <time.h>
 
@@ -121,6 +128,12 @@
 // Combinación objetivo (ejemplo)
 static const int COMBO_TARGET[COMBO_LEN] = {3, 6, 4};
 
+// ===== Configuración WiFi / MQTT (desde main_mqtt.c) =====
+#define WIFI_SSID "iPhone de Cesar"
+#define WIFI_PASS "DenGra9401"
+#define MQTT_BROKER "mqtt://172.20.10.8:1883"
+#define MQTT_TOPIC "iot/telemetry"
+
 // Tarjeta RFID MFRC522 (SPI). Pines VSPI por defecto del ESP32.
 #define RFID_SPI_CS_GPIO          GPIO_NUM_5
 #define RFID_SPI_SCK_GPIO         GPIO_NUM_18
@@ -146,6 +159,8 @@ static const size_t AUTH_UIDS_COUNT = sizeof(AUTH_UIDS)/sizeof(AUTH_UIDS[0]);
 
 static const char *TAG = "ACCESS";
 static const char *DEVICE_ID = "access_control_01";
+// Cliente MQTT (debe estar antes de log_event)
+static esp_mqtt_client_handle_t g_mqtt_client = NULL;
 
 // Ruta de archivo de logs (JSON lines)
 #define LOG_FILE_PATH "/spiffs/events.jsonl"
@@ -192,15 +207,20 @@ static void log_event(const char *access_method, bool access_granted, const char
 		return;
 	}
 	char ts[32]; format_timestamp(ts, sizeof(ts));
-	// Construimos JSON (sin librería externa para minimizar dependencias)
-	fprintf(f,
-			"{\"device_id\":\"%s\",\"door_status\":\"%s\",\"access_method\":\"%s\",\"access_granted\":%s,\"timestamp\":\"%s\"}\n",
-			DEVICE_ID,
-			door_status ? door_status : "unknown",
-			access_method ? access_method : "door",
-			access_granted ? "true" : "false",
-			ts);
+	char json_line[256];
+	snprintf(json_line, sizeof(json_line),
+		 "{\"device_id\":\"%s\",\"door_status\":\"%s\",\"access_method\":\"%s\",\"access_granted\":%s,\"timestamp\":\"%s\"}",
+		 DEVICE_ID,
+		 door_status ? door_status : "unknown",
+		 access_method ? access_method : "door",
+		 access_granted ? "true" : "false",
+		 ts);
+	fprintf(f, "%s\n", json_line);
 	fclose(f);
+	// Publicar por MQTT (usa llamada presente en main_mqtt.c)
+	if (g_mqtt_client) {
+		esp_mqtt_client_publish(g_mqtt_client, MQTT_TOPIC, json_line, 0, 1, 0);
+	}
 	xSemaphoreGive(g_log_mutex);
 }
 
@@ -1255,9 +1275,92 @@ static void gpio_basic_init(void)
 	// Nada especial aquí por ahora
 }
 
+// ===== Código WiFi/MQTT reutilizado de main_mqtt.c =====
+// (Definición de g_mqtt_client movida arriba para visibilidad en log_event)
+
+// Helper para obtener modelo de chip (igual a main_mqtt.c)
+static const char *get_chip_model()
+{
+	esp_chip_info_t chip_info;
+	esp_chip_info(&chip_info);
+	switch (chip_info.model) {
+	case CHIP_ESP32:   return "ESP32_Classic";
+	case CHIP_ESP32S3: return "ESP32_S3";
+	case CHIP_ESP32C3: return "ESP32_C3";
+	default:           return "ESP_Unknown";
+	}
+}
+
+static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
+{
+	if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+		esp_wifi_connect();
+	} else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
+		esp_wifi_connect();
+		ESP_LOGW(TAG, "Retrying WiFi...");
+	} else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+		ip_event_got_ip_t *event = (ip_event_got_ip_t *)event_data;
+		ESP_LOGI(TAG, "WiFi Connected! IP: " IPSTR, IP2STR(&event->ip_info.ip));
+	}
+}
+
+static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
+{
+	esp_mqtt_event_handle_t event = event_data;
+	if (event_id == MQTT_EVENT_CONNECTED) {
+		ESP_LOGI(TAG, "MQTT Connected. Enviando payload inicial...");
+		// Crear JSON inicial (idéntico al ejemplo de main_mqtt.c)
+		cJSON *root = cJSON_CreateObject();
+		cJSON_AddStringToObject(root, "device", get_chip_model());
+		cJSON_AddNumberToObject(root, "uptime_sec", esp_timer_get_time() / 1000000);
+		cJSON_AddStringToObject(root, "ssid", WIFI_SSID);
+		char *payload = cJSON_PrintUnformatted(root);
+		esp_mqtt_client_publish(event->client, MQTT_TOPIC, payload, 0, 1, 0);
+		ESP_LOGI(TAG, "Published init: %s", payload);
+		cJSON_Delete(root);
+		free(payload);
+	}
+}
+
 void app_main(void)
 {
 	ESP_LOGI(TAG, "Sistema de Acceso y Monitoreo de Seguridad");
+
+	// ===== Inicialización NVS y WiFi/MQTT (copiado de main_mqtt.c) =====
+	esp_err_t ret = nvs_flash_init();
+	if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+		ESP_ERROR_CHECK(nvs_flash_erase());
+		ret = nvs_flash_init();
+	}
+	ESP_ERROR_CHECK(ret);
+
+	esp_netif_init();
+	esp_event_loop_create_default();
+	esp_netif_create_default_wifi_sta();
+	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+	esp_wifi_init(&cfg);
+
+	esp_event_handler_instance_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL, NULL);
+	esp_event_handler_instance_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler, NULL, NULL);
+
+	wifi_config_t wifi_config = {
+		.sta = {
+			.threshold.authmode = WIFI_AUTH_WPA2_PSK,
+			.pmf_cfg = {.capable = true, .required = false}
+		},
+	};
+
+	strncpy((char *)wifi_config.sta.ssid, WIFI_SSID, sizeof(wifi_config.sta.ssid) - 1);
+	strncpy((char *)wifi_config.sta.password, WIFI_PASS, sizeof(wifi_config.sta.password) - 1);
+
+	esp_wifi_set_mode(WIFI_MODE_STA);
+	esp_wifi_set_config(WIFI_IF_STA, &wifi_config);
+	esp_wifi_start();
+
+	esp_mqtt_client_config_t mqtt_cfg = { .broker.address.uri = MQTT_BROKER };
+	g_mqtt_client = esp_mqtt_client_init(&mqtt_cfg);
+	esp_mqtt_client_register_event(g_mqtt_client, ESP_EVENT_ANY_ID, mqtt_event_handler, NULL);
+	esp_mqtt_client_start(g_mqtt_client);
 
 	g_events = xEventGroupCreate();
 
