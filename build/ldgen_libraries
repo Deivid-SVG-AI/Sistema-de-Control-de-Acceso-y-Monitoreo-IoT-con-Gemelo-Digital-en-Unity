@@ -35,6 +35,7 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/es
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/app_update/libapp_update.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_app_format/libesp_app_format.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_bootloader_format/libesp_bootloader_format.a
+<<<<<<< HEAD
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_gdbstub/libesp_gdbstub.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/driver/libdriver.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_pcnt/libesp_driver_pcnt.a
@@ -62,14 +63,29 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/es
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/nvs_flash/libnvs_flash.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mbedtls/libmbedtls.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_wifi/libesp_wifi.a
+=======
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/nvs_flash/libnvs_flash.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mbedtls/libmbedtls.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_wifi/libesp_wifi.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_event/libesp_event.a
+>>>>>>> new_timeline2
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_phy/libesp_phy.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_netif/libesp_netif.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/wpa_supplicant/libwpa_supplicant.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_coex/libesp_coex.a
+<<<<<<< HEAD
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_https_ota/libesp_https_ota.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_security/libesp_security.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/pthread/libpthread.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gpio/libesp_driver_gpio.a
+=======
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/libesp-tls.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/libhttp_parser.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_security/libesp_security.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/pthread/libpthread.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gpio/libesp_driver_gpio.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/libesp_timer.a
+>>>>>>> new_timeline2
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_pm/libesp_pm.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_app_format/libesp_app_format.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_bootloader_format/libesp_bootloader_format.a
@@ -91,6 +107,7 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/fr
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/newlib/libnewlib.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/pthread/libpthread.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/cxx/libcxx.a
+<<<<<<< HEAD
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/libesp_timer.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gptimer/libesp_driver_gptimer.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_ringbuf/libesp_ringbuf.a
@@ -99,18 +116,53 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/ap
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_event/libesp_event.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/nvs_flash/libnvs_flash.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_phy/libesp_phy.a
+=======
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espressif__cjson/libespressif__cjson.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_event/libesp_event.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/nvs_flash/libnvs_flash.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_phy/libesp_phy.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_ringbuf/libesp_ringbuf.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_uart/libesp_driver_uart.a
+>>>>>>> new_timeline2
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_vfs_console/libesp_vfs_console.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/lwip/liblwip.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_netif/libesp_netif.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/wpa_supplicant/libwpa_supplicant.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_coex/libesp_coex.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_wifi/libesp_wifi.a
+<<<<<<< HEAD
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/libesp_driver_spi.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_gdbstub/libesp_gdbstub.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/unity/libunity.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/cmock/libcmock.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/unity/libunity.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/console/libconsole.a
+=======
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/libhttp_parser.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/libesp-tls.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/tcp_transport/libtcp_transport.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mqtt/libmqtt.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/tcp_transport/libtcp_transport.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_pcnt/libesp_driver_pcnt.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gptimer/libesp_driver_gptimer.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/libesp_driver_spi.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_mcpwm/libesp_driver_mcpwm.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_i2s/libesp_driver_i2s.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/sdmmc/libsdmmc.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_sdmmc/libesp_driver_sdmmc.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/sdmmc/libsdmmc.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_sdspi/libesp_driver_sdspi.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/libesp_driver_spi.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_sdio/libesp_driver_sdio.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_dac/libesp_driver_dac.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_i2s/libesp_driver_i2s.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_rmt/libesp_driver_rmt.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_sdm/libesp_driver_sdm.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_i2c/libesp_driver_i2c.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_ledc/libesp_driver_ledc.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_twai/libesp_driver_twai.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/driver/libdriver.a
+>>>>>>> new_timeline2
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_pcnt/libesp_driver_pcnt.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_mcpwm/libesp_driver_mcpwm.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_i2s/libesp_driver_i2s.a
@@ -124,6 +176,7 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/es
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_i2c/libesp_driver_i2c.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_ledc/libesp_driver_ledc.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_twai/libesp_driver_twai.a
+<<<<<<< HEAD
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/driver/libdriver.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/libhttp_parser.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/libesp-tls.a
@@ -158,4 +211,13 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/sp
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/wifi_provisioning/libwifi_provisioning.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/json/libjson.a
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/main/libmain.a
+=======
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/spiffs/libspiffs.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_adc/libesp_adc.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/driver/libdriver.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/main/libmain.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espressif__cjson/libespressif__cjson.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mqtt/libmqtt.a
+>>>>>>> new_timeline2
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/spiffs/libspiffs.a
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_adc/libesp_adc.a

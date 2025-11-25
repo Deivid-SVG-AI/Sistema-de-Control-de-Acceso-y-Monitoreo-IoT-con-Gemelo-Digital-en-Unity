@@ -43,6 +43,16 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/es
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gpio/CMakeFiles/install.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gpio/CMakeFiles/install/local.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gpio/CMakeFiles/install/strip.dir
+<<<<<<< HEAD
+=======
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/CMakeFiles/__idf_esp_timer.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/CMakeFiles/edit_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/CMakeFiles/rebuild_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/CMakeFiles/list_install_components.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/CMakeFiles/install.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/CMakeFiles/install/local.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/CMakeFiles/install/strip.dir
+>>>>>>> new_timeline2
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_pm/CMakeFiles/__idf_esp_pm.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_pm/CMakeFiles/edit_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_pm/CMakeFiles/rebuild_cache.dir
@@ -322,6 +332,7 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/cx
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/cxx/CMakeFiles/install.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/cxx/CMakeFiles/install/local.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/cxx/CMakeFiles/install/strip.dir
+<<<<<<< HEAD
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/CMakeFiles/__idf_esp_timer.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/CMakeFiles/edit_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/CMakeFiles/rebuild_cache.dir
@@ -357,6 +368,15 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/ap
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/app_trace/CMakeFiles/install.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/app_trace/CMakeFiles/install/local.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/app_trace/CMakeFiles/install/strip.dir
+=======
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espressif__cjson/CMakeFiles/__idf_espressif__cjson.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espressif__cjson/CMakeFiles/edit_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espressif__cjson/CMakeFiles/rebuild_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espressif__cjson/CMakeFiles/list_install_components.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espressif__cjson/CMakeFiles/install.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espressif__cjson/CMakeFiles/install/local.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espressif__cjson/CMakeFiles/install/strip.dir
+>>>>>>> new_timeline2
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_event/CMakeFiles/__idf_esp_event.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_event/CMakeFiles/edit_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_event/CMakeFiles/rebuild_cache.dir
@@ -378,6 +398,23 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/es
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_phy/CMakeFiles/install.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_phy/CMakeFiles/install/local.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_phy/CMakeFiles/install/strip.dir
+<<<<<<< HEAD
+=======
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_ringbuf/CMakeFiles/__idf_esp_ringbuf.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_ringbuf/CMakeFiles/edit_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_ringbuf/CMakeFiles/rebuild_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_ringbuf/CMakeFiles/list_install_components.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_ringbuf/CMakeFiles/install.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_ringbuf/CMakeFiles/install/local.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_ringbuf/CMakeFiles/install/strip.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_uart/CMakeFiles/__idf_esp_driver_uart.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_uart/CMakeFiles/edit_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_uart/CMakeFiles/rebuild_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_uart/CMakeFiles/list_install_components.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_uart/CMakeFiles/install.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_uart/CMakeFiles/install/local.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_uart/CMakeFiles/install/strip.dir
+>>>>>>> new_timeline2
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_usb_serial_jtag/CMakeFiles/edit_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_usb_serial_jtag/CMakeFiles/rebuild_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_usb_serial_jtag/CMakeFiles/list_install_components.dir
@@ -439,6 +476,7 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/es
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_wifi/CMakeFiles/install.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_wifi/CMakeFiles/install/local.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_wifi/CMakeFiles/install/strip.dir
+<<<<<<< HEAD
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/CMakeFiles/__idf_esp_driver_spi.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/CMakeFiles/edit_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/CMakeFiles/rebuild_cache.dir
@@ -480,6 +518,36 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/co
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/console/CMakeFiles/install.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/console/CMakeFiles/install/local.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/console/CMakeFiles/install/strip.dir
+=======
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/CMakeFiles/__idf_http_parser.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/CMakeFiles/edit_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/CMakeFiles/rebuild_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/CMakeFiles/list_install_components.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/CMakeFiles/install.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/CMakeFiles/install/local.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/CMakeFiles/install/strip.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/CMakeFiles/__idf_esp-tls.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/CMakeFiles/edit_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/CMakeFiles/rebuild_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/CMakeFiles/list_install_components.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/CMakeFiles/install.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/CMakeFiles/install/local.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/CMakeFiles/install/strip.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/tcp_transport/CMakeFiles/__idf_tcp_transport.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/tcp_transport/CMakeFiles/edit_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/tcp_transport/CMakeFiles/rebuild_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/tcp_transport/CMakeFiles/list_install_components.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/tcp_transport/CMakeFiles/install.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/tcp_transport/CMakeFiles/install/local.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/tcp_transport/CMakeFiles/install/strip.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mqtt/CMakeFiles/__idf_mqtt.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mqtt/CMakeFiles/edit_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mqtt/CMakeFiles/rebuild_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mqtt/CMakeFiles/list_install_components.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mqtt/CMakeFiles/install.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mqtt/CMakeFiles/install/local.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mqtt/CMakeFiles/install/strip.dir
+>>>>>>> new_timeline2
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_pcnt/CMakeFiles/__idf_esp_driver_pcnt.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_pcnt/CMakeFiles/edit_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_pcnt/CMakeFiles/rebuild_cache.dir
@@ -487,6 +555,23 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/es
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_pcnt/CMakeFiles/install.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_pcnt/CMakeFiles/install/local.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_pcnt/CMakeFiles/install/strip.dir
+<<<<<<< HEAD
+=======
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gptimer/CMakeFiles/__idf_esp_driver_gptimer.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gptimer/CMakeFiles/edit_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gptimer/CMakeFiles/rebuild_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gptimer/CMakeFiles/list_install_components.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gptimer/CMakeFiles/install.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gptimer/CMakeFiles/install/local.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gptimer/CMakeFiles/install/strip.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/CMakeFiles/__idf_esp_driver_spi.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/CMakeFiles/edit_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/CMakeFiles/rebuild_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/CMakeFiles/list_install_components.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/CMakeFiles/install.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/CMakeFiles/install/local.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/CMakeFiles/install/strip.dir
+>>>>>>> new_timeline2
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_mcpwm/CMakeFiles/__idf_esp_driver_mcpwm.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_mcpwm/CMakeFiles/edit_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_mcpwm/CMakeFiles/rebuild_cache.dir
@@ -602,6 +687,7 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/dr
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/driver/CMakeFiles/install.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/driver/CMakeFiles/install/local.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/driver/CMakeFiles/install/strip.dir
+<<<<<<< HEAD
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/CMakeFiles/__idf_http_parser.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/CMakeFiles/edit_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/CMakeFiles/rebuild_cache.dir
@@ -812,6 +898,8 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/rt
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/rt/CMakeFiles/install.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/rt/CMakeFiles/install/local.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/rt/CMakeFiles/install/strip.dir
+=======
+>>>>>>> new_timeline2
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/spiffs/CMakeFiles/__idf_spiffs.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/spiffs/CMakeFiles/edit_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/spiffs/CMakeFiles/rebuild_cache.dir
@@ -819,6 +907,7 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/sp
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/spiffs/CMakeFiles/install.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/spiffs/CMakeFiles/install/local.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/spiffs/CMakeFiles/install/strip.dir
+<<<<<<< HEAD
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/ulp/CMakeFiles/edit_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/ulp/CMakeFiles/rebuild_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/ulp/CMakeFiles/list_install_components.dir
@@ -838,6 +927,15 @@ C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/wi
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/wifi_provisioning/CMakeFiles/install.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/wifi_provisioning/CMakeFiles/install/local.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/wifi_provisioning/CMakeFiles/install/strip.dir
+=======
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_adc/CMakeFiles/__idf_esp_adc.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_adc/CMakeFiles/edit_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_adc/CMakeFiles/rebuild_cache.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_adc/CMakeFiles/list_install_components.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_adc/CMakeFiles/install.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_adc/CMakeFiles/install/local.dir
+C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_adc/CMakeFiles/install/strip.dir
+>>>>>>> new_timeline2
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/main/CMakeFiles/__idf_main.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/main/CMakeFiles/edit_cache.dir
 C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/main/CMakeFiles/rebuild_cache.dir

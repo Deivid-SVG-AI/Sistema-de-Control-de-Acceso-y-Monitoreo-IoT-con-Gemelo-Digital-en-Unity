@@ -1,29 +1,103 @@
 # Sistema de Acceso y Monitoreo de Seguridad (ESP32 + ESP-IDF)
 
-Proyecto de control de acceso con ESP32: puerta con sensor magnético, cerradura (servo o electroimán), buzzer, LEDs, autenticación por combinación (potenciómetro analógico) y/o tarjeta RFID MFRC522, más pantalla LCD1602 I2C para retroalimentación visual. Enfatiza la regla de seguridad: nunca bloquear mientras la puerta esté abierta.
+Proyecto de control de acceso con ESP32: puerta con sensor magnético, cerradura electromagnética, buzzer, LEDs, autenticación por combinación (potenciómetro analógico), tarjeta RFID MFRC522 y control remoto vía MQTT, más pantalla LCD1602 I2C para retroalimentación visual. Enfatiza la regla de seguridad: nunca bloquear mientras la puerta esté abierta.
 
 ## Resumen de Funcionalidad Actual
-- Modos de autenticación: `ACCESS_MODE_AND` (RFID + combinación) o `ACCESS_MODE_OR` (RFID o combinación). Valor por defecto en el código: OR.
-- Sensor magnético (reed) para estado puerta (abierta/cerrada).
-- Cerradura accionada por servo (por defecto `LOCK_USE_SERVO=1`), o salida GPIO para electroimán si se cambia a `LOCK_USE_SERVO=0`.
-- Buzzer (LEDC) con patrones: pip corto (tick), doble pip acceso correcto, triple pip combinación incorrecta, pip en lectura RFID.
-- LEDs de estado: sistema (azul), verde acceso concedido, rojo denegado/bloqueado.
-- Regla de seguridad: solo se ejecuta lock (cerrar) si la puerta está detectada como cerrada; se difiere el re‑lock 1 segundo al cerrar tras un unlock.
-- Tiempo máximo desbloqueado si la puerta nunca se abrió (`UNLOCK_MAX_OPEN_TIME_MS`).
-- Pantalla LCD1602 (I2C + PCF8574) para mensajes: idle, progreso combinación, granted/denied, locking, patrón de diagnóstico.
 
-## Estado del soporte RFID (MFRC522)
-- En el código actual `USE_MFRC522` está en `1`, lo que significa que se requiere el archivo/driver `mfrc522_min.h` (añádelo como componente). Si no tienes el driver, puedes poner `USE_MFRC522 0` para compilar sin RFID.
-- Whitelist de UIDs en `AUTH_UIDS`: inicialmente contiene `{EA:E8:D2:84}`.
-- Al detectar UID autorizado: set del bit `EVT_RFID_OK`, mensaje LCD “ACCESS GRANTED!” y doble beep (por la lógica general de acceso).
+### Métodos de Acceso
+El sistema implementa **tres métodos independientes de acceso**:
+1. **Combinación por Potenciómetro**: Entrada de 3 dígitos mediante potenciómetro analógico (combinación predeterminada: 3-6-4)
+2. **Tarjeta RFID (MFRC522)**: Autenticación mediante tarjetas NFC autorizadas
+3. **Control Remoto MQTT**: Desbloqueo remoto a través de comandos JSON vía MQTT en el topic `iot/commands`
+
+### Modos de Autenticación
+- **`ACCESS_MODE_AND`**: Requiere RFID + combinación simultáneamente
+- **`ACCESS_MODE_OR`**: Acepta RFID O combinación O comando remoto (modo predeterminado)
+- El acceso remoto MQTT **siempre concede acceso** independientemente del modo configurado
+
+### Hardware de Control
+- **Cerradura electromagnética** controlada por relay (por defecto `LOCK_USE_SERVO=0`)
+  - Estado BLOQUEADO: relay inactivo (bobina desenergizada) - estado de reposo seguro
+  - Estado DESBLOQUEADO: relay activo (bobina energizada) - permite apertura de puerta
+  - Configuración de polaridad: `RELAY_ACTIVE_LEVEL=0` (relay activo en LOW)
+- **Alternativa servo**: Disponible cambiando `LOCK_USE_SERVO=1` (ángulos configurables)
+
+### Monitoreo y Retroalimentación
+- **Sensor magnético (reed switch)**: Detecta estado de puerta (abierta/cerrada)
+- **Buzzer (PWM LEDC)** con patrones diferenciados:
+  - Pip corto: captura de dígito o detección de tarjeta
+  - Doble pip: acceso concedido
+  - Triple pip: combinación incorrecta
+- **LEDs de estado**:
+  - Azul (GPIO14): sistema listo (siempre encendido)
+  - Verde (GPIO12): acceso concedido / desbloqueado
+  - Rojo (GPIO27): acceso denegado (parpadeo breve)
+- **Pantalla LCD1602 (I2C + PCF8574)**: 
+  - Mensajes contextuales: idle, progreso de combinación, granted/denied, locking
+  - Dirección I2C: 0x27 (variante de mapeo: VARIANT 0)
+  - Frecuencia reducida a 50 kHz para estabilidad
+
+### Conectividad IoT
+- **WiFi Station Mode**: Conexión automática con reconexión (SSID: "iPhone de Cesar")
+- **Cliente MQTT**: 
+  - Broker: `mqtt://172.20.10.8:1883`
+  - Topic de telemetría: `iot/telemetry` (publica eventos en formato JSON)
+  - Topic de comandos: `iot/commands` (suscrito para control remoto)
+- **Sistema de Logs SPIFFS**: Registro persistente de eventos en `/spiffs/events.jsonl`
+  - Campos: `device_id`, `door_status`, `access_method`, `access_granted`, `timestamp`
+  - Formato: JSON Lines (un evento por línea)
+
+### Reglas de Seguridad
+- **Lock solo con puerta cerrada**: La cerradura NUNCA se bloquea si el sensor detecta puerta abierta
+- **Re-lock diferido**: Después de desbloquear, espera 1 segundo tras detectar cierre de puerta antes de bloquear automáticamente
+- **Timeout de desbloqueo**: Si la puerta no se abre tras `UNLOCK_MAX_OPEN_TIME_MS` (10 segundos), intenta re-bloquear solo si está cerrada
+- **Comportamiento del lock NO automático**: La cerradura NO cambia de estado cuando la puerta se abre/cierra; solo responde a:
+  - Métodos de acceso exitosos (RFID, combinación, remoto)
+  - Timer de re-lock después de acceso concedido
+  - Timeout máximo de desbloqueo
+
+## Estado del Soporte RFID (MFRC522)
+- **Habilitado por defecto**: `USE_MFRC522=1` (requiere archivo/driver `mfrc522_min.h`)
+- **Whitelist de UIDs autorizados**: Configurada en `AUTH_UIDS` con UID inicial `{EA:E8:D2:84}`
+- **Funcionamiento**: 
+  - Detección automática de tarjetas cada 150ms
+  - Validación contra whitelist
+  - Al detectar UID autorizado: establece bit `EVT_RFID_OK`, muestra "ACCESS GRANTED!" en LCD y doble beep
+  - Beep corto al detectar cualquier tarjeta (autorizada o no)
+- **Para compilar sin RFID**: Cambiar a `USE_MFRC522 0` en `main/main.c`
 
 ## Entrada de Combinación (Potenciómetro Analógico)
-- Se sustituyó el encoder rotatorio por un potenciómetro conectado a `GPIO34` (ADC1_CH6).
-- La lectura analógica (0..4095) se mapea a dígitos `0..10` (`POT_MAX_DIGIT=10`).
-- El sistema captura un dígito cuando el valor permanece estable por `POT_SETTLE_MS` (1200 ms) tras movimiento.
-- Longitud de combinación: `COMBO_LEN = 3`, objetivo: `{3,6,4}`.
-- Al capturar cada dígito: beep corto y actualización LCD (“CURRENT PASS:” + progreso).
-- Al completar 3 dígitos: comparación con `COMBO_TARGET`. Correcta => doble beep y `EVT_COMBO_OK`; incorrecta => triple pip, LED rojo breve y reset de la captura.
+- **Hardware**: Potenciómetro conectado a `GPIO34` (ADC1_CH6)
+- **Mapeo de valores**: 
+  - Lectura ADC: 0..4095 (12 bits)
+  - Se mapea linealmente a dígitos: 0..10 (`POT_MAX_DIGIT=10`)
+- **Captura de dígitos**:
+  - El sistema captura un dígito cuando el valor permanece **estable** por `POT_SETTLE_MS` (1200 ms) tras movimiento
+  - Requiere movimiento del potenciómetro antes de capturar el siguiente dígito (evita capturas duplicadas)
+  - Longitud de combinación: `COMBO_LEN = 3`
+  - Combinación objetivo: `{3,6,4}` (modificable en código)
+- **Retroalimentación**:
+  - Beep corto al capturar cada dígito
+  - Actualización LCD: muestra "CURRENT PASS:" con progreso
+  - Al completar 3 dígitos:
+    - **Correcta**: doble beep, `EVT_COMBO_OK` activado, LED verde
+    - **Incorrecta**: triple pip, LED rojo breve, reset automático de captura
+- **Reset automático**: Si no hay movimiento por `INPUT_IDLE_RESET_MS` (8 segundos), limpia combinación parcial
+
+## Control Remoto MQTT
+- **Topic de suscripción**: `iot/commands`
+- **Formato de comando**: JSON con cualquiera de estas estructuras:
+  ```json
+  {"action": "open"}
+  {"open": true}
+  {}
+  ```
+- **Comportamiento**:
+  - Cualquier JSON válido sin campos específicos se interpreta como solicitud de desbloqueo
+  - Activa el bit `EVT_REMOTE_OK` inmediatamente
+  - Registra el evento en logs con `access_method: "remote"`
+  - Publica confirmación vía MQTT en topic de telemetría
+- **Prioridad**: El acceso remoto siempre concede acceso, independiente del modo AND/OR configurado
 
 ## Pines Actuales (ver sección CONFIGURACIÓN en `main/main.c`)
 | Función | Macro / Definición | Pin |
@@ -33,7 +107,7 @@ Proyecto de control de acceso con ESP32: puerta con sensor magnético, cerradura
 | LED verde | `LED_GREEN_GPIO` | GPIO12 |
 | LED rojo | `LED_RED_GPIO` | GPIO27 |
 | Sensor puerta (reed) | `DOOR_SENSOR_GPIO` | GPIO33 |
-| Servo / Lock GPIO | `SERVO_GPIO` / `LOCK_GPIO` | GPIO25 |
+| Relay / Lock GPIO | `LOCK_GPIO` | GPIO25 |
 | Potenciómetro ADC | `POT_ADC_GPIO` (ADC1_CH6) | GPIO34 |
 | MFRC522 SCK | `RFID_SPI_SCK_GPIO` | GPIO18 |
 | MFRC522 MOSI | `RFID_SPI_MOSI_GPIO` | GPIO23 |
@@ -43,64 +117,170 @@ Proyecto de control de acceso con ESP32: puerta con sensor magnético, cerradura
 | LCD I2C SDA | `I2C_SDA_GPIO` | GPIO21 |
 | LCD I2C SCL | `I2C_SCL_GPIO` | GPIO22 |
 
-Nota: reemplaza servo por electroimán ajustando `LOCK_USE_SERVO` y cableado; si usas electroimán, verifica `LOCK_ACTIVE_HIGH` según tu transistor/relevador.
+**Notas sobre hardware**:
+- **Cerradura**: Por defecto usa relay electromagnético (`LOCK_USE_SERVO=0`). Para servo, cambiar a `LOCK_USE_SERVO=1`
+- **Polaridad relay**: `RELAY_ACTIVE_LEVEL=0` (activo en LOW). Ajustar según tu módulo relay/transistor
+- **Reed switch**: Configurado con pull-up interno; contacto a GND indica puerta cerrada
 
 ## Diagrama Textual de Conexiones
 ```
-						+---------------- ESP32 ----------------+
-						|                                      |
-		(Door Reed) ----+ GPIO33 (DOOR_SENSOR)       3V3        |
-						|    ^ (pull-up interno)     |         |
-						|    |                       |         |
-						|    |                  +----+----+    |
-						|    |                  |  LCD1602 |   |
-						|    |   I2C SDA -------+ GPIO21   |   |
-						|    |   I2C SCL -------+ GPIO22   |   |
-						|    |                  | Addr 0x27|   |
-						|    |                  +----+----+    |
-						|    |                       |BL       |
-						|    |                       v         |
- Servo Signal (lock) ---+ GPIO25 (SERVO / LOCK_GPIO)           |
-						|                                      |
+                        +---------------- ESP32 ----------------+
+                        |                                      |
+        (Door Reed) ----+ GPIO33 (DOOR_SENSOR)       3V3        |
+                        |    ^ (pull-up interno)     |         |
+                        |    |                       |         |
+                        |    |                  +----+----+    |
+                        |    |                  |  LCD1602 |   |
+                        |    |   I2C SDA -------+ GPIO21   |   |
+                        |    |   I2C SCL -------+ GPIO22   |   |
+                        |    |                  | Addr 0x27|   |
+                        |    |                  +----+----+    |
+                        |    |                       |BL       |
+                        |    |                       v         |
+ Relay Electromagnético + GPIO25 (LOCK_GPIO, activo LOW)       |
+ (MOSFET + diodo)       |                                      |
+                        |                                      |
  Buzzer PWM ----------- + GPIO26 (BUZZER)                      |
-						|                                      |
+                        |                                      |
  LED Azul (Status) -----+ GPIO14                               |
  LED Verde (Granted) ---+ GPIO12                               |
  LED Rojo (Denied)  ----+ GPIO27                               |
-						|                                      |
+                        |                                      |
  Potenciómetro wiper ---+ GPIO34 (ADC1_CH6)                    |
  (Otros extremos a 3V3 y GND)                                   |
-						|                                      |
+                        |                                      |
  SPI MFRC522:            |  SCK=GPIO18  MOSI=GPIO23             |
-						 |  MISO=GPIO19 CS=GPIO5 RST=GPIO13     |
-						+--------------------------------------+
+                         |  MISO=GPIO19 CS=GPIO5 RST=GPIO13     |
+                        +--------------------------------------+
 
 Alimentación recomendada:
-- Servo: fuente externa 5V (GND común con ESP32) si el consumo supera lo que el regulador puede entregar.
-- MFRC522: 3.3V (evitar 5V directo si el módulo no regula internamente).
-- LCD1602: muchos módulos aceptan 5V (backlight más brillante); si usas 5V asegura niveles I2C tolerados o adapta.
+- Relay electromagnético: Si usa bobina de 5V, alimentar directamente; usar MOSFET NPN/PNP para control desde GPIO25
+- MFRC522: 3.3V (evitar 5V directo si el módulo no regula internamente)
+- LCD1602: muchos módulos aceptan 5V (backlight más brillante); si usas 5V asegura niveles I2C tolerados o adapta
 ```
 
 Leyenda:
-- Flechas (^) indican entrada al ESP32; líneas simples representan señal directa.
-- Mantener cables I2C (SDA/SCL) cortos y separados de líneas de potencia de servo para reducir ruido.
+- Flechas (^) indican entrada al ESP32; líneas simples representan señal directa
+- **IMPORTANTE**: Usar diodo flyback en paralelo con bobina del relay para proteger el MOSFET
+- Mantener cables I2C (SDA/SCL) cortos y separados de líneas de potencia del relay para reducir ruido
 
-## Parámetros Clave
-- `ACCESS_MODE` define lógica AND/OR.
-- `UNLOCK_MAX_OPEN_TIME_MS` máximo tiempo desbloqueado sin abrir puerta.
-- `COMBO_TARGET[]` combinación objetivo.
-- `LOCK_ACTIVE_HIGH` polaridad hardware del lock si no es servo.
-- `POT_SETTLE_MS` estabilidad requerida para capturar dígito.
-- `POT_MAX_DIGIT` rango de dígitos (0..10).
+## Parámetros Clave de Configuración
+- **`ACCESS_MODE`**: Define lógica de autenticación (AND/OR)
+- **`UNLOCK_MAX_OPEN_TIME_MS`**: Tiempo máximo desbloqueado sin abrir puerta (10 segundos)
+- **`INPUT_IDLE_RESET_MS`**: Timeout para reset de combinación parcial (8 segundos)
+- **`COMBO_TARGET[]`**: Combinación objetivo de 3 dígitos
+- **`RELAY_ACTIVE_LEVEL`**: Polaridad del relay (0 = activo en LOW, 1 = activo en HIGH)
+- **`POT_SETTLE_MS`**: Tiempo de estabilidad para capturar dígito (1200 ms)
+- **`POT_MAX_DIGIT`**: Rango de dígitos del potenciómetro (0..10)
+- **WiFi/MQTT**: 
+  - `WIFI_SSID` / `WIFI_PASS`: Credenciales de red
+  - `MQTT_BROKER`: URI del broker MQTT
+  - `MQTT_TOPIC`: Topic de telemetría
 
-## Comportamiento (Resumen Operativo)
-1. Arranque: inicializa periféricos, LCD muestra patrón de diagnóstico si `LCD_DEBUG_PATTERN=1`, luego estado idle.
-2. Puerta cerrada al inicio: se bloquea inmediatamente (lock). Puerta abierta: se energiza lock pero sólo se confirma cierre cuando reed reporta `CERRADA`.
-3. Combinación: cada dígito se captura tras estabilizarse; al fallar se reinicia secuencia.
-4. RFID: al escanear tarjeta autorizada se satisface condición de acceso según modo.
-5. Desbloqueo: si se cumplen condiciones (AND u OR) y la puerta está cerrada, se hace `unlock_door()`. Si está abierta, espera cierre.
-6. Re-bloqueo: al cerrar después de un unlock, se arma retardo de 1s antes de ejecutar lock.
-7. Tiempo máximo desbloqueado: si nunca se abrió, se intenta lock sólo si puerta está cerrada.
+## Comportamiento Operativo Completo
+
+### 1. Arranque del Sistema
+- Inicializa todos los periféricos (GPIO, I2C, ADC, SPI, WiFi, MQTT)
+- Monta sistema de archivos SPIFFS para logs
+- LCD muestra patrón de diagnóstico si `LCD_DEBUG_PATTERN=1` está habilitado
+- Conecta a WiFi y establece conexión MQTT
+- Lee estado inicial de puerta:
+  - **Puerta cerrada**: bloquea cerradura inmediatamente (relay inactivo)
+  - **Puerta abierta**: mantiene relay activo pero NO considera bloqueado hasta detectar cierre
+- Muestra mensaje de bienvenida en LCD: "WELCOME, INPUT PASSWORD OR RFID"
+
+### 2. Captura de Combinación (Potenciómetro)
+- Monitorea continuamente lectura ADC del potenciómetro
+- Mapea valor 0..4095 a dígitos 0..10
+- **Captura de dígito**:
+  - Detecta movimiento del potenciómetro
+  - Espera estabilización por 1200 ms
+  - Captura dígito cuando valor se mantiene estable
+  - Emite beep corto y actualiza LCD con progreso
+- **Validación de secuencia**:
+  - Al completar 3 dígitos, compara con `COMBO_TARGET`
+  - **Correcta**: doble beep, activa `EVT_COMBO_OK`, LED verde
+  - **Incorrecta**: triple pip, flash de LED rojo, limpia captura
+- **Reset automático**: Limpia combinación parcial tras 8 segundos de inactividad
+
+### 3. Autenticación RFID
+- Escanea tarjetas cada 150 ms
+- Al detectar tarjeta nueva:
+  - Emite beep corto
+  - Lee UID y compara contra whitelist `AUTH_UIDS`
+  - **Autorizada**: activa `EVT_RFID_OK`, muestra "ACCESS GRANTED!", doble beep
+  - **No autorizada**: solo beep de detección, sin conceder acceso
+- Previene lecturas repetidas del mismo UID mientras la tarjeta permanece presente
+
+### 4. Control Remoto MQTT
+- Escucha topic `iot/commands` continuamente
+- Al recibir mensaje:
+  - Parsea JSON del payload
+  - Valida campos: `"action":"open"` o `"open":true` o JSON vacío
+  - **Válido**: activa `EVT_REMOTE_OK` inmediatamente
+  - Registra evento en logs y SPIFFS
+  - Publica confirmación en `iot/telemetry`
+- **Sin validación de puerta**: el comando remoto SIEMPRE concede acceso independiente del estado de puerta
+
+### 5. Lógica de Control de Acceso (`control_task`)
+- Espera eventos de los 3 métodos de acceso: `EVT_RFID_OK | EVT_COMBO_OK | EVT_REMOTE_OK`
+- **Evaluación según modo configurado**:
+  - **Modo AND**: Requiere `EVT_RFID_OK` Y `EVT_COMBO_OK` simultáneamente
+  - **Modo OR**: Acepta cualquier método individual
+  - **Excepción**: `EVT_REMOTE_OK` SIEMPRE concede acceso (prioridad máxima)
+- **Proceso de desbloqueo**:
+  - Si puerta está abierta: espera evento `EVT_DOOR_CLOSED` antes de proceder
+  - Llama a `unlock_door()`: energiza relay (bobina activa), LED verde ON
+  - Marca `g_pending_relock = true` para armar re-lock futuro
+  - Limpia bits de eventos consumidos
+- **Registro de evento**: Escribe JSON a SPIFFS y publica vía MQTT con método de acceso usado
+
+### 6. Monitoreo de Puerta (`door_monitor_task`)
+- Lee sensor reed cada 50 ms con debounce
+- **Detección de cambios de estado**:
+  - **ABIERTA → CERRADA**:
+    - Establece bit `EVT_DOOR_CLOSED`
+    - Registra evento en logs: `access_method:"door"`, `door_status:"close"`
+    - Si `g_pending_relock == true`: arma timer de re-lock diferido (1 segundo)
+    - **NO cambia estado del relay** (comportamiento modificado)
+  - **CERRADA → ABIERTA**:
+    - Limpia bit `EVT_DOOR_CLOSED`
+    - Registra evento: `door_status:"open"`
+    - Cancela timer de re-lock si estaba armado
+    - **NO cambia estado del relay** (comportamiento modificado)
+- **Re-lock diferido**: 
+  - Después de cerrar la puerta tras desbloqueo, espera 1 segundo
+  - Llama a `lock_door()`: desenergiza relay (bobina OFF), LED verde OFF
+  - Solo ejecuta si puerta sigue cerrada al cumplirse el timer
+- **Timeout de desbloqueo**: 
+  - Si estado es UNLOCKED y puerta no se abrió por 10 segundos
+  - Intenta `lock_door()` solo si `g_door_state == DOOR_CLOSED`
+
+### 7. Actualización de LCD (`lcd_task`)
+- Renderiza buffer de mensajes cada 100 ms
+- Limpia pantalla y reposiciona cursor en cada actualización (evita artefactos)
+- **Auto-clear por inactividad**: Vuelve a mensaje idle tras 5 segundos sin actividad
+- **Mensaje "LOCKING"**: Se mantiene visible por 1 segundo tras bloquear
+
+### 8. Telemetría y Logs
+- **Eventos registrados**:
+  - Cambios de estado de puerta (open/close)
+  - Intentos de acceso (exitosos y fallidos)
+  - Comandos remotos (aceptados y rechazados)
+- **Formato de log JSON**:
+  ```json
+  {
+    "device_id": "access_control_01",
+    "door_status": "open|close",
+    "access_method": "password|rfid|remote|door",
+    "access_granted": true|false,
+    "timestamp": ""
+  }
+  ```
+- **Destinos**:
+  - Archivo local: `/spiffs/events.jsonl` (JSON Lines, un evento por línea)
+  - MQTT: Publicación en `iot/telemetry` con QoS 1
+- **Campo timestamp**: Intencionalmente vacío por requerimiento del proyecto
 
 ## LCD1602 (I2C + PCF8574)
 - Dirección confirmada: `0x27`, variante de mapeo de pines: `VARIANT 0`.
@@ -127,16 +307,65 @@ Si `idf.py` no funciona, exporta entorno:
 ```powershell
 & "$env:IDF_PATH/export.ps1"
 ```
-O abre la terminal “ESP-IDF PowerShell”. Verifica:
+O abre la terminal "ESP-IDF PowerShell". Verifica:
 ```powershell
-
-## Cómo compilar y grabar (Windows PowerShell)
+echo $env:IDF_PATH
+where idf.py
 ```
 
-## Habilitar / Deshabilitar MFRC522
-1. Ajusta `USE_MFRC522` (1 habilita, 0 deshabilita).
-2. Añade componente/driver y asegúrate de que `mfrc522_min.h` esté accesible.
-3. Expande lógica de `rfid_task()` si requieres anticollision extendida o autenticación.
+## Arquitectura de Tareas FreeRTOS
+
+El sistema utiliza 5 tareas concurrentes con prioridades diferenciadas:
+
+| Tarea | Función | Prioridad | Descripción |
+|-------|---------|-----------|-------------|
+| `control_task` | Control de acceso | 7 (máxima) | Evalúa condiciones de acceso y ejecuta unlock/lock |
+| `door_monitor_task` | Monitoreo de puerta | 6 | Lee sensor reed, gestiona re-lock diferido y timeouts |
+| `pot_task` | Entrada de combinación | 5 | Lee ADC, captura dígitos, valida secuencia |
+| `rfid_task` | Lector RFID | 4 | Escanea tarjetas, valida UIDs contra whitelist |
+| `lcd_task` | Actualización de display | 3 | Renderiza mensajes en LCD1602 |
+
+### Sincronización mediante Event Groups
+- **Event Bits**:
+  - `EVT_RFID_OK` (bit 0): Tarjeta autorizada detectada
+  - `EVT_COMBO_OK` (bit 1): Combinación correcta ingresada
+  - `EVT_DOOR_CLOSED` (bit 2): Puerta detectada cerrada
+  - `EVT_LOCKED` (bit 3): Estado de cerradura bloqueada
+  - `EVT_REMOTE_OK` (bit 4): Comando remoto MQTT recibido
+
+### Variables de Estado Globales
+- `g_door_state`: Estado actual de puerta (DOOR_OPEN / DOOR_CLOSED / DOOR_UNKNOWN)
+- `g_lock_state`: Estado de cerradura (LOCKED / UNLOCKED / LOCK_STATE_UNKNOWN)
+- `g_pending_relock`: Flag para armar re-lock tras desbloqueo
+- `g_relock_arm_time_us`: Timestamp del timer de re-lock diferido
+- `g_entered[]`: Buffer de dígitos capturados del potenciómetro
+- `g_entered_count`: Contador de dígitos ingresados
+- `g_mqtt_client`: Handle del cliente MQTT
+
+## Estructura Principal del Código (`main/main.c`)
+
+### Funciones Clave
+- **`lock_door()`**: Desenergiza relay (bobina OFF), solo si puerta cerrada; limpia banderas de acceso
+- **`unlock_door()`**: Energiza relay (bobina ON), establece `g_pending_relock = true`
+- **`combo_reset()`**: Limpia buffer de combinación y limpia `EVT_COMBO_OK`
+- **`log_event()`**: Registra evento en SPIFFS y publica vía MQTT
+- **`mqtt_event_handler()`**: Maneja conexión MQTT, suscripción a topics y comandos remotos
+- **`wifi_event_handler()`**: Gestiona reconexión automática de WiFi
+
+### Inicialización en `app_main()`
+1. NVS Flash init (requerido para WiFi)
+2. WiFi/MQTT setup y conexión
+3. Creación de Event Group
+4. Inicialización de periféricos (GPIO, I2C, ADC, SPI, LEDC, SPIFFS)
+5. Lectura de estado inicial de puerta
+6. Creación de las 5 tareas FreeRTOS
+
+## Configuración de Hardware Avanzada
+
+### Habilitar / Deshabilitar MFRC522
+1. Ajusta `USE_MFRC522` (1 habilita, 0 deshabilita) en `main/main.c`
+2. Si está habilitado, añade componente/driver y asegúrate de que `mfrc522_min.h` esté accesible
+3. Para extender funcionalidad: modifica lógica de `rfid_task()` para anticollision extendida o autenticación de sectores
 
 ## Estructura Principal del Código
 - `door_monitor_task`: estado de puerta, armado de re-lock diferido.
@@ -146,140 +375,184 @@ O abre la terminal “ESP-IDF PowerShell”. Verifica:
 - `lcd_task`: render periódico de buffer de mensajes.
 - Funciones de lock/unlock aplican regla de seguridad (no lock con puerta abierta).
 
-## Advertencias de Hardware
-- Servo: alimentarlo separado o asegurar corriente suficiente; evitar ruido que afecte I2C.
-- Electroimán: usar driver MOSFET + diodo flyback; no alimentar directo del pin.
-- Pull-ups I2C: verificar que el módulo LCD tenga resistencias (frecuencia reducida ayuda si hay cables largos).
-- Reed: adaptar lógica en `read_door_state()` si cableado tiene niveles invertidos.
+### Advertencias de Seguridad y Hardware
+- **Relay electromagnético**: 
+  - Usar driver MOSFET (NPN o PNP según diseño)
+  - **OBLIGATORIO**: Diodo flyback (1N4007 o similar) en paralelo con bobina para proteger MOSFET
+  - NO conectar bobina directo a GPIO (corriente excesiva daña ESP32)
+  - Verificar `RELAY_ACTIVE_LEVEL` según tipo de módulo relay (muchos son activos en LOW)
+- **Potencia**:
+  - Relay de 5V: alimentar desde fuente externa, GND común con ESP32
+  - Corriente típica de bobina: 30-70mA (excede límite de GPIO de 12mA)
+- **I2C (LCD)**:
+  - Verificar que módulo PCF8574 tenga resistencias pull-up (2.2kΩ - 4.7kΩ)
+  - Frecuencia reducida a 50 kHz ayuda con cables largos (> 15cm)
+  - Evitar proximidad con líneas de potencia del relay (ruido EMI)
+- **Reed switch**: 
+  - Configurado con pull-up interno del ESP32
+  - Contacto a GND indica puerta cerrada
+  - Adaptar lógica en `read_door_state()` si tu cableado usa lógica invertida
+- **RFID MFRC522**: 
+  - Alimentar SOLO con 3.3V (no tolera 5V directo en muchos módulos)
+  - Mantener cables SPI cortos (< 10cm recomendado)
+  - Condensador 100nF entre VCC y GND cerca del módulo ayuda con estabilidad
 
-## Próximos Pasos Sugeridos
-- Persistencia (NVS) de últimos accesos y UIDs.
-- Comunicación (MQTT/HTTP) para reportar eventos.
-- OTA con particiones duales si se requiere actualización segura.
-- Integrar autenticación adicional (PIN por keypad matricial, BLE, etc.).
-- Watchdog y métricas de rendimiento (tiempo de tareas, latencias).
+## Partición Flash y Sistema de Archivos
+- **Tabla de particiones custom** (`partitions.csv`):
+  - `nvs`: 24KB para almacenamiento WiFi/calibración
+  - `factory`: Aplicación principal
+  - `storage`: 128KB para SPIFFS (logs de eventos)
+- **Sistema SPIFFS**:
+  - Montado en `/spiffs/`
+  - Archivo de logs: `/spiffs/events.jsonl`
+  - Auto-format si falla montaje
+  - Mutex `g_log_mutex` protege escrituras concurrentes
+- **Para volver a tabla por defecto**: 
+  ```bash
+  idf.py menuconfig
+  # → Partition Table → Single factory app (no custom CSV)
+  ```
 
-## Eventos y Bits
-- `EVT_RFID_OK`: tarjeta autorizada.
-- `EVT_COMBO_OK`: combinación correcta.
-- `EVT_DOOR_CLOSED`: puerta confirmada cerrada.
-- `EVT_LOCKED`: estado bloqueado actual.
+## Eventos y Bits de Estado
 
-## Patrones de Sonido (Resumen)
-- Tick corto: movimiento/captura dígito o escaneo RFID.
-- Doble pip: combinación correcta / acceso concedido.
-- Triple pip: combinación incorrecta.
-- Pip largo (error): puede emplearse para otros fallos futuros.
+| Bit | Macro | Descripción | Productor | Consumidor |
+|-----|-------|-------------|-----------|------------|
+| 0 | `EVT_RFID_OK` | Tarjeta autorizada detectada | `rfid_task` | `control_task` |
+| 1 | `EVT_COMBO_OK` | Combinación correcta ingresada | `pot_task` | `control_task` |
+| 2 | `EVT_DOOR_CLOSED` | Puerta confirmada cerrada | `door_monitor_task` | `control_task` |
+| 3 | `EVT_LOCKED` | Estado de cerradura bloqueada | `lock_door()` / `unlock_door()` | — |
+| 4 | `EVT_REMOTE_OK` | Comando remoto MQTT recibido | `mqtt_event_handler()` | `control_task` |
+
+## Patrones de Retroalimentación Sonora
+
+| Patrón | Duración | Significado | Contexto |
+|--------|----------|-------------|----------|
+| **Beep corto** | 30ms | Movimiento detectado / Captura de dígito / Tarjeta detectada | Potenciómetro o RFID |
+| **Doble pip** | 80ms + pausa + 80ms | Acceso concedido / Combinación correcta | Autenticación exitosa |
+| **Triple pip** | 3x 30ms con pausas | Combinación incorrecta | Fallo de combinación |
+| **Beep largo** | 300ms | Error general (reservado) | Futuros errores |
+
+## Próximos Pasos y Mejoras Sugeridas
+- **Persistencia NVS**: 
+  - Almacenar histórico de accesos y UIDs autorizados
+  - Configuración WiFi/MQTT modificable sin recompilar
+- **OTA (Over-The-Air)**:
+  - Implementar particiones duales para actualizaciones seguras
+  - Rollback automático si nueva versión falla
+- **Autenticación adicional**:
+  - Keypad matricial 4x4 para PIN numérico
+  - Bluetooth LE para desbloqueo desde smartphone
+  - Biométrico (huella digital) con sensor AS608
+- **Monitoreo avanzado**:
+  - SNTP para timestamps reales (actualmente vacíos)
+  - Métricas de latencia de tareas (uso de `esp_timer`)
+  - Watchdog para recuperación ante cuelgues
+- **Seguridad**:
+  - Encriptación de logs en SPIFFS
+  - TLS/SSL para conexión MQTT
+  - Rate limiting en comandos remotos (anti-brute force)
+- **Interfaz web**:
+  - Servidor HTTP embebido para configuración
+  - Dashboard en tiempo real con WebSockets
+  - Gestión de whitelist RFID vía web
 
 ## Diagrama Lógico de Eventos y Flujo
 ```
-								+---------------------------+
-								|        door_monitor_task  |
-								| reads reed every 50 ms    |
-								+-------------+-------------+
-															| sets/clears
-										EVT_DOOR_CLOSED (closed/open)
-															|                 (arms re-lock 1s after close
-															|                  if g_pending_relock=true)
-															v
-				+------------------ control_task ------------------+
-				|  WAIT CONDITION:                                 |
-				|  OR  => (EVT_RFID_OK OR EVT_COMBO_OK)            |
-				|  AND => (EVT_RFID_OK AND EVT_COMBO_OK)           |
-				+-----------+------------------+-------------------+
-										| bits satisfied
-										v
-						(if door open => wait EVT_DOOR_CLOSED)
-										|
-										v
-							 unlock_door()
-										| sets g_pending_relock=true
-										| clears EVT_RFID_OK / EVT_COMBO_OK
-										v
-				(User may open door -> EVT_DOOR_CLOSED cleared)
-										|
-			Upon subsequent close + 1s delay (armed) by door_monitor
-										v
-							 lock_door() -> sets EVT_LOCKED, resets combo
-										|
-										v
-								 BACK TO IDLE
+                                +---------------------------+
+                                |    door_monitor_task      |
+                                |  Lee reed cada 50 ms      |
+                                +-------------+-------------+
+                                              | establece/limpia
+                                    EVT_DOOR_CLOSED (cerrada/abierta)
+                                              | (arma re-lock 1s después de cerrar
+                                              |  si g_pending_relock=true)
+                                              v
+                +------------------- control_task --------------------+
+                |  CONDICIÓN DE ESPERA:                               |
+                |  OR  => (EVT_RFID_OK | EVT_COMBO_OK | EVT_REMOTE_OK)|
+                |  AND => (EVT_RFID_OK & EVT_COMBO_OK)                |
+                |  Excepción: EVT_REMOTE_OK siempre concede acceso    |
+                +------------+-------------------+---------------------+
+                             | bits satisfechos
+                             v
+              (si puerta abierta => espera EVT_DOOR_CLOSED)
+                             |
+                             v
+                      unlock_door()
+                             | establece g_pending_relock=true
+                             | limpia EVT_RFID_OK / EVT_COMBO_OK / EVT_REMOTE_OK
+                             v
+         (Usuario puede abrir puerta -> EVT_DOOR_CLOSED limpiado)
+                             |
+  Al cerrar subsecuentemente + delay 1s (armado) por door_monitor
+                             v
+                 lock_door() -> establece EVT_LOCKED, resetea combo
+                             |
+                             v
+                      VUELTA A IDLE
 
-OTHER EVENT PRODUCERS:
+PRODUCTORES DE EVENTOS:
 
- +------------------+          +------------------+
- |    rfid_task     |          |    pot_task      |
- | reads MFRC522    |          | ADC stable read  |
- | new authorized   |          | captures digit   |
- | UID => set       |          | builds sequence  |
- | EVT_RFID_OK      |          | when sequence OK |
- +---------+--------+          | set EVT_COMBO_OK |
-					 |                   +---------+--------+
-					 |                               |
-					 +---------------+---------------+
-													 |
-													 v (consumed by control_task condition logic)
+ +------------------+  +------------------+  +----------------------+
+ |   rfid_task      |  |    pot_task      |  | mqtt_event_handler   |
+ | Lee MFRC522      |  | Lectura ADC      |  | Parsea JSON remote   |
+ | UID autorizado   |  | Captura dígito   |  | Comando válido =>    |
+ | => EVT_RFID_OK   |  | Secuencia OK =>  |  | EVT_REMOTE_OK        |
+ +--------+---------+  | EVT_COMBO_OK     |  +----------+-----------+
+          |            +---------+--------+             |
+          |                      |                      |
+          +----------+-----------+-----------+----------+
+                     |                       |
+                     v (consumidos por control_task)
 
-TIMEOUT PATH:
-	If UNLOCKED and door never opened for UNLOCK_MAX_OPEN_TIME_MS:
-		 - If door closed => lock_door()
-		 - Else => wait until door closes then normal re-lock path.
+RUTA DE TIMEOUT:
+  Si UNLOCKED y puerta nunca abierta por UNLOCK_MAX_OPEN_TIME_MS:
+    - Si puerta cerrada => lock_door()
+    - Si no => espera cierre y luego ruta normal de re-lock
 
-LCD TASK RELATION:
-	lcd_task renders messages set by pot_task, rfid_task, lock/unlock functions.
-	It does NOT generate events; it reacts to state changes.
+RELACIÓN LCD TASK:
+  lcd_task renderiza mensajes establecidos por pot_task, rfid_task, funciones lock/unlock
+  NO genera eventos; reacciona a cambios de estado
 
-STATE FLAGS SUMMARY:
-	g_lock_state: LOCKED/UNLOCKED (informational + LED logic)
-	g_pending_relock: true after unlock until lock_door()
-	g_relock_arm_time_us: timestamp for delayed re-lock after close.
+RESUMEN DE FLAGS DE ESTADO:
+  g_lock_state: LOCKED/UNLOCKED (informacional + lógica de LEDs)
+  g_pending_relock: true después de unlock hasta lock_door()
+  g_relock_arm_time_us: timestamp para re-lock diferido tras cerrar
+  g_door_state: DOOR_OPEN/DOOR_CLOSED/DOOR_UNKNOWN
 
-SECUENCIA DE ACCESO EXITOSO (OR ejemplo):
-	Idle -> Usuario ingresa 3 dígitos correctos (EVT_COMBO_OK) ->
-	control_task detecta condición -> (puerta cerrada?) sí -> unlock_door ->
-	Usuario abre puerta (EVT_DOOR_CLOSED cleared) -> Usuario cierra puerta ->
-	door_monitor arma re-lock +1s -> lock_door -> Idle.
+SECUENCIA DE ACCESO EXITOSO (modo OR, ejemplo):
+  Idle -> Usuario ingresa 3 dígitos correctos (EVT_COMBO_OK) ->
+  control_task detecta condición -> (¿puerta cerrada?) sí -> unlock_door() ->
+  Usuario abre puerta (EVT_DOOR_CLOSED limpiado) -> Usuario cierra puerta ->
+  door_monitor arma re-lock +1s -> lock_door() -> Idle
 
 SECUENCIA FALLIDA DE COMBINACIÓN:
-	Captura dígitos -> comparación incorrecta -> triple pip, LED rojo, reset combinación -> Idle sin EVT_COMBO_OK.
+  Captura dígitos -> comparación incorrecta -> triple pip, LED rojo, 
+  reset combinación -> Idle sin EVT_COMBO_OK
+
+SECUENCIA DE ACCESO REMOTO:
+  Broker MQTT publica {"action":"open"} en iot/commands ->
+  mqtt_event_handler() parsea JSON -> EVT_REMOTE_OK activado ->
+  control_task concede acceso inmediato (sin validar puerta) ->
+  unlock_door() -> LED verde ON
 ```
 
 ---
-Mantén `main/main.c` como fuente de verdad; actualiza este README si cambias pines, tiempos o modo de autenticación.
-Asegúrate de tener ESP-IDF configurado. Luego en la raíz del proyecto:
 
-```powershell
-idf.py set-target esp32
-idf.py build
-idf.py flash
-idf.py monitor
-```
+## Resumen de Cambios Recientes
+1. **Control remoto MQTT**: Añadido método de acceso vía comandos JSON en topic `iot/commands`
+2. **Comportamiento de lock modificado**: La cerradura NO cambia automáticamente cuando la puerta se abre/cierra; solo responde a métodos de acceso o timers
+3. **Sistema de logs SPIFFS**: Registro persistente de todos los eventos con formato JSON Lines
+4. **WiFi/MQTT integrado**: Telemetría en tiempo real y control remoto IoT
+5. **Timestamp vacío**: Campo timestamp en logs intencionalmente dejado como cadena vacía
 
-Para salir del monitor: `Ctrl+]`.
+## Notas Finales
+- **Fuente de verdad**: `main/main.c` es el código definitivo; actualiza este README si modificas pines, tiempos o modos
+- **Configuración WiFi/MQTT**: Editar credenciales en `main/main.c` antes de compilar
+- **Requisito ESP-IDF**: Versión 5.x recomendada (proyecto desarrollado con v5.5.1)
+- **Logs locales**: Archivos en `/spiffs/events.jsonl` persisten entre reinicios; considerar rotación si el uso es intensivo
 
-### Configuración del entorno ESP-IDF (Windows)
-Si `idf.py` no se reconoce como comando, la sesión PowerShell no tiene cargado el entorno de ESP-IDF.
+---
 
-Opciones para inicializarlo:
-1. Abrir el acceso directo "ESP-IDF PowerShell" que crea el instalador (recomendado). Esto abre una consola ya preparada.
-2. Ejecutar manualmente el script `export.ps1` dentro de tu carpeta de ESP-IDF. Ejemplos (ajusta versión/ruta):
-	```powershell
-	# Si instalaste con el instalador oficial:
-	& "C:\Espressif\frameworks\esp-idf-v5.2\export.ps1"
-
-	# Si clonaste el repo tú mismo:
-	cd C:\Users\LEONI\esp-idf
-	.\install.ps1   # (solo la primera vez para instalar herramientas)
-	.\export.ps1    # cada nueva terminal para cargar entorno
-	```
-3. Verifica que las variables estén definidas:
-	```powershell
-	echo $env:IDF_PATH
-	echo $env:IDF_TOOLS_PATH
-	where idf.py
-	```
-
-Tras esto, vuelve a los comandos `idf.py set-target esp32`, `idf.py build`, etc.
-
-<!-- Secciones antiguas sobre encoder y pines obsoletos reemplazadas por la configuración actual -->
+Mantén este documento actualizado al realizar cambios en la arquitectura o funcionalidad del sistema.
 

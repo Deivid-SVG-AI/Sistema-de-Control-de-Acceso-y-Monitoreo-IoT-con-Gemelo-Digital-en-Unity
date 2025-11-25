@@ -13,6 +13,7 @@
     "ADC_ONESHOT_CTRL_FUNC_IN_IRAM": false,
     "ADC_SKIP_LEGACY_CONFLICT_CHECK": false,
     "ADC_SUPPRESS_DEPRECATE_WARN": false,
+<<<<<<< HEAD
     "APPTRACE_DEST_JTAG": false,
     "APPTRACE_DEST_NONE": true,
     "APPTRACE_DEST_UART1": false,
@@ -20,6 +21,8 @@
     "APPTRACE_DEST_UART_NONE": true,
     "APPTRACE_LOCK_ENABLE": true,
     "APPTRACE_UART_TASK_PRIO": 1,
+=======
+>>>>>>> new_timeline2
     "APP_BUILD_BOOTLOADER": true,
     "APP_BUILD_GENERATE_BINARIES": true,
     "APP_BUILD_TYPE_APP_2NDBOOT": true,
@@ -70,9 +73,12 @@
     "BOOTLOADER_WDT_DISABLE_IN_USER_CODE": false,
     "BOOTLOADER_WDT_ENABLE": true,
     "BOOTLOADER_WDT_TIME_MS": 9000,
+<<<<<<< HEAD
     "BT_BLE_LOG_SPI_OUT_ENABLED": false,
     "BT_BLE_LOG_UHCI_OUT_ENABLED": false,
     "BT_ENABLED": false,
+=======
+>>>>>>> new_timeline2
     "COMPILER_ASSERT_NDEBUG_EVALUATE": true,
     "COMPILER_CXX_EXCEPTIONS": false,
     "COMPILER_CXX_RTTI": false,
@@ -103,7 +109,10 @@
     "COMPILER_STACK_CHECK_MODE_STRONG": false,
     "COMPILER_STATIC_ANALYZER": false,
     "COMPILER_WARN_WRITE_STRINGS": false,
+<<<<<<< HEAD
     "CONSOLE_SORTED_HELP": false,
+=======
+>>>>>>> new_timeline2
     "DAC_CTRL_FUNC_IN_IRAM": false,
     "DAC_DMA_AUTO_16BIT_ALIGN": true,
     "DAC_ENABLE_DEBUG_LOG": false,
@@ -132,8 +141,11 @@
     "ESP32_UNIVERSAL_MAC_ADDRESSES_FOUR": true,
     "ESP32_UNIVERSAL_MAC_ADDRESSES_TWO": false,
     "ESP32_USE_FIXED_STATIC_RAM_SIZE": false,
+<<<<<<< HEAD
     "ESPHID_TASK_SIZE_BLE": 4096,
     "ESPHID_TASK_SIZE_BT": 2048,
+=======
+>>>>>>> new_timeline2
     "ESPTOOLPY_AFTER": "hard_reset",
     "ESPTOOLPY_AFTER_NORESET": false,
     "ESPTOOLPY_AFTER_RESET": true,
@@ -183,9 +195,12 @@
     "ESP_CONSOLE_UART_CUSTOM": false,
     "ESP_CONSOLE_UART_DEFAULT": true,
     "ESP_CONSOLE_UART_NUM": 0,
+<<<<<<< HEAD
     "ESP_COREDUMP_ENABLE_TO_FLASH": false,
     "ESP_COREDUMP_ENABLE_TO_NONE": true,
     "ESP_COREDUMP_ENABLE_TO_UART": false,
+=======
+>>>>>>> new_timeline2
     "ESP_DEBUG_OCDAWARE": true,
     "ESP_DEBUG_STUBS_ENABLE": false,
     "ESP_DEFAULT_CPU_FREQ_MHZ": 160,
@@ -198,6 +213,7 @@
     "ESP_EVENT_LOOP_PROFILING": false,
     "ESP_EVENT_POST_FROM_IRAM_ISR": true,
     "ESP_EVENT_POST_FROM_ISR": true,
+<<<<<<< HEAD
     "ESP_GDBSTUB_ENABLED": true,
     "ESP_GDBSTUB_MAX_TASKS": 32,
     "ESP_GDBSTUB_SUPPORT_TASKS": true,
@@ -212,6 +228,8 @@
     "ESP_HTTP_CLIENT_ENABLE_DIGEST_AUTH": false,
     "ESP_HTTP_CLIENT_ENABLE_HTTPS": true,
     "ESP_HTTP_CLIENT_EVENT_POST_TIMEOUT": 2000,
+=======
+>>>>>>> new_timeline2
     "ESP_INTR_IN_IRAM": true,
     "ESP_INT_WDT": true,
     "ESP_INT_WDT_CHECK_CPU1": true,
@@ -262,10 +280,13 @@
     "ESP_PHY_RF_CAL_FULL": false,
     "ESP_PHY_RF_CAL_NONE": false,
     "ESP_PHY_RF_CAL_PARTIAL": true,
+<<<<<<< HEAD
     "ESP_PROTOCOMM_SUPPORT_SECURITY_PATCH_VERSION": true,
     "ESP_PROTOCOMM_SUPPORT_SECURITY_VERSION_0": true,
     "ESP_PROTOCOMM_SUPPORT_SECURITY_VERSION_1": true,
     "ESP_PROTOCOMM_SUPPORT_SECURITY_VERSION_2": true,
+=======
+>>>>>>> new_timeline2
     "ESP_REGI2C_CTRL_FUNC_IN_IRAM": true,
     "ESP_REV_MAX_FULL": 399,
     "ESP_REV_MIN_FULL": 0,
@@ -299,9 +320,13 @@
     "ESP_SYSTEM_ESP32_SRAM1_REGION_AS_IRAM": false,
     "ESP_SYSTEM_EVENT_QUEUE_SIZE": 32,
     "ESP_SYSTEM_EVENT_TASK_STACK_SIZE": 2304,
+<<<<<<< HEAD
     "ESP_SYSTEM_GDBSTUB_RUNTIME": false,
     "ESP_SYSTEM_IN_IRAM": true,
     "ESP_SYSTEM_PANIC_GDBSTUB": false,
+=======
+    "ESP_SYSTEM_IN_IRAM": true,
+>>>>>>> new_timeline2
     "ESP_SYSTEM_PANIC_PRINT_HALT": false,
     "ESP_SYSTEM_PANIC_PRINT_REBOOT": true,
     "ESP_SYSTEM_PANIC_REBOOT_DELAY_SECONDS": 0,
@@ -387,6 +412,7 @@
     "ESP_WIFI_WPS_PASSPHRASE": false,
     "ESP_WIFI_WPS_SOFTAP_REGISTRAR": false,
     "ESP_WIFI_WPS_STRICT": false,
+<<<<<<< HEAD
     "ETH_DMA_BUFFER_SIZE": 512,
     "ETH_DMA_RX_BUFFER_NUM": 10,
     "ETH_DMA_TX_BUFFER_NUM": 10,
@@ -446,6 +472,8 @@
     "FATFS_USE_STRFUNC_WITH_CRLF_CONV": false,
     "FATFS_VFS_FSTAT_BLKSIZE": 0,
     "FATFS_VOLUME_COUNT": 2,
+=======
+>>>>>>> new_timeline2
     "FREERTOS_CHECK_MUTEX_GIVEN_BY_OWNER": true,
     "FREERTOS_CHECK_PORT_CRITICAL_COMPLIANCE": false,
     "FREERTOS_CHECK_STACKOVERFLOW_CANARY": true,
@@ -520,6 +548,7 @@
     "HEAP_TRACING_STANDALONE": false,
     "HEAP_TRACING_TOHOST": false,
     "HEAP_USE_HOOKS": false,
+<<<<<<< HEAD
     "HTTPD_ERR_RESP_NO_DELAY": true,
     "HTTPD_LOG_PURGE_DATA": false,
     "HTTPD_MAX_REQ_HDR_LEN": 1024,
@@ -528,6 +557,8 @@
     "HTTPD_QUEUE_WORK_BLOCKING": false,
     "HTTPD_SERVER_EVENT_POST_TIMEOUT": 2000,
     "HTTPD_WS_SUPPORT": false,
+=======
+>>>>>>> new_timeline2
     "I2C_ENABLE_DEBUG_LOG": false,
     "I2C_ENABLE_SLAVE_DRIVER_VERSION_2": false,
     "I2C_ISR_IRAM_SAFE": false,
@@ -547,7 +578,10 @@
     "IDF_TARGET_ESP32": true,
     "IDF_TOOLCHAIN": "gcc",
     "IDF_TOOLCHAIN_GCC": true,
+<<<<<<< HEAD
     "LCD_ENABLE_DEBUG_LOG": false,
+=======
+>>>>>>> new_timeline2
     "LEDC_CTRL_FUNC_IN_IRAM": false,
     "LIBC_LOCKS_PLACE_IN_IRAM": true,
     "LIBC_MISC_IN_IRAM": true,
@@ -848,8 +882,11 @@
     "MQTT_USE_CUSTOM_CONFIG": false,
     "NVS_ASSERT_ERROR_CHECK": false,
     "NVS_LEGACY_DUP_KEYS_COMPATIBILITY": false,
+<<<<<<< HEAD
     "OPENTHREAD_ENABLED": false,
     "OPENTHREAD_SPINEL_ONLY": false,
+=======
+>>>>>>> new_timeline2
     "PARTITION_TABLE_CUSTOM": true,
     "PARTITION_TABLE_CUSTOM_FILENAME": "partitions.csv",
     "PARTITION_TABLE_FILENAME": "partitions.csv",
@@ -1166,7 +1203,10 @@
     "SPIFFS_USE_MAGIC": true,
     "SPIFFS_USE_MAGIC_LENGTH": true,
     "SPIFFS_USE_MTIME": true,
+<<<<<<< HEAD
     "SPIRAM": false,
+=======
+>>>>>>> new_timeline2
     "SPI_FLASH_BROWNOUT_RESET": true,
     "SPI_FLASH_BROWNOUT_RESET_XMC": true,
     "SPI_FLASH_BYPASS_BLOCK_ERASE": false,
@@ -1204,10 +1244,13 @@
     "SPI_MASTER_ISR_IN_IRAM": true,
     "SPI_SLAVE_IN_IRAM": false,
     "SPI_SLAVE_ISR_IN_IRAM": true,
+<<<<<<< HEAD
     "TOUCH_CTRL_FUNC_IN_IRAM": false,
     "TOUCH_ENABLE_DEBUG_LOG": false,
     "TOUCH_ISR_IRAM_SAFE": false,
     "TOUCH_SKIP_FSM_CHECK": false,
+=======
+>>>>>>> new_timeline2
     "TOUCH_SKIP_LEGACY_CONFLICT_CHECK": false,
     "TOUCH_SUPPRESS_DEPRECATE_WARN": false,
     "TWAI_ENABLE_DEBUG_LOG": false,
@@ -1223,6 +1266,7 @@
     "UHCI_ENABLE_DEBUG_LOG": false,
     "UHCI_ISR_CACHE_SAFE": false,
     "UHCI_ISR_HANDLER_IN_IRAM": false,
+<<<<<<< HEAD
     "ULP_COPROC_ENABLED": false,
     "UNITY_ENABLE_64BIT": false,
     "UNITY_ENABLE_BACKTRACE_ON_FAIL": false,
@@ -1232,6 +1276,8 @@
     "UNITY_ENABLE_FLOAT": true,
     "UNITY_ENABLE_IDF_TEST_RUNNER": true,
     "UNITY_TEST_ORDER_BY_FILE_PATH_AND_LINE": false,
+=======
+>>>>>>> new_timeline2
     "VFS_INITIALIZE_DEV_NULL": true,
     "VFS_MAX_COUNT": 8,
     "VFS_SELECT_IN_RAM": false,
@@ -1241,6 +1287,7 @@
     "VFS_SUPPORT_SELECT": true,
     "VFS_SUPPORT_TERMIOS": true,
     "VFS_SUPPRESS_SELECT_DEBUG_OUTPUT": true,
+<<<<<<< HEAD
     "WIFI_PROV_AUTOSTOP_TIMEOUT": 30,
     "WIFI_PROV_SCAN_MAX_ENTRIES": 16,
     "WIFI_PROV_STA_ALL_CHANNEL_SCAN": true,
@@ -1248,6 +1295,8 @@
     "WL_SECTOR_SIZE": 4096,
     "WL_SECTOR_SIZE_4096": true,
     "WL_SECTOR_SIZE_512": false,
+=======
+>>>>>>> new_timeline2
     "WS_BUFFER_SIZE": 1024,
     "WS_DYNAMIC_BUFFER": false,
     "WS_TRANSPORT": true,

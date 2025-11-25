@@ -49,6 +49,14 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+<<<<<<< HEAD
+=======
+  include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+>>>>>>> new_timeline2
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_pm/cmake_install.cmake")
 endif()
 
@@ -179,6 +187,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+<<<<<<< HEAD
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_timer/cmake_install.cmake")
 endif()
 
@@ -200,6 +209,9 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/app_trace/cmake_install.cmake")
+=======
+  include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espressif__cjson/cmake_install.cmake")
+>>>>>>> new_timeline2
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
@@ -219,6 +231,19 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+<<<<<<< HEAD
+=======
+  include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_ringbuf/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_uart/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+>>>>>>> new_timeline2
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_usb_serial_jtag/cmake_install.cmake")
 endif()
 
@@ -264,21 +289,34 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+<<<<<<< HEAD
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/cmake_install.cmake")
+=======
+  include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/cmake_install.cmake")
+>>>>>>> new_timeline2
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+<<<<<<< HEAD
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_gdbstub/cmake_install.cmake")
+=======
+  include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/cmake_install.cmake")
+>>>>>>> new_timeline2
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+<<<<<<< HEAD
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/bt/cmake_install.cmake")
+=======
+  include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/tcp_transport/cmake_install.cmake")
+>>>>>>> new_timeline2
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+<<<<<<< HEAD
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/unity/cmake_install.cmake")
 endif()
 
@@ -290,6 +328,9 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/console/cmake_install.cmake")
+=======
+  include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/mqtt/cmake_install.cmake")
+>>>>>>> new_timeline2
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
@@ -299,6 +340,19 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+<<<<<<< HEAD
+=======
+  include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_gptimer/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_spi/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+>>>>>>> new_timeline2
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_mcpwm/cmake_install.cmake")
 endif()
 
@@ -384,12 +438,16 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+<<<<<<< HEAD
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/http_parser/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp-tls/cmake_install.cmake")
+=======
+  include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/spiffs/cmake_install.cmake")
+>>>>>>> new_timeline2
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
@@ -399,6 +457,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+<<<<<<< HEAD
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/esp_driver_isp/cmake_install.cmake")
 endif()
 
@@ -559,6 +618,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+=======
+>>>>>>> new_timeline2
   include("C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/main/cmake_install.cmake")
 endif()
 

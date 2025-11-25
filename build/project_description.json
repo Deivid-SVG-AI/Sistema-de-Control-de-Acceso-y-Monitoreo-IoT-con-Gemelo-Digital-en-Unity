@@ -1,7 +1,11 @@
 {
     "version":            "1.2",
     "project_name":       "projectv1",
+<<<<<<< HEAD
     "project_version":    "87c1976-dirty",
+=======
+    "project_version":    "84cf4a5-dirty",
+>>>>>>> new_timeline2
     "project_path":       "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1",
     "idf_path":           "C:/Users/LEONI/esp/v5.5.1/esp-idf",
     "build_dir":          "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build",
@@ -21,6 +25,7 @@
     "monitor_toolprefix": "xtensa-esp32-elf-",
     "c_compiler":         "C:/Users/LEONI/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc.exe",
     "config_environment" : {
+<<<<<<< HEAD
         "COMPONENT_KCONFIGS" : "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/app_trace/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bt/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/driver/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/efuse/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp-tls/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_adc/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_coex/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_common/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_ana_cmpr/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_bitscrambler/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_cam/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_dac/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_gpio/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_gptimer/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_i2c/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_i2s/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_isp/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_jpeg/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_ledc/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_mcpwm/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_parlio/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_pcnt/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_rmt/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_sdm/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_spi/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_touch_sens/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_tsens/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_twai/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_uart/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_usb_serial_jtag/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_event/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_gdbstub/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hid/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_http_client/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_http_server/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_https_ota/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_https_server/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_lcd/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_mm/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_netif/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_partition/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_phy/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_pm/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_psram/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_ringbuf/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_rom/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_security/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_system/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_timer/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/espcoredump/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/fatfs/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/freertos/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/heap/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/ieee802154/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/log/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/lwip/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/mbedtls/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/mqtt/esp-mqtt/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/newlib/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_sec_provider/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/openthread/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/pthread/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/soc/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/spi_flash/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/spiffs/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/tcp_transport/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/ulp/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/unity/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/usb/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/vfs/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wear_levelling/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/Kconfig",
         "COMPONENT_KCONFIGS_PROJBUILD" : "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader/Kconfig.projbuild;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_app_format/Kconfig.projbuild;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_rom/Kconfig.projbuild;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esptool_py/Kconfig.projbuild;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/partition_table/Kconfig.projbuild"
     },
@@ -43,6 +48,15 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/app_trace/app_trace.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/app_trace/app_trace_util.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/app_trace/host_file_io.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/app_trace/port/port_uart.c" ],
             "include_dirs": [ "include" ]
         },
+=======
+        "COMPONENT_KCONFIGS" : "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/driver/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/efuse/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp-tls/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_adc/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_coex/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_common/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_ana_cmpr/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_bitscrambler/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_dac/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_gpio/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_gptimer/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_i2c/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_i2s/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_ledc/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_mcpwm/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_parlio/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_pcnt/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_rmt/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_sdm/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_spi/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_tsens/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_twai/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_uart/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_usb_serial_jtag/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_event/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_mm/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_netif/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_partition/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_phy/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_pm/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_ringbuf/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_rom/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_security/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_system/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_timer/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/freertos/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/heap/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/log/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/lwip/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/mbedtls/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/mqtt/esp-mqtt/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/newlib/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/pthread/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/soc/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/spi_flash/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/spiffs/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/tcp_transport/Kconfig;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/vfs/Kconfig",
+        "COMPONENT_KCONFIGS_PROJBUILD" : "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader/Kconfig.projbuild;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_app_format/Kconfig.projbuild;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_rom/Kconfig.projbuild;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esptool_py/Kconfig.projbuild;C:/Users/LEONI/esp/v5.5.1/esp-idf/components/partition_table/Kconfig.projbuild"
+    },
+    "common_component_reqs": [ "cxx", "newlib", "freertos", "esp_hw_support", "heap", "log", "soc", "hal", "esp_rom", "esp_common", "esp_system", "xtensa" ],
+    "build_components" : [ "app_update", "bootloader", "bootloader_support", "cxx", "driver", "efuse", "esp-tls", "esp_adc", "esp_app_format", "esp_bootloader_format", "esp_coex", "esp_common", "esp_driver_ana_cmpr", "esp_driver_bitscrambler", "esp_driver_dac", "esp_driver_gpio", "esp_driver_gptimer", "esp_driver_i2c", "esp_driver_i2s", "esp_driver_ledc", "esp_driver_mcpwm", "esp_driver_parlio", "esp_driver_pcnt", "esp_driver_rmt", "esp_driver_sdio", "esp_driver_sdm", "esp_driver_sdmmc", "esp_driver_sdspi", "esp_driver_spi", "esp_driver_tsens", "esp_driver_twai", "esp_driver_uart", "esp_driver_usb_serial_jtag", "esp_event", "esp_hw_support", "esp_mm", "esp_netif", "esp_netif_stack", "esp_partition", "esp_phy", "esp_pm", "esp_ringbuf", "esp_rom", "esp_security", "esp_system", "esp_timer", "esp_vfs_console", "esp_wifi", "espressif__cjson", "esptool_py", "freertos", "hal", "heap", "http_parser", "log", "lwip", "main", "mbedtls", "mqtt", "newlib", "nvs_flash", "partition_table", "pthread", "sdmmc", "soc", "spi_flash", "spiffs", "tcp_transport", "vfs", "wpa_supplicant", "xtensa", "" ],
+    "build_component_paths" : [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/app_update", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/cxx", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/driver", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/efuse", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp-tls", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_adc", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_app_format", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_bootloader_format", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_coex", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_common", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_ana_cmpr", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_bitscrambler", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_dac", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_gpio", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_gptimer", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_i2c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_i2s", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_ledc", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_mcpwm", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_parlio", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_pcnt", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_rmt", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_sdio", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_sdm", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_sdmmc", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_sdspi", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_spi", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_tsens", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_twai", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_uart", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_usb_serial_jtag", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_event", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_mm", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_netif", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_netif_stack", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_partition", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_phy", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_pm", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_ringbuf", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_rom", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_security", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_system", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_timer", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_vfs_console", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi", "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/managed_components/espressif__cjson", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esptool_py", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/freertos", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/heap", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/http_parser", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/log", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/lwip", "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/main", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/mbedtls", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/mqtt", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/newlib", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/partition_table", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/pthread", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/sdmmc", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/soc", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/spi_flash", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/spiffs", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/tcp_transport", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/vfs", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wpa_supplicant", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/xtensa", "" ],
+    "build_component_info" : {
+>>>>>>> new_timeline2
         "app_update": {
             "alias": "idf::app_update",
             "target": "___idf_app_update",
@@ -88,6 +102,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_common.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_common_loader.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_clock_init.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_mem.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_random.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_efuse.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/flash_encrypt.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/secure_boot.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_random_esp32.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/bootloader_flash/src/bootloader_flash.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/bootloader_flash/src/flash_qio_mode.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/bootloader_flash/src/bootloader_flash_config_esp32.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_utility.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/flash_partitions.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/esp_image_format.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/bootloader_sha.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/bootloader_support/src/esp32/secure_boot_secure_features.c" ],
             "include_dirs": [ "include", "bootloader_flash/include" ]
         },
+<<<<<<< HEAD
         "bt": {
             "alias": "idf::bt",
             "target": "___idf_bt",
@@ -133,6 +148,8 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/commands.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/esp_console_common.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/esp_console_repl_internal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/split_argv.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/linenoise/linenoise.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/esp_console_repl_chip.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_cmd.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_date.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_dbl.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_dstr.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_end.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_file.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_hashtable.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_int.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_lit.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_rem.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_rex.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_str.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/arg_utils.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console/argtable3/argtable3.c" ],
             "include_dirs": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/console" ]
         },
+=======
+>>>>>>> new_timeline2
         "cxx": {
             "alias": "idf::cxx",
             "target": "___idf_cxx",
@@ -298,6 +315,7 @@
             "sources": [],
             "include_dirs": [ "include" ]
         },
+<<<<<<< HEAD
         "esp_driver_cam": {
             "alias": "idf::esp_driver_cam",
             "target": "___idf_esp_driver_cam",
@@ -313,6 +331,8 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_cam/esp_cam_ctlr.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_cam/dvp_share_ctrl.c" ],
             "include_dirs": [ "include", "interface" ]
         },
+=======
+>>>>>>> new_timeline2
         "esp_driver_dac": {
             "alias": "idf::esp_driver_dac",
             "target": "___idf_esp_driver_dac",
@@ -388,6 +408,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_i2s/i2s_common.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_i2s/i2s_std.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_i2s/i2s_pdm.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_i2s/i2s_platform.c" ],
             "include_dirs": [ "include" ]
         },
+<<<<<<< HEAD
         "esp_driver_isp": {
             "alias": "idf::esp_driver_isp",
             "target": "___idf_esp_driver_isp",
@@ -418,6 +439,8 @@
             "sources": [],
             "include_dirs": [ "include" ]
         },
+=======
+>>>>>>> new_timeline2
         "esp_driver_ledc": {
             "alias": "idf::esp_driver_ledc",
             "target": "___idf_esp_driver_ledc",
@@ -478,6 +501,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_pcnt/src/pulse_cnt.c" ],
             "include_dirs": [ "include" ]
         },
+<<<<<<< HEAD
         "esp_driver_ppa": {
             "alias": "idf::esp_driver_ppa",
             "target": "___idf_esp_driver_ppa",
@@ -493,6 +517,8 @@
             "sources": [],
             "include_dirs": [ "include" ]
         },
+=======
+>>>>>>> new_timeline2
         "esp_driver_rmt": {
             "alias": "idf::esp_driver_rmt",
             "target": "___idf_esp_driver_rmt",
@@ -583,6 +609,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_spi/src/gpspi/spi_common.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_spi/src/gpspi/spi_master.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_spi/src/gpspi/spi_slave.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_spi/src/gpspi/spi_dma.c" ],
             "include_dirs": [ "include" ]
         },
+<<<<<<< HEAD
         "esp_driver_touch_sens": {
             "alias": "idf::esp_driver_touch_sens",
             "target": "___idf_esp_driver_touch_sens",
@@ -598,6 +625,8 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_touch_sens/common/touch_sens_common.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_driver_touch_sens/hw_ver1/touch_version_specific.c" ],
             "include_dirs": [ "include", "hw_ver1/include" ]
         },
+=======
+>>>>>>> new_timeline2
         "esp_driver_tsens": {
             "alias": "idf::esp_driver_tsens",
             "target": "___idf_esp_driver_tsens",
@@ -658,6 +687,7 @@
             "sources": [],
             "include_dirs": [ "include" ]
         },
+<<<<<<< HEAD
         "esp_eth": {
             "alias": "idf::esp_eth",
             "target": "___idf_esp_eth",
@@ -673,6 +703,8 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/esp_eth.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/phy/esp_eth_phy_802_3.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/esp_eth_netif_glue.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/mac/esp_eth_mac_esp.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/mac/esp_eth_mac_esp_dma.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/mac/esp_eth_mac_esp_gpio.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/phy/esp_eth_phy_generic.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/phy/esp_eth_phy_dp83848.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/phy/esp_eth_phy_ip101.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/phy/esp_eth_phy_ksz80xx.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/phy/esp_eth_phy_lan87xx.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_eth/src/phy/esp_eth_phy_rtl8201.c" ],
             "include_dirs": [ "include" ]
         },
+=======
+>>>>>>> new_timeline2
         "esp_event": {
             "alias": "idf::esp_event",
             "target": "___idf_esp_event",
@@ -688,6 +720,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_event/default_event_loop.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_event/esp_event.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_event/esp_event_private.c" ],
             "include_dirs": [ "include" ]
         },
+<<<<<<< HEAD
         "esp_gdbstub": {
             "alias": "idf::esp_gdbstub",
             "target": "___idf_esp_gdbstub",
@@ -778,6 +811,8 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_https_server/src/https_server.c" ],
             "include_dirs": [ "include" ]
         },
+=======
+>>>>>>> new_timeline2
         "esp_hw_support": {
             "alias": "idf::esp_hw_support",
             "target": "___idf_esp_hw_support",
@@ -793,6 +828,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/cpu.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/esp_cpu_intr.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/esp_memory_utils.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/cpu_region_protect.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/esp_clk.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/clk_ctrl_os.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/hw_random.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/intr_alloc.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/mac_addr.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/periph_ctrl.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/revision.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/rtc_module.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/regi2c_ctrl.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/esp_gpio_reserve.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/sar_periph_ctrl_common.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/io_mux.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/esp_clk_tree.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/dma/esp_dma_utils.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/dma/gdma_link.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/spi_bus_lock.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/clk_utils.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp_clk_tree_common.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/spi_share_hw_ctrl.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/adc_share_hw_ctrl.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_modem.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_modes.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_console.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_usb.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_gpio.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_event.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/rtc_wdt.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/mspi_timing_tuning/mspi_timing_tuning.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/sleep_wake_stub.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/esp_clock_output.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/power_supply/brownout.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/rtc_clk.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/rtc_clk_init.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/rtc_init.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/rtc_sleep.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/rtc_time.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/chip_info.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/cache_sram_mmu.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/port/esp32/sar_periph_ctrl.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_hw_support/lowpower" ],
             "include_dirs": [ "include", "include/soc", "include/soc/esp32", "dma/include", "ldo/include", "debug_probe/include", "mspi_timing_tuning/include", "mspi_timing_tuning/tuning_scheme_impl/include", "power_supply/include" ]
         },
+<<<<<<< HEAD
         "esp_lcd": {
             "alias": "idf::esp_lcd",
             "target": "___idf_esp_lcd",
@@ -823,6 +859,8 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_local_ctrl/src/esp_local_ctrl.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_local_ctrl/src/esp_local_ctrl_handler.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_local_ctrl/proto-c/esp_local_ctrl.pb-c.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_local_ctrl/src/esp_local_ctrl_transport_httpd.c" ],
             "include_dirs": [ "include" ]
         },
+=======
+>>>>>>> new_timeline2
         "esp_mm": {
             "alias": "idf::esp_mm",
             "target": "___idf_esp_mm",
@@ -913,6 +951,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_pm/pm_locks.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_pm/pm_trace.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_pm/pm_impl.c" ],
             "include_dirs": [ "include" ]
         },
+<<<<<<< HEAD
         "esp_psram": {
             "alias": "idf::esp_psram",
             "target": "___idf_esp_psram",
@@ -928,6 +967,8 @@
             "sources": [],
             "include_dirs": [ "include" ]
         },
+=======
+>>>>>>> new_timeline2
         "esp_ringbuf": {
             "alias": "idf::esp_ringbuf",
             "target": "___idf_esp_ringbuf",
@@ -1033,6 +1074,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/src/lib_printf.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/src/mesh_event.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/src/smartconfig.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/src/wifi_init.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/src/wifi_default.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/src/wifi_netif.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/src/wifi_default_ap.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/esp32/esp_adapter.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/regulatory/esp_wifi_regulatory.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/esp_wifi/src/smartconfig_ack.c" ],
             "include_dirs": [ "include", "include/local", "wifi_apps/include", "wifi_apps/nan_app/include" ]
         },
+<<<<<<< HEAD
         "espcoredump": {
             "alias": "idf::espcoredump",
             "target": "___idf_espcoredump",
@@ -1047,6 +1089,22 @@
             "file": "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espcoredump/libespcoredump.a",
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/espcoredump/src/core_dump_init.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/espcoredump/src/core_dump_common.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/espcoredump/src/core_dump_flash.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/espcoredump/src/core_dump_uart.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/espcoredump/src/core_dump_elf.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/espcoredump/src/core_dump_binary.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/espcoredump/src/core_dump_sha.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/espcoredump/src/core_dump_crc.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/espcoredump/src/port/xtensa/core_dump_port.c" ],
             "include_dirs": [ "include", "include/port/xtensa" ]
+=======
+        "espressif__cjson": {
+            "alias": "idf::espressif__cjson",
+            "target": "___idf_espressif__cjson",
+            "prefix": "idf",
+            "dir": "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/managed_components/espressif__cjson",
+            "type": "LIBRARY",
+            "lib": "__idf_espressif__cjson",
+            "reqs": [],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "file": "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/espressif__cjson/libespressif__cjson.a",
+            "sources": [ "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/managed_components/espressif__cjson/cJSON/cJSON.c", "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/managed_components/espressif__cjson/cJSON/cJSON_Utils.c" ],
+            "include_dirs": [ "cJSON" ]
+>>>>>>> new_timeline2
         },
         "esptool_py": {
             "alias": "idf::esptool_py",
@@ -1063,6 +1121,7 @@
             "sources": [],
             "include_dirs": []
         },
+<<<<<<< HEAD
         "fatfs": {
             "alias": "idf::fatfs",
             "target": "___idf_fatfs",
@@ -1078,6 +1137,8 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/fatfs/diskio/diskio.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/fatfs/diskio/diskio_rawflash.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/fatfs/diskio/diskio_wl.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/fatfs/src/ff.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/fatfs/src/ffunicode.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/fatfs/port/freertos/ffsystem.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/fatfs/diskio/diskio_sdmmc.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/fatfs/vfs/vfs_fat.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/fatfs/vfs/vfs_fat_sdmmc.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/fatfs/vfs/vfs_fat_spiflash.c" ],
             "include_dirs": [ "diskio", "src", "vfs" ]
         },
+=======
+>>>>>>> new_timeline2
         "freertos": {
             "alias": "idf::freertos",
             "target": "___idf_freertos",
@@ -1105,7 +1166,11 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/hal/libhal.a",
+<<<<<<< HEAD
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/hal_utils.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/mpu_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/efuse_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/esp32/efuse_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/wdt_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/mmu_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/esp32/cache_hal_esp32.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/color_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_flash_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_flash_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_flash_encrypt_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/esp32/clk_tree_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/uart_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/uart_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/gpio_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/rtc_io_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/timer_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/ledc_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/ledc_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/i2c_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/i2c_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/rmt_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/pcnt_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/mcpwm_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/twai_hal_sja1000.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/i2s_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/sdm_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/sdmmc_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/emac_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/adc_hal_common.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/adc_oneshot_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/adc_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/mpi_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/sha_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/aes_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/brownout_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_slave_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_slave_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/sdio_slave_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/esp32/touch_sensor_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/touch_sensor_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/touch_sens_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/esp32/gpio_hal_workaround.c" ],
+=======
+            "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/hal_utils.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/mpu_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/efuse_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/esp32/efuse_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/wdt_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/mmu_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/esp32/cache_hal_esp32.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/color_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_flash_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_flash_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_flash_encrypt_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/esp32/clk_tree_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/uart_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/uart_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/gpio_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/rtc_io_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/timer_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/ledc_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/ledc_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/i2c_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/i2c_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/rmt_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/pcnt_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/mcpwm_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/twai_hal_sja1000.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/i2s_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/sdm_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/sdmmc_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/adc_hal_common.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/adc_oneshot_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/adc_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/mpi_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/sha_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/aes_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/brownout_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_slave_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/spi_slave_hal_iram.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/sdio_slave_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/esp32/touch_sensor_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/touch_sensor_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/touch_sens_hal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/hal/esp32/gpio_hal_workaround.c" ],
+>>>>>>> new_timeline2
             "include_dirs": [ "platform_port/include", "esp32/include", "include" ]
         },
         "heap": {
@@ -1138,6 +1203,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/http_parser/http_parser.c" ],
             "include_dirs": [ "." ]
         },
+<<<<<<< HEAD
         "idf_test": {
             "alias": "idf::idf_test",
             "target": "___idf_idf_test",
@@ -1183,6 +1249,8 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/json/cJSON/cJSON.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/json/cJSON/cJSON_Utils.c" ],
             "include_dirs": [ "cJSON" ]
         },
+=======
+>>>>>>> new_timeline2
         "log": {
             "alias": "idf::log",
             "target": "___idf_log",
@@ -1220,10 +1288,17 @@
             "dir": "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/main",
             "type": "LIBRARY",
             "lib": "__idf_main",
+<<<<<<< HEAD
             "reqs": [ "driver", "spi_flash", "spiffs", "esp_timer", "esp_adc" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
+=======
+            "reqs": [ "espressif__cjson", "esp_timer", "esp_wifi", "esp_event", "mqtt", "driver", "nvs_flash", "esp_netif", "vfs", "spiffs", "esp_adc", "esp_system" ],
+            "priv_reqs": [ "spi_flash", "espressif__cjson" ],
+            "managed_reqs": [],
+            "managed_priv_reqs": [ "espressif__cjson" ],
+>>>>>>> new_timeline2
             "file": "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/build/esp-idf/main/libmain.a",
             "sources": [ "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/main/main.c", "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/main/mfrc522_min.c" ],
             "include_dirs": [ "." ]
@@ -1288,6 +1363,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_api.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_cxx_api.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_item_hash_list.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_page.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_pagemanager.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_storage.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_handle_simple.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_handle_locked.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_partition.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_partition_lookup.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_partition_manager.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_types.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_platform.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_bootloader.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_encrypted_partition.cpp", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_bootloader_aes.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/nvs_flash/src/nvs_bootloader_xts_aes.c" ],
             "include_dirs": [ "include" ]
         },
+<<<<<<< HEAD
         "nvs_sec_provider": {
             "alias": "idf::nvs_sec_provider",
             "target": "___idf_nvs_sec_provider",
@@ -1318,6 +1394,8 @@
             "sources": [],
             "include_dirs": []
         },
+=======
+>>>>>>> new_timeline2
         "partition_table": {
             "alias": "idf::partition_table",
             "target": "___idf_partition_table",
@@ -1333,6 +1411,7 @@
             "sources": [],
             "include_dirs": []
         },
+<<<<<<< HEAD
         "perfmon": {
             "alias": "idf::perfmon",
             "target": "___idf_perfmon",
@@ -1378,6 +1457,8 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/src/common/protocomm.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/proto-c/constants.pb-c.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/proto-c/sec0.pb-c.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/proto-c/sec1.pb-c.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/proto-c/sec2.pb-c.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/proto-c/session.pb-c.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/src/transports/protocomm_console.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/src/transports/protocomm_httpd.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/src/security/security0.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/src/security/security1.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/src/security/security2.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/src/crypto/srp6a/esp_srp.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/protocomm/src/crypto/srp6a/esp_srp_mpi.c" ],
             "include_dirs": [ "include/common", "include/security", "include/transports", "include/crypto/srp6a", "proto-c" ]
         },
+=======
+>>>>>>> new_timeline2
         "pthread": {
             "alias": "idf::pthread",
             "target": "___idf_pthread",
@@ -1393,6 +1474,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/pthread/pthread.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/pthread/pthread_cond_var.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/pthread/pthread_local_storage.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/pthread/pthread_rwlock.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/pthread/pthread_semaphore.c" ],
             "include_dirs": [ "include" ]
         },
+<<<<<<< HEAD
         "rt": {
             "alias": "idf::rt",
             "target": "___idf_rt",
@@ -1408,6 +1490,8 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/rt/FreeRTOS_POSIX_mqueue.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/rt/FreeRTOS_POSIX_utils.c" ],
             "include_dirs": [ "include" ]
         },
+=======
+>>>>>>> new_timeline2
         "sdmmc": {
             "alias": "idf::sdmmc",
             "target": "___idf_sdmmc",
@@ -1483,6 +1567,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/tcp_transport/transport.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/tcp_transport/transport_ssl.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/tcp_transport/transport_internal.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/tcp_transport/transport_socks_proxy.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/tcp_transport/transport_ws.c" ],
             "include_dirs": [ "include" ]
         },
+<<<<<<< HEAD
         "ulp": {
             "alias": "idf::ulp",
             "target": "___idf_ulp",
@@ -1528,6 +1613,8 @@
             "sources": [],
             "include_dirs": []
         },
+=======
+>>>>>>> new_timeline2
         "vfs": {
             "alias": "idf::vfs",
             "target": "___idf_vfs",
@@ -1543,6 +1630,7 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/vfs/vfs.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/vfs/vfs_eventfd.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/vfs/vfs_semihost.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/vfs/nullfs.c" ],
             "include_dirs": [ "include" ]
         },
+<<<<<<< HEAD
         "wear_levelling": {
             "alias": "idf::wear_levelling",
             "target": "___idf_wear_levelling",
@@ -1573,6 +1661,8 @@
             "sources": [ "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/src/wifi_config.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/src/wifi_scan.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/src/wifi_ctrl.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/src/manager.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/src/handlers.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/src/scheme_console.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/proto-c/wifi_config.pb-c.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/proto-c/wifi_scan.pb-c.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/proto-c/wifi_ctrl.pb-c.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/proto-c/wifi_constants.pb-c.c", "C:/Users/LEONI/esp/v5.5.1/esp-idf/components/wifi_provisioning/src/scheme_softap.c" ],
             "include_dirs": [ "include" ]
         },
+=======
+>>>>>>> new_timeline2
         "wpa_supplicant": {
             "alias": "idf::wpa_supplicant",
             "target": "___idf_wpa_supplicant",
@@ -2907,11 +2997,31 @@
             "prefix": "idf",
             "dir": "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/main",
             "lib": "__idf_main",
+<<<<<<< HEAD
             "reqs": [ "driver", "spi_flash", "spiffs", "esp_timer", "esp_adc" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "include_dirs": [ "." ]
+=======
+            "reqs": [ "espressif__cjson", "esp_timer", "esp_wifi", "esp_event", "mqtt", "driver", "nvs_flash", "esp_netif", "vfs", "spiffs", "esp_adc", "esp_system" ],
+            "priv_reqs": [ "spi_flash", "espressif__cjson" ],
+            "managed_reqs": [],
+            "managed_priv_reqs": [ "espressif__cjson" ],
+            "include_dirs": [ "." ]
+        },
+        "espressif__cjson": {
+            "alias": "idf::espressif__cjson",
+            "target": "___idf_espressif__cjson",
+            "prefix": "idf",
+            "dir": "C:/Users/LEONI/Documents/Maestria/Codigos/IoT/ESP-IDF/projectv1/managed_components/espressif__cjson",
+            "lib": "__idf_espressif__cjson",
+            "reqs": [],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "include_dirs": [ "cJSON" ]
+>>>>>>> new_timeline2
         }
     },
     "debug_prefix_map_gdbinit": "",
