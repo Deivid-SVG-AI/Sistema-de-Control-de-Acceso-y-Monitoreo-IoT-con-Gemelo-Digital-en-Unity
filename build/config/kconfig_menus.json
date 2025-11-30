@@ -5720,7 +5720,6 @@
                         "children": [
                             {
                                 "children": [],
-<<<<<<< HEAD
                                 "depends_on": "<choice APPTRACE_DESTINATION1>",
                                 "help": null,
                                 "id": "APPTRACE_DEST_JTAG",
@@ -14784,8 +14783,6 @@
                         "children": [
                             {
                                 "children": [],
-=======
->>>>>>> new_timeline2
                                 "depends_on": "SOC_TWAI_SUPPORTED",
                                 "help": "This configuration option used to bypass the conflict check mechanism with legacy code.",
                                 "id": "TWAI_SKIP_LEGACY_CONFLICT_CHECK",
@@ -15935,7 +15932,6 @@
                 "children": [
                     {
                         "children": [],
-<<<<<<< HEAD
                         "depends_on": "SOC_MIPI_CSI_SUPPORTED && (SOC_MIPI_CSI_SUPPORTED || SOC_ISP_DVP_SUPPORTED || SOC_LCDCAM_CAM_SUPPORTED)",
                         "help": "Ensure the CSI driver ISR is Cache-Safe. When enabled, the ISR handler\nwill be available when the cache is disabled.",
                         "id": "CAM_CTLR_MIPI_CSI_ISR_CACHE_SAFE",
@@ -15974,8 +15970,6 @@
                 "children": [
                     {
                         "children": [],
-=======
->>>>>>> new_timeline2
                         "depends_on": "SOC_DAC_SUPPORTED",
                         "help": "Place DAC control functions (e.g. 'dac_oneshot_output_voltage') into IRAM,\nso that this function can be IRAM-safe and able to be called in the other IRAM interrupt context.\nEnabling this option can improve driver performance as well.",
                         "id": "DAC_CTRL_FUNC_IN_IRAM",
@@ -16186,7 +16180,6 @@
                 "children": [
                     {
                         "children": [],
-<<<<<<< HEAD
                         "depends_on": "SOC_ISP_SUPPORTED",
                         "help": "Ensure the ISP driver ISR is IRAM-Safe. When enabled, the ISR handler\nwill be available when the cache is disabled.",
                         "id": "ISP_ISR_IRAM_SAFE",
@@ -16233,8 +16226,6 @@
                 "children": [
                     {
                         "children": [],
-=======
->>>>>>> new_timeline2
                         "depends_on": null,
                         "help": "Place LEDC control functions (ledc_update_duty and ledc_stop) into IRAM,\nso that these functions can be IRAM-safe and able to be called in an IRAM context.\nEnabling this option can improve driver performance as well.",
                         "id": "LEDC_CTRL_FUNC_IN_IRAM",
@@ -16601,7 +16592,6 @@
                 "children": [
                     {
                         "children": [],
-<<<<<<< HEAD
                         "depends_on": "SOC_TOUCH_SENSOR_SUPPORTED",
                         "help": "Place touch sensor oneshot scanning and continuous scanning functions into IRAM,\nso that these function can be IRAM-safe and able to be called when the flash cache is disabled.\nEnabling this option can improve driver performance as well.",
                         "id": "TOUCH_CTRL_FUNC_IN_IRAM",
@@ -16650,8 +16640,6 @@
                 "children": [
                     {
                         "children": [],
-=======
->>>>>>> new_timeline2
                         "depends_on": "SOC_TEMP_SENSOR_SUPPORTED",
                         "help": "whether to enable the debug log message for temperature sensor driver.\nNote that, this option only controls the temperature sensor driver log, won't affect other drivers.",
                         "id": "TEMP_SENSOR_ENABLE_DEBUG_LOG",
@@ -16814,7 +16802,6 @@
                     {
                         "children": [],
                         "depends_on": null,
-<<<<<<< HEAD
                         "help": null,
                         "id": "ETH_ENABLED",
                         "name": "ETH_ENABLED",
@@ -17071,8 +17058,6 @@
                     {
                         "children": [],
                         "depends_on": null,
-=======
->>>>>>> new_timeline2
                         "help": "Enables collections of statistics in the event loop library such as the number of events posted\nto/recieved by an event loop, number of callbacks involved, number of events dropped to to a full event\nloop queue, run time of event handlers, and number of times/run time of each event handler.",
                         "id": "ESP_EVENT_LOOP_PROFILING",
                         "name": "ESP_EVENT_LOOP_PROFILING",
@@ -17110,7 +17095,6 @@
             {
                 "children": [
                     {
-<<<<<<< HEAD
                         "children": [],
                         "depends_on": null,
                         "help": null,
@@ -17419,8 +17403,6 @@
             {
                 "children": [
                     {
-=======
->>>>>>> new_timeline2
                         "children": [
                             {
                                 "children": [
@@ -18462,7 +18444,6 @@
             {
                 "children": [
                     {
-<<<<<<< HEAD
                         "children": [],
                         "depends_on": null,
                         "help": "whether to enable the debug log message for LCD driver.\nNote that, this option only controls the LCD driver log, won't affect other drivers.",
@@ -18511,8 +18492,6 @@
             {
                 "children": [
                     {
-=======
->>>>>>> new_timeline2
                         "children": [
                             {
                                 "children": [],
@@ -19150,7 +19129,6 @@
                     {
                         "children": [
                             {
-<<<<<<< HEAD
                                 "children": [
                                     {
                                         "children": [],
@@ -19780,8 +19758,6 @@
                     {
                         "children": [
                             {
-=======
->>>>>>> new_timeline2
                                 "children": [],
                                 "depends_on": "RINGBUF_PLACE_FUNCTIONS_INTO_FLASH",
                                 "help": "Place ISR ringbuf functions (like xRingbufferSendFromISR/xRingbufferReceiveFromISR) into flash.\nThis frees up IRAM, but the functions can no longer be called when the cache is disabled\nor from an IRAM interrupt context.\n\nThis option is not compatible with ESP-IDF drivers which are configured to\nrun the ISR from an IRAM context, e.g. CONFIG_UART_ISR_IN_IRAM.",
@@ -22450,7 +22426,6 @@
                         "children": [
                             {
                                 "children": [],
-<<<<<<< HEAD
                                 "depends_on": "<choice ESP_COREDUMP_TO_FLASH_OR_UART>",
                                 "help": null,
                                 "id": "ESP_COREDUMP_ENABLE_TO_FLASH",
@@ -23327,8 +23302,6 @@
                         "children": [
                             {
                                 "children": [],
-=======
->>>>>>> new_timeline2
                                 "depends_on": "!IDF_TARGET_ESP32P4",
                                 "help": "Amazon has released an SMP version of the FreeRTOS Kernel which can be found via the following link:\nhttps://github.com/FreeRTOS/FreeRTOS-Kernel/tree/smp\n\nIDF has added an experimental port of this SMP kernel located in\ncomponents/freertos/FreeRTOS-Kernel-SMP. Enabling this option will cause IDF to use the Amazon SMP\nkernel. Note that THIS FEATURE IS UNDER ACTIVE DEVELOPMENT, users use this at their own risk.\n\nLeaving this option disabled will mean the IDF FreeRTOS kernel is used instead, which is located in:\ncomponents/freertos/FreeRTOS-Kernel. Both kernel versions are SMP capable, but differ in\ntheir implementation and features.",
                                 "id": "FREERTOS_SMP",
@@ -24487,7 +24460,6 @@
                         "children": [
                             {
                                 "children": [],
-<<<<<<< HEAD
                                 "depends_on": "IEEE802154_ENABLED",
                                 "help": "The number of 802.15.4 receive buffers",
                                 "id": "IEEE802154_RX_BUFFER_SIZE",
@@ -24794,8 +24766,6 @@
                         "children": [
                             {
                                 "children": [],
-=======
->>>>>>> new_timeline2
                                 "depends_on": "<choice LOG_VERSION>",
                                 "help": "Select this option to use Log V1. Recommended for projects with strict stack constraints\nor that prioritize performance over flexibility.",
                                 "id": "LOG_VERSION_1",
@@ -29614,7 +29584,6 @@
             {
                 "children": [
                     {
-<<<<<<< HEAD
                         "children": [
                             {
                                 "children": [],
@@ -30767,8 +30736,6 @@
             {
                 "children": [
                     {
-=======
->>>>>>> new_timeline2
                         "children": [],
                         "depends_on": null,
                         "help": "Priority used to create new tasks with default pthread parameters.",
@@ -31821,7 +31788,6 @@
                     {
                         "children": [
                             {
-<<<<<<< HEAD
                                 "children": [
                                     {
                                         "children": [],
@@ -32289,8 +32255,6 @@
                     {
                         "children": [
                             {
-=======
->>>>>>> new_timeline2
                                 "children": [],
                                 "depends_on": "VFS_SUPPORT_IO",
                                 "help": "If enabled, the following functions are provided by the VFS component.\n\nstat, link, unlink, rename, utime, access, truncate, rmdir, mkdir,\nopendir, closedir, readdir, readdir_r, seekdir, telldir, rewinddir\n\nFilesystem drivers can then be registered to handle these functions\nfor specific paths.\n\nDisabling this option can save memory when the support for these functions\nis not required.",
@@ -32396,7 +32360,6 @@
                 "id": "component-config-virtual-file-system",
                 "title": "Virtual file system",
                 "type": "menu"
-<<<<<<< HEAD
             },
             {
                 "children": [
@@ -32610,8 +32573,6 @@
                 "id": "component-config-wi-fi-provisioning-manager",
                 "title": "Wi-Fi Provisioning Manager",
                 "type": "menu"
-=======
->>>>>>> new_timeline2
             }
         ],
         "depends_on": null,
