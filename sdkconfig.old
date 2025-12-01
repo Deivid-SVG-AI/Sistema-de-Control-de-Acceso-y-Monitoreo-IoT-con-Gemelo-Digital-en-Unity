@@ -472,12 +472,612 @@ CONFIG_COMPILER_ORPHAN_SECTIONS_WARNING=y
 #
 
 #
-# !!! MINIMAL_BUILD is enabled !!!
+# Application Level Tracing
+#
+# CONFIG_APPTRACE_DEST_JTAG is not set
+CONFIG_APPTRACE_DEST_NONE=y
+# CONFIG_APPTRACE_DEST_UART1 is not set
+# CONFIG_APPTRACE_DEST_UART2 is not set
+CONFIG_APPTRACE_DEST_UART_NONE=y
+CONFIG_APPTRACE_UART_TASK_PRIO=1
+CONFIG_APPTRACE_LOCK_ENABLE=y
+# end of Application Level Tracing
+
+#
+# Bluetooth
+#
+# CONFIG_BT_ENABLED is not set
+
+#
+# Common Options
+#
+# CONFIG_BT_BLE_LOG_SPI_OUT_ENABLED is not set
+# CONFIG_BT_BLE_LOG_UHCI_OUT_ENABLED is not set
+# end of Common Options
+# end of Bluetooth
+
+#
+# Console Library
+#
+# CONFIG_CONSOLE_SORTED_HELP is not set
+# end of Console Library
+
+#
+# Driver Configurations
 #
 
 #
-# Only common components and those transitively required by the main component are listed
+# Legacy TWAI Driver Configurations
 #
+# CONFIG_TWAI_SKIP_LEGACY_CONFLICT_CHECK is not set
+CONFIG_TWAI_ERRATA_FIX_BUS_OFF_REC=y
+CONFIG_TWAI_ERRATA_FIX_TX_INTR_LOST=y
+CONFIG_TWAI_ERRATA_FIX_RX_FRAME_INVALID=y
+CONFIG_TWAI_ERRATA_FIX_RX_FIFO_CORRUPT=y
+CONFIG_TWAI_ERRATA_FIX_LISTEN_ONLY_DOM=y
+# end of Legacy TWAI Driver Configurations
+
+#
+# Legacy ADC Driver Configuration
+#
+CONFIG_ADC_DISABLE_DAC=y
+# CONFIG_ADC_SUPPRESS_DEPRECATE_WARN is not set
+# CONFIG_ADC_SKIP_LEGACY_CONFLICT_CHECK is not set
+
+#
+# Legacy ADC Calibration Configuration
+#
+CONFIG_ADC_CAL_EFUSE_TP_ENABLE=y
+CONFIG_ADC_CAL_EFUSE_VREF_ENABLE=y
+CONFIG_ADC_CAL_LUT_ENABLE=y
+# CONFIG_ADC_CALI_SUPPRESS_DEPRECATE_WARN is not set
+# end of Legacy ADC Calibration Configuration
+# end of Legacy ADC Driver Configuration
+
+#
+# Legacy DAC Driver Configurations
+#
+# CONFIG_DAC_SUPPRESS_DEPRECATE_WARN is not set
+# CONFIG_DAC_SKIP_LEGACY_CONFLICT_CHECK is not set
+# end of Legacy DAC Driver Configurations
+
+#
+# Legacy MCPWM Driver Configurations
+#
+# CONFIG_MCPWM_SUPPRESS_DEPRECATE_WARN is not set
+# CONFIG_MCPWM_SKIP_LEGACY_CONFLICT_CHECK is not set
+# end of Legacy MCPWM Driver Configurations
+
+#
+# Legacy Timer Group Driver Configurations
+#
+# CONFIG_GPTIMER_SUPPRESS_DEPRECATE_WARN is not set
+# CONFIG_GPTIMER_SKIP_LEGACY_CONFLICT_CHECK is not set
+# end of Legacy Timer Group Driver Configurations
+
+#
+# Legacy RMT Driver Configurations
+#
+# CONFIG_RMT_SUPPRESS_DEPRECATE_WARN is not set
+# CONFIG_RMT_SKIP_LEGACY_CONFLICT_CHECK is not set
+# end of Legacy RMT Driver Configurations
+
+#
+# Legacy I2S Driver Configurations
+#
+# CONFIG_I2S_SUPPRESS_DEPRECATE_WARN is not set
+# CONFIG_I2S_SKIP_LEGACY_CONFLICT_CHECK is not set
+# end of Legacy I2S Driver Configurations
+
+#
+# Legacy I2C Driver Configurations
+#
+# CONFIG_I2C_SKIP_LEGACY_CONFLICT_CHECK is not set
+# end of Legacy I2C Driver Configurations
+
+#
+# Legacy PCNT Driver Configurations
+#
+# CONFIG_PCNT_SUPPRESS_DEPRECATE_WARN is not set
+# CONFIG_PCNT_SKIP_LEGACY_CONFLICT_CHECK is not set
+# end of Legacy PCNT Driver Configurations
+
+#
+# Legacy SDM Driver Configurations
+#
+# CONFIG_SDM_SUPPRESS_DEPRECATE_WARN is not set
+# CONFIG_SDM_SKIP_LEGACY_CONFLICT_CHECK is not set
+# end of Legacy SDM Driver Configurations
+
+#
+# Legacy Touch Sensor Driver Configurations
+#
+# CONFIG_TOUCH_SUPPRESS_DEPRECATE_WARN is not set
+# CONFIG_TOUCH_SKIP_LEGACY_CONFLICT_CHECK is not set
+# end of Legacy Touch Sensor Driver Configurations
+# end of Driver Configurations
+
+#
+# eFuse Bit Manager
+#
+# CONFIG_EFUSE_CUSTOM_TABLE is not set
+# CONFIG_EFUSE_VIRTUAL is not set
+# CONFIG_EFUSE_CODE_SCHEME_COMPAT_NONE is not set
+CONFIG_EFUSE_CODE_SCHEME_COMPAT_3_4=y
+# CONFIG_EFUSE_CODE_SCHEME_COMPAT_REPEAT is not set
+CONFIG_EFUSE_MAX_BLK_LEN=192
+# end of eFuse Bit Manager
+
+#
+# ESP-TLS
+#
+CONFIG_ESP_TLS_USING_MBEDTLS=y
+# CONFIG_ESP_TLS_USE_SECURE_ELEMENT is not set
+# CONFIG_ESP_TLS_CLIENT_SESSION_TICKETS is not set
+# CONFIG_ESP_TLS_SERVER_SESSION_TICKETS is not set
+# CONFIG_ESP_TLS_SERVER_CERT_SELECT_HOOK is not set
+# CONFIG_ESP_TLS_SERVER_MIN_AUTH_MODE_OPTIONAL is not set
+# CONFIG_ESP_TLS_PSK_VERIFICATION is not set
+# CONFIG_ESP_TLS_INSECURE is not set
+CONFIG_ESP_TLS_DYN_BUF_STRATEGY_SUPPORTED=y
+# end of ESP-TLS
+
+#
+# ADC and ADC Calibration
+#
+# CONFIG_ADC_ONESHOT_CTRL_FUNC_IN_IRAM is not set
+# CONFIG_ADC_CONTINUOUS_ISR_IRAM_SAFE is not set
+
+#
+# ADC Calibration Configurations
+#
+CONFIG_ADC_CALI_EFUSE_TP_ENABLE=y
+CONFIG_ADC_CALI_EFUSE_VREF_ENABLE=y
+CONFIG_ADC_CALI_LUT_ENABLE=y
+# end of ADC Calibration Configurations
+
+CONFIG_ADC_DISABLE_DAC_OUTPUT=y
+# CONFIG_ADC_ENABLE_DEBUG_LOG is not set
+# end of ADC and ADC Calibration
+
+#
+# Wireless Coexistence
+#
+CONFIG_ESP_COEX_ENABLED=y
+# CONFIG_ESP_COEX_GPIO_DEBUG is not set
+# end of Wireless Coexistence
+
+#
+# Common ESP-related
+#
+CONFIG_ESP_ERR_TO_NAME_LOOKUP=y
+# end of Common ESP-related
+
+#
+# ESP-Driver:DAC Configurations
+#
+# CONFIG_DAC_CTRL_FUNC_IN_IRAM is not set
+# CONFIG_DAC_ISR_IRAM_SAFE is not set
+# CONFIG_DAC_ENABLE_DEBUG_LOG is not set
+CONFIG_DAC_DMA_AUTO_16BIT_ALIGN=y
+# end of ESP-Driver:DAC Configurations
+
+#
+# ESP-Driver:GPIO Configurations
+#
+# CONFIG_GPIO_ESP32_SUPPORT_SWITCH_SLP_PULL is not set
+# CONFIG_GPIO_CTRL_FUNC_IN_IRAM is not set
+# end of ESP-Driver:GPIO Configurations
+
+#
+# ESP-Driver:GPTimer Configurations
+#
+CONFIG_GPTIMER_ISR_HANDLER_IN_IRAM=y
+# CONFIG_GPTIMER_CTRL_FUNC_IN_IRAM is not set
+# CONFIG_GPTIMER_ISR_CACHE_SAFE is not set
+CONFIG_GPTIMER_OBJ_CACHE_SAFE=y
+# CONFIG_GPTIMER_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:GPTimer Configurations
+
+#
+# ESP-Driver:I2C Configurations
+#
+# CONFIG_I2C_ISR_IRAM_SAFE is not set
+# CONFIG_I2C_ENABLE_DEBUG_LOG is not set
+# CONFIG_I2C_ENABLE_SLAVE_DRIVER_VERSION_2 is not set
+CONFIG_I2C_MASTER_ISR_HANDLER_IN_IRAM=y
+# end of ESP-Driver:I2C Configurations
+
+#
+# ESP-Driver:I2S Configurations
+#
+# CONFIG_I2S_ISR_IRAM_SAFE is not set
+# CONFIG_I2S_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:I2S Configurations
+
+#
+# ESP-Driver:LEDC Configurations
+#
+# CONFIG_LEDC_CTRL_FUNC_IN_IRAM is not set
+# end of ESP-Driver:LEDC Configurations
+
+#
+# ESP-Driver:MCPWM Configurations
+#
+CONFIG_MCPWM_ISR_HANDLER_IN_IRAM=y
+# CONFIG_MCPWM_ISR_CACHE_SAFE is not set
+# CONFIG_MCPWM_CTRL_FUNC_IN_IRAM is not set
+CONFIG_MCPWM_OBJ_CACHE_SAFE=y
+# CONFIG_MCPWM_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:MCPWM Configurations
+
+#
+# ESP-Driver:PCNT Configurations
+#
+# CONFIG_PCNT_CTRL_FUNC_IN_IRAM is not set
+# CONFIG_PCNT_ISR_IRAM_SAFE is not set
+# CONFIG_PCNT_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:PCNT Configurations
+
+#
+# ESP-Driver:RMT Configurations
+#
+CONFIG_RMT_ENCODER_FUNC_IN_IRAM=y
+CONFIG_RMT_TX_ISR_HANDLER_IN_IRAM=y
+CONFIG_RMT_RX_ISR_HANDLER_IN_IRAM=y
+# CONFIG_RMT_RECV_FUNC_IN_IRAM is not set
+# CONFIG_RMT_TX_ISR_CACHE_SAFE is not set
+# CONFIG_RMT_RX_ISR_CACHE_SAFE is not set
+CONFIG_RMT_OBJ_CACHE_SAFE=y
+# CONFIG_RMT_ENABLE_DEBUG_LOG is not set
+# CONFIG_RMT_ISR_IRAM_SAFE is not set
+# end of ESP-Driver:RMT Configurations
+
+#
+# ESP-Driver:Sigma Delta Modulator Configurations
+#
+# CONFIG_SDM_CTRL_FUNC_IN_IRAM is not set
+# CONFIG_SDM_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:Sigma Delta Modulator Configurations
+
+#
+# ESP-Driver:SPI Configurations
+#
+# CONFIG_SPI_MASTER_IN_IRAM is not set
+CONFIG_SPI_MASTER_ISR_IN_IRAM=y
+# CONFIG_SPI_SLAVE_IN_IRAM is not set
+CONFIG_SPI_SLAVE_ISR_IN_IRAM=y
+# end of ESP-Driver:SPI Configurations
+
+#
+# ESP-Driver:Touch Sensor Configurations
+#
+# CONFIG_TOUCH_CTRL_FUNC_IN_IRAM is not set
+# CONFIG_TOUCH_ISR_IRAM_SAFE is not set
+# CONFIG_TOUCH_ENABLE_DEBUG_LOG is not set
+# CONFIG_TOUCH_SKIP_FSM_CHECK is not set
+# end of ESP-Driver:Touch Sensor Configurations
+
+#
+# ESP-Driver:TWAI Configurations
+#
+# CONFIG_TWAI_ISR_IN_IRAM is not set
+# CONFIG_TWAI_ISR_CACHE_SAFE is not set
+# CONFIG_TWAI_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:TWAI Configurations
+
+#
+# ESP-Driver:UART Configurations
+#
+# CONFIG_UART_ISR_IN_IRAM is not set
+# end of ESP-Driver:UART Configurations
+
+#
+# ESP-Driver:UHCI Configurations
+#
+# CONFIG_UHCI_ISR_HANDLER_IN_IRAM is not set
+# CONFIG_UHCI_ISR_CACHE_SAFE is not set
+# CONFIG_UHCI_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:UHCI Configurations
+
+#
+# Ethernet
+#
+CONFIG_ETH_ENABLED=y
+CONFIG_ETH_USE_ESP32_EMAC=y
+CONFIG_ETH_PHY_INTERFACE_RMII=y
+CONFIG_ETH_RMII_CLK_INPUT=y
+# CONFIG_ETH_RMII_CLK_OUTPUT is not set
+CONFIG_ETH_RMII_CLK_IN_GPIO=0
+CONFIG_ETH_DMA_BUFFER_SIZE=512
+CONFIG_ETH_DMA_RX_BUFFER_NUM=10
+CONFIG_ETH_DMA_TX_BUFFER_NUM=10
+# CONFIG_ETH_IRAM_OPTIMIZATION is not set
+CONFIG_ETH_USE_SPI_ETHERNET=y
+# CONFIG_ETH_SPI_ETHERNET_DM9051 is not set
+# CONFIG_ETH_SPI_ETHERNET_W5500 is not set
+# CONFIG_ETH_SPI_ETHERNET_KSZ8851SNL is not set
+# CONFIG_ETH_USE_OPENETH is not set
+# CONFIG_ETH_TRANSMIT_MUTEX is not set
+# end of Ethernet
+
+#
+# Event Loop Library
+#
+# CONFIG_ESP_EVENT_LOOP_PROFILING is not set
+CONFIG_ESP_EVENT_POST_FROM_ISR=y
+CONFIG_ESP_EVENT_POST_FROM_IRAM_ISR=y
+# end of Event Loop Library
+
+#
+# GDB Stub
+#
+CONFIG_ESP_GDBSTUB_ENABLED=y
+# CONFIG_ESP_SYSTEM_GDBSTUB_RUNTIME is not set
+CONFIG_ESP_GDBSTUB_SUPPORT_TASKS=y
+CONFIG_ESP_GDBSTUB_MAX_TASKS=32
+# end of GDB Stub
+
+#
+# ESP HID
+#
+CONFIG_ESPHID_TASK_SIZE_BT=2048
+CONFIG_ESPHID_TASK_SIZE_BLE=4096
+# end of ESP HID
+
+#
+# ESP HTTP client
+#
+CONFIG_ESP_HTTP_CLIENT_ENABLE_HTTPS=y
+# CONFIG_ESP_HTTP_CLIENT_ENABLE_BASIC_AUTH is not set
+# CONFIG_ESP_HTTP_CLIENT_ENABLE_DIGEST_AUTH is not set
+# CONFIG_ESP_HTTP_CLIENT_ENABLE_CUSTOM_TRANSPORT is not set
+CONFIG_ESP_HTTP_CLIENT_EVENT_POST_TIMEOUT=2000
+# end of ESP HTTP client
+
+#
+# HTTP Server
+#
+CONFIG_HTTPD_MAX_REQ_HDR_LEN=1024
+CONFIG_HTTPD_MAX_URI_LEN=512
+CONFIG_HTTPD_ERR_RESP_NO_DELAY=y
+CONFIG_HTTPD_PURGE_BUF_LEN=32
+# CONFIG_HTTPD_LOG_PURGE_DATA is not set
+# CONFIG_HTTPD_WS_SUPPORT is not set
+# CONFIG_HTTPD_QUEUE_WORK_BLOCKING is not set
+CONFIG_HTTPD_SERVER_EVENT_POST_TIMEOUT=2000
+# end of HTTP Server
+
+#
+# ESP HTTPS OTA
+#
+# CONFIG_ESP_HTTPS_OTA_DECRYPT_CB is not set
+# CONFIG_ESP_HTTPS_OTA_ALLOW_HTTP is not set
+CONFIG_ESP_HTTPS_OTA_EVENT_POST_TIMEOUT=2000
+# end of ESP HTTPS OTA
+
+#
+# ESP HTTPS server
+#
+# CONFIG_ESP_HTTPS_SERVER_ENABLE is not set
+CONFIG_ESP_HTTPS_SERVER_EVENT_POST_TIMEOUT=2000
+# CONFIG_ESP_HTTPS_SERVER_CERT_SELECT_HOOK is not set
+# end of ESP HTTPS server
+
+#
+# Hardware Settings
+#
+
+#
+# Chip revision
+#
+CONFIG_ESP32_REV_MIN_0=y
+# CONFIG_ESP32_REV_MIN_1 is not set
+# CONFIG_ESP32_REV_MIN_1_1 is not set
+# CONFIG_ESP32_REV_MIN_2 is not set
+# CONFIG_ESP32_REV_MIN_3 is not set
+# CONFIG_ESP32_REV_MIN_3_1 is not set
+CONFIG_ESP32_REV_MIN=0
+CONFIG_ESP32_REV_MIN_FULL=0
+CONFIG_ESP_REV_MIN_FULL=0
+
+#
+# Maximum Supported ESP32 Revision (Rev v3.99)
+#
+CONFIG_ESP32_REV_MAX_FULL=399
+CONFIG_ESP_REV_MAX_FULL=399
+CONFIG_ESP_EFUSE_BLOCK_REV_MIN_FULL=0
+CONFIG_ESP_EFUSE_BLOCK_REV_MAX_FULL=99
+
+#
+# Maximum Supported ESP32 eFuse Block Revision (eFuse Block Rev v0.99)
+#
+# end of Chip revision
+
+#
+# MAC Config
+#
+CONFIG_ESP_MAC_ADDR_UNIVERSE_WIFI_STA=y
+CONFIG_ESP_MAC_ADDR_UNIVERSE_WIFI_AP=y
+CONFIG_ESP_MAC_ADDR_UNIVERSE_BT=y
+CONFIG_ESP_MAC_ADDR_UNIVERSE_ETH=y
+CONFIG_ESP_MAC_UNIVERSAL_MAC_ADDRESSES_FOUR=y
+CONFIG_ESP_MAC_UNIVERSAL_MAC_ADDRESSES=4
+# CONFIG_ESP32_UNIVERSAL_MAC_ADDRESSES_TWO is not set
+CONFIG_ESP32_UNIVERSAL_MAC_ADDRESSES_FOUR=y
+CONFIG_ESP32_UNIVERSAL_MAC_ADDRESSES=4
+# CONFIG_ESP_MAC_IGNORE_MAC_CRC_ERROR is not set
+# CONFIG_ESP_MAC_USE_CUSTOM_MAC_AS_BASE_MAC is not set
+# end of MAC Config
+
+#
+# Sleep Config
+#
+# CONFIG_ESP_SLEEP_POWER_DOWN_FLASH is not set
+CONFIG_ESP_SLEEP_FLASH_LEAKAGE_WORKAROUND=y
+# CONFIG_ESP_SLEEP_MSPI_NEED_ALL_IO_PU is not set
+CONFIG_ESP_SLEEP_RTC_BUS_ISO_WORKAROUND=y
+# CONFIG_ESP_SLEEP_GPIO_RESET_WORKAROUND is not set
+CONFIG_ESP_SLEEP_WAIT_FLASH_READY_EXTRA_DELAY=2000
+# CONFIG_ESP_SLEEP_CACHE_SAFE_ASSERTION is not set
+# CONFIG_ESP_SLEEP_DEBUG is not set
+CONFIG_ESP_SLEEP_GPIO_ENABLE_INTERNAL_RESISTORS=y
+# end of Sleep Config
+
+#
+# RTC Clock Config
+#
+CONFIG_RTC_CLK_SRC_INT_RC=y
+# CONFIG_RTC_CLK_SRC_EXT_CRYS is not set
+# CONFIG_RTC_CLK_SRC_EXT_OSC is not set
+# CONFIG_RTC_CLK_SRC_INT_8MD256 is not set
+CONFIG_RTC_CLK_CAL_CYCLES=1024
+# end of RTC Clock Config
+
+#
+# Peripheral Control
+#
+CONFIG_ESP_PERIPH_CTRL_FUNC_IN_IRAM=y
+CONFIG_ESP_REGI2C_CTRL_FUNC_IN_IRAM=y
+# end of Peripheral Control
+
+#
+# Main XTAL Config
+#
+# CONFIG_XTAL_FREQ_26 is not set
+# CONFIG_XTAL_FREQ_32 is not set
+CONFIG_XTAL_FREQ_40=y
+# CONFIG_XTAL_FREQ_AUTO is not set
+CONFIG_XTAL_FREQ=40
+# end of Main XTAL Config
+
+#
+# Power Supplier
+#
+
+#
+# Brownout Detector
+#
+CONFIG_ESP_BROWNOUT_DET=y
+CONFIG_ESP_BROWNOUT_DET_LVL_SEL_0=y
+# CONFIG_ESP_BROWNOUT_DET_LVL_SEL_1 is not set
+# CONFIG_ESP_BROWNOUT_DET_LVL_SEL_2 is not set
+# CONFIG_ESP_BROWNOUT_DET_LVL_SEL_3 is not set
+# CONFIG_ESP_BROWNOUT_DET_LVL_SEL_4 is not set
+# CONFIG_ESP_BROWNOUT_DET_LVL_SEL_5 is not set
+# CONFIG_ESP_BROWNOUT_DET_LVL_SEL_6 is not set
+# CONFIG_ESP_BROWNOUT_DET_LVL_SEL_7 is not set
+CONFIG_ESP_BROWNOUT_DET_LVL=0
+CONFIG_ESP_BROWNOUT_USE_INTR=y
+# end of Brownout Detector
+# end of Power Supplier
+
+CONFIG_ESP_SPI_BUS_LOCK_ISR_FUNCS_IN_IRAM=y
+CONFIG_ESP_INTR_IN_IRAM=y
+# end of Hardware Settings
+
+#
+# ESP-Driver:LCD Controller Configurations
+#
+# CONFIG_LCD_ENABLE_DEBUG_LOG is not set
+# end of ESP-Driver:LCD Controller Configurations
+
+#
+# ESP-MM: Memory Management Configurations
+#
+# end of ESP-MM: Memory Management Configurations
+
+#
+# ESP NETIF Adapter
+#
+CONFIG_ESP_NETIF_IP_LOST_TIMER_INTERVAL=120
+# CONFIG_ESP_NETIF_PROVIDE_CUSTOM_IMPLEMENTATION is not set
+CONFIG_ESP_NETIF_TCPIP_LWIP=y
+# CONFIG_ESP_NETIF_LOOPBACK is not set
+CONFIG_ESP_NETIF_USES_TCPIP_WITH_BSD_API=y
+CONFIG_ESP_NETIF_REPORT_DATA_TRAFFIC=y
+# CONFIG_ESP_NETIF_RECEIVE_REPORT_ERRORS is not set
+# CONFIG_ESP_NETIF_L2_TAP is not set
+# CONFIG_ESP_NETIF_BRIDGE_EN is not set
+# CONFIG_ESP_NETIF_SET_DNS_PER_DEFAULT_NETIF is not set
+# end of ESP NETIF Adapter
+
+#
+# Partition API Configuration
+#
+# end of Partition API Configuration
+
+#
+# PHY
+#
+CONFIG_ESP_PHY_ENABLED=y
+CONFIG_ESP_PHY_CALIBRATION_AND_DATA_STORAGE=y
+# CONFIG_ESP_PHY_INIT_DATA_IN_PARTITION is not set
+CONFIG_ESP_PHY_MAX_WIFI_TX_POWER=20
+CONFIG_ESP_PHY_MAX_TX_POWER=20
+# CONFIG_ESP_PHY_REDUCE_TX_POWER is not set
+# CONFIG_ESP_PHY_ENABLE_CERT_TEST is not set
+CONFIG_ESP_PHY_RF_CAL_PARTIAL=y
+# CONFIG_ESP_PHY_RF_CAL_NONE is not set
+# CONFIG_ESP_PHY_RF_CAL_FULL is not set
+CONFIG_ESP_PHY_CALIBRATION_MODE=0
+CONFIG_ESP_PHY_PLL_TRACK_PERIOD_MS=1000
+# CONFIG_ESP_PHY_PLL_TRACK_DEBUG is not set
+# CONFIG_ESP_PHY_RECORD_USED_TIME is not set
+CONFIG_ESP_PHY_IRAM_OPT=y
+# CONFIG_ESP_PHY_DEBUG is not set
+# end of PHY
+
+#
+# Power Management
+#
+CONFIG_PM_SLEEP_FUNC_IN_IRAM=y
+# CONFIG_PM_ENABLE is not set
+CONFIG_PM_SLP_IRAM_OPT=y
+# end of Power Management
+
+#
+# ESP PSRAM
+#
+# CONFIG_SPIRAM is not set
+# end of ESP PSRAM
+
+#
+# ESP Ringbuf
+#
+# CONFIG_RINGBUF_PLACE_FUNCTIONS_INTO_FLASH is not set
+# end of ESP Ringbuf
+
+#
+# ESP-ROM
+#
+CONFIG_ESP_ROM_PRINT_IN_IRAM=y
+# end of ESP-ROM
+
+#
+# ESP Security Specific
+#
+# end of ESP Security Specific
+
+#
+# ESP System Settings
+#
+# CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_80 is not set
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_160=y
+# CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240 is not set
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ=160
+
+#
+# Memory
+#
+# CONFIG_ESP32_USE_FIXED_STATIC_RAM_SIZE is not set
+
+#
+# Non-backward compatible options
+#
+# CONFIG_ESP_SYSTEM_ESP32_SRAM1_REGION_AS_IRAM is not set
+# end of Non-backward compatible options
+# end of Memory
 
 #
 # If a component configuration is missing, please add it to the main component's requirements

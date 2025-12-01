@@ -1,6 +1,8 @@
-# Sistema de Acceso y Monitoreo de Seguridad (ESP32 + ESP-IDF)
+# Sistema de Acceso y Monitoreo de Seguridad (ESP32-S3 + ESP-IDF)
 
-Proyecto de control de acceso con ESP32: puerta con sensor magnético, cerradura electromagnética, buzzer, LEDs, autenticación por combinación (potenciómetro analógico), tarjeta RFID MFRC522 y control remoto vía MQTT, más pantalla LCD1602 I2C para retroalimentación visual. Enfatiza la regla de seguridad: nunca bloquear mientras la puerta esté abierta.
+> **⚠️ IMPORTANTE**: Este proyecto ha sido migrado a **ESP32-S3**. Si tienes un ESP32 Classic, consulta el historial de Git para la versión anterior. Ver **[MIGRATION_SUMMARY.md](MIGRATION_SUMMARY.md)** y **[ESP32_S3_PIN_MAP.md](ESP32_S3_PIN_MAP.md)** para detalles de la migración.
+
+Proyecto de control de acceso con ESP32-S3: puerta con sensor magnético, cerradura electromagnética, buzzer, LEDs, autenticación por combinación (potenciómetro analógico), tarjeta RFID MFRC522 y control remoto vía MQTT, más pantalla LCD1602 I2C para retroalimentación visual. Enfatiza la regla de seguridad: nunca bloquear mientras la puerta esté abierta.
 
 ## Resumen de Funcionalidad Actual
 
@@ -291,13 +293,27 @@ Leyenda:
 
 ## Partición Flash
 - `sdkconfig` está configurado para usar una tabla de particiones custom (`partitions.csv`). Contiene `nvs`, `factory` y `spiffs`.
-- Para volver a tabla por defecto: `idf.py menuconfig` → Partition Table → seleccionar “Single factory app” y desactivar custom CSV.
+- Para volver a tabla por defecto: `idf.py menuconfig` → Partition Table → seleccionar "Single factory app" y desactivar custom CSV.
 
 ## Cómo Compilar y Grabar (Windows PowerShell)
+
+### Opción 1: Script Automático (Recomendado)
 ```powershell
-idf.py set-target esp32
+.\build_esp32s3.ps1
+```
+
+### Opción 2: Comandos Manuales
+```powershell
+# Configurar target para ESP32-S3
+idf.py set-target esp32s3
+
+# Compilar
 idf.py build
+
+# Flashear
 idf.py flash
+
+# Monitor serial
 idf.py monitor
 ```
 Salir del monitor: `Ctrl+]`.
@@ -307,6 +323,8 @@ Si `idf.py` no funciona, exporta entorno:
 ```powershell
 & "$env:IDF_PATH/export.ps1"
 ```
+
+> **📖 Documentación adicional**: Ver **[ESP32_S3_PIN_MAP.md](ESP32_S3_PIN_MAP.md)** para mapeo completo de pines y **[MIGRATION_SUMMARY.md](MIGRATION_SUMMARY.md)** para cambios desde ESP32 Classic.
 O abre la terminal "ESP-IDF PowerShell". Verifica:
 ```powershell
 echo $env:IDF_PATH

@@ -73,31 +73,31 @@
 #define DEBOUNCE_MS                 40   // Anti-rebote para entradas digitales
 
 // Configuración del buzzer (LEDC PWM)
-#define BUZZER_GPIO               GPIO_NUM_26
+#define BUZZER_GPIO               GPIO_NUM_5    // GPIO5 libre para PWM
 #define BUZZER_LEDC_TIMER         LEDC_TIMER_0
 #define BUZZER_LEDC_MODE          LEDC_LOW_SPEED_MODE
 #define BUZZER_LEDC_CHANNEL       LEDC_CHANNEL_0
 #define BUZZER_FREQ_HZ            2000   // Frecuencia del beep
 
 // LEDs de estado
-#define LED_STATUS_GPIO           GPIO_NUM_14  // LED de “sistema listo”
-#define LED_GREEN_GPIO            GPIO_NUM_12   // LED de acceso concedido
-#define LED_RED_GPIO              GPIO_NUM_27  // LED de acceso denegado / bloqueado
+#define LED_STATUS_GPIO           GPIO_NUM_2    // LED de “sistema listo”
+#define LED_GREEN_GPIO            GPIO_NUM_15    // LED verde (ADC1_CH0) - evita conflicto con I2C GPIO18
+#define LED_RED_GPIO              GPIO_NUM_16  // LED de acceso denegado / bloqueado (GPIO27 no existe en S3)
 
 // Sensor magnético de puerta (reed switch)
-#define DOOR_SENSOR_GPIO          GPIO_NUM_33  // Usar con pull-up interno y contacto a GND
+#define DOOR_SENSOR_GPIO          GPIO_NUM_7   // GPIO7 con pull-up interno + contacto a GND
 
 // Electroimán (cerradura) controlado por un MOSFET/Relay externo
-#define LOCK_GPIO                 GPIO_NUM_25
+#define LOCK_GPIO                 GPIO_NUM_6   // CAM_VSYNC (seguro para salida digital)
 // Nivel lógico que ACTIVA el relay (energiza el electroimán). Muchos módulos relay son activos en LOW.
 // Ajusta a 1 si tu módulo requiere nivel alto para activarse.
-#define RELAY_ACTIVE_LEVEL        0  // Transistor NPN: nivel alto en GPIO activa la bobina
+#define RELAY_ACTIVE_LEVEL        1  // Relay activo en HIGH (nivel lógico directo)
 #define LOCK_ACTIVE_HIGH          1            // Conservado para compatibilidad, ya no se usa en la función principal.
 
 // Alternativa: Servo como cerradura (selección por compilación)
 // 0 = electroimán (LOCK_GPIO), 1 = servo (SERVO_GPIO)
 #define LOCK_USE_SERVO            0
-#define SERVO_GPIO                GPIO_NUM_25   // Cambia según tu hardware
+#define SERVO_GPIO                GPIO_NUM_18  // GPIO18 libre para PWM servo
 #define SERVO_LEDC_MODE           LEDC_LOW_SPEED_MODE
 #define SERVO_LEDC_TIMER          LEDC_TIMER_1
 #define SERVO_LEDC_CHANNEL        LEDC_CHANNEL_1
@@ -112,8 +112,8 @@
 #define SERVO_LOCK_DEG            90
 #define SERVO_UNLOCK_DEG          0
 
-// Potenciómetro analógico (sustituye encoder). Usamos solo GPIO34 (ADC1_CH6)
-#define POT_ADC_GPIO              GPIO_NUM_34
+// Potenciómetro analógico (sustituye encoder). ADC1_CH3 en Freenove
+#define POT_ADC_GPIO              GPIO_NUM_4   // ADC1_CH3
 
 // Resolución esperada ADC (ESP32 ADC1 es 12 bits por defecto => 0..4095)
 #define POT_ADC_MAX_RAW           4095
@@ -142,12 +142,12 @@ static const int COMBO_TARGET[COMBO_LEN] = {3, 6, 4};
 #define MQTT_BROKER "mqtt://172.20.10.8:1883"
 #define MQTT_TOPIC "iot/telemetry"
 
-// Tarjeta RFID MFRC522 (SPI). Pines VSPI por defecto del ESP32.
-#define RFID_SPI_CS_GPIO          GPIO_NUM_5
-#define RFID_SPI_SCK_GPIO         GPIO_NUM_18
-#define RFID_SPI_MOSI_GPIO        GPIO_NUM_23
-#define RFID_SPI_MISO_GPIO        GPIO_NUM_19
-#define RFID_RST_GPIO             GPIO_NUM_13
+// Tarjeta RFID MFRC522 (SPI2 estándar en Freenove)
+#define RFID_SPI_CS_GPIO          GPIO_NUM_10  // CS (SPI2 default)
+#define RFID_SPI_SCK_GPIO         GPIO_NUM_12  // SCK (SPI2 default)
+#define RFID_SPI_MOSI_GPIO        GPIO_NUM_11  // MOSI (SPI2 default)
+#define RFID_SPI_MISO_GPIO        GPIO_NUM_13  // MISO (SPI2 default)
+#define RFID_RST_GPIO             GPIO_NUM_9   // RST (libre)
 
 #define USE_MFRC522               1  // Desactivado por defecto para compilar sin librería externa
 
@@ -275,8 +275,8 @@ static void buzzer_play_ms(uint32_t ms, uint32_t duty);
 // =============================================================
 
 #define I2C_PORT                  I2C_NUM_0
-#define I2C_SDA_GPIO              GPIO_NUM_21
-#define I2C_SCL_GPIO              GPIO_NUM_22
+#define I2C_SDA_GPIO              GPIO_NUM_21   // I2C SDA estándar Freenove
+#define I2C_SCL_GPIO              GPIO_NUM_47   // I2C SCL estándar Freenove
 #define I2C_FREQ_HZ               50000  // Reducido para mayor margen frente a ruido
 #define LCD_ADDR                  0x27  // Confirmado por usuario
 // Auto-probe deshabilitado (ya identificamos mapeo correcto)
@@ -841,8 +841,9 @@ static void lock_hw_init(void)
 		.intr_type = GPIO_INTR_DISABLE
 	};
 	gpio_config(&io);
-	// Estado inicial: activo (energizado) excepto cuando la puerta se abra.
-	gpio_set_level(LOCK_GPIO, RELAY_ACTIVE_LEVEL);
+	// Estado inicial: DESBLOQUEADO (relay OFF - electroimán desactivado)
+	// Se bloqueará automáticamente cuando se detecte la puerta cerrada
+	gpio_set_level(LOCK_GPIO, 0);  // Iniciar desactivado (LOW)
 #endif
 }
 
@@ -897,24 +898,24 @@ static void lock_door(void)
 		ESP_LOGW(TAG, "Intento de lock ignorado: puerta no está cerrada");
 		return;
 	}
-	// Lock: desenergizar bobina (relay inactivo) para cerrar (estado reposo seguro)
-	lock_apply_locked_hw(false);
+	// Lock: energizar electroimán para BLOQUEAR (relay activo)
+	lock_apply_locked_hw(true);  // CORREGIDO: true = LOCKED (energiza relay)
 	set_locked_state(true);
 	g_pending_relock = false;
 	combo_reset();
-	ESP_LOGI(TAG, "Cerradura BLOQUEADA (bobina OFF)");
-	lcd_set_message("LOCKING...", "");
+	ESP_LOGI(TAG, "Cerradura BLOQUEADA (relay ON - electroimán activado)");
+	lcd_set_message("LOCKED", "");
 	touch_activity();
 	g_locking_until_us = esp_timer_get_time() + 1000000; // 1s
 }
 
 static void unlock_door(void)
 {
-	// Unlock: energizar bobina para liberar
-	lock_apply_locked_hw(true);
+	// Unlock: desenergizar electroimán para LIBERAR (relay inactivo)
+	lock_apply_locked_hw(false);  // CORREGIDO: false = UNLOCKED (desactiva relay)
 	set_locked_state(false);
-	g_pending_relock = true;  // Se re-bloqueará (bobina OFF) al cerrar puerta
-	ESP_LOGI(TAG, "Cerradura DESBLOQUEADA (bobina ON)");
+	g_pending_relock = true;  // Se re-bloqueará al cerrar puerta
+	ESP_LOGI(TAG, "Cerradura DESBLOQUEADA (relay OFF - electroimán desactivado)");
 }
 
 // =============================================================
@@ -1011,7 +1012,7 @@ static void door_monitor_task(void *arg)
 // ================= POTENCIÓMETRO (LECTURA ANALÓGICA) =================
 #include "esp_adc/adc_oneshot.h"
 static adc_oneshot_unit_handle_t g_adc_handle;
-static adc_channel_t g_adc_channel = ADC_CHANNEL_6; // GPIO34 -> ADC1_CH6
+static adc_channel_t g_adc_channel = ADC_CHANNEL_3; // GPIO4 -> ADC1_CH3 (Freenove)
 
 static void pot_init(void)
 {
@@ -1178,7 +1179,7 @@ static void rfid_task(void *arg)
 {
 	ESP_LOGI(TAG, "RFID (MFRC522) habilitado");
 	mfrc522_t rfid = {0};
-	if (!mfrc522_init(&rfid, SPI3_HOST, RFID_SPI_SCK_GPIO, RFID_SPI_MOSI_GPIO, RFID_SPI_MISO_GPIO, RFID_SPI_CS_GPIO, RFID_RST_GPIO)) {
+	if (!mfrc522_init(&rfid, SPI2_HOST, RFID_SPI_SCK_GPIO, RFID_SPI_MOSI_GPIO, RFID_SPI_MISO_GPIO, RFID_SPI_CS_GPIO, RFID_RST_GPIO)) {
 		ESP_LOGE(TAG, "Error inicializando MFRC522");
 	}
 
@@ -1468,4 +1469,5 @@ void app_main(void)
 	xTaskCreatePinnedToCore(control_task,      "control",  4096, NULL, 7, NULL, tskNO_AFFINITY);
 	xTaskCreatePinnedToCore(lcd_task,          "lcd",      3072, NULL, 3, NULL, tskNO_AFFINITY);
 }
+
 

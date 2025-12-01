@@ -6,18 +6,18 @@
   "idf.pythonInstallPath": "C:\\Users\\LEONI\\.espressif\\tools\\idf-python\\3.11.2\\python.exe",
   "idf.openOcdConfigs": [
     "interface/ftdi/esp_ftdi.cfg",
-    "target/esp32.cfg"
+    "target/esp32s3.cfg"
   ],
-  "idf.portWin": "COM3",
+  "idf.portWin": "COM6",
   "idf.toolsPathWin": "C:\\Users\\LEONI\\.espressif",
   "idf.customExtraVars": {
-    "IDF_TARGET": "esp32"
+    "IDF_TARGET": "esp32s3"
   },
   "clangd.path": "C:\\Users\\LEONI\\.espressif\\tools\\esp-clang\\esp-19.1.2_20250312\\esp-clang\\bin\\clangd.exe",
   "clangd.arguments": [
     "--background-index",
-    "--query-driver=C:\\Users\\LEONI\\.espressif\\tools\\xtensa-esp-elf\\**\\xtensa-esp32-elf-gcc.exe;C:\\Users\\LEONI\\.espressif\\tools\\xtensa-esp-elf\\**\\xtensa-esp32s3-elf-gcc.exe",
-    "--compile-commands-dir=${workspaceFolder}\\build"
+    "--query-driver=C:\\Users\\LEONI\\.espressif\\tools\\xtensa-esp-elf\\esp-14.2.0_20241119\\xtensa-esp-elf\\bin\\xtensa-esp32s3-elf-gcc.exe",
+    "--compile-commands-dir=c:\\Users\\LEONI\\Documents\\Maestria\\Codigos\\IoT\\ESP-IDF\\projectv1\\build"
   ],
   "python-envs.defaultEnvManager": "ms-python.python:conda",
   "python-envs.defaultPackageManager": "ms-python.python:conda",
