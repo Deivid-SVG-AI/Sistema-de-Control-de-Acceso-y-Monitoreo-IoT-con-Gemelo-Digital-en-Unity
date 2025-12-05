@@ -1,0 +1,32 @@
+{
+  "title": "Potenciómetro - Filtro IIR (EMA)",
+  "description": "Comparación de señal RAW vs FILTRADA del ADC",
+  "parser": "regex",
+  "regex_pattern": "POT: raw=(\\d+) filtered=(\\d+) digit=(\\d+)",
+  "series": [
+    {
+      "name": "RAW",
+      "color": "#FF6B6B",
+      "group": 1
+    },
+    {
+      "name": "Filtrado",
+      "color": "#4ECDC4",
+      "group": 2
+    },
+    {
+      "name": "Dígito",
+      "color": "#45B7D1",
+      "group": 3
+    }
+  ],
+  "yaxis": {
+    "min": 0,
+    "max": 4200,
+    "label": "Valor ADC / Dígito"
+  },
+  "xaxis": {
+    "label": "Tiempo (muestras)"
+  },
+  "window_size": 100
+}

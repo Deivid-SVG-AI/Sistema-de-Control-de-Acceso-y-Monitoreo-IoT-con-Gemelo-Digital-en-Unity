@@ -117,29 +117,26 @@
 
 // Resolución esperada ADC (ESP32 ADC1 es 12 bits por defecto => 0..4095)
 #define POT_ADC_MAX_RAW           4095
-// Mapeo lineal: 0 voltaje -> dígito 0, máximo -> dígito 10 (11 niveles)
-#define POT_MAX_DIGIT             10
-// Deadzones simétricas (en cuentas ADC) al inicio y final (5% cada extremo).
-// Si el potenciómetro se detiene dentro de estas zonas no se considera input válido.
-#define POT_DEADZONE_RAW           ((POT_ADC_MAX_RAW * 5)/100)   // 5% en cada extremo (10% total excluido)
-// Desplazamiento manual del mapeo hacia la izquierda/derecha (en cuentas ADC)
-// Valor positivo desplaza los rangos hacia la izquierda (más cercanos a 0),
-// valor negativo hacia la derecha. Ajusta fino para alinear con el dial físico.
-#define POT_MAP_SHIFT_RAW          1500
-#define POT_INVALID_DIGIT          -1    // Sentinela para indicar deadzone
-// Tiempo que debe permanecer estable el valor para considerar un dígito (ms)
-#define POT_SETTLE_MS             2000  // Aumentado para mayor estabilidad antes de capturar dígito
-// Mínimo tiempo entre logs del potenciómetro mientras se mueve (ms)
+// Mapeo: dividir en 10 dígitos (0-9)
+#define POT_MAX_DIGIT             9
+// Deadzones pequeñas al inicio y final (2% cada extremo)
+#define POT_DEADZONE_RAW          80   // ~2% en cada extremo
+#define POT_INVALID_DIGIT         -1
+// Invertir mapeo si el potenciómetro está conectado al revés (1=invertido, 0=normal)
+#define POT_INVERT_MAPPING        1    // CAMBIAR A 0 SI AÚN ESTÁ INVERTIDO
+// Tiempo de estabilización
+#define POT_SETTLE_MS             2000
+// Mínimo tiempo entre logs
 #define POT_LOG_MIN_MS            300
-// Longitud de la combinación (número de dígitos a ingresar)
+// Longitud de la combinación
 #define COMBO_LEN                 3
 // Combinación objetivo (ejemplo)
 static const int COMBO_TARGET[COMBO_LEN] = {3, 6, 4};
 
 // ===== Configuración WiFi / MQTT (desde main_mqtt.c) =====
-#define WIFI_SSID "iPhone de Cesar"
-#define WIFI_PASS "DenGra9401"
-#define MQTT_BROKER "mqtt://172.20.10.8:1883"
+#define WIFI_SSID "HUAWEI WIFI 6 Plus 2.4G"
+#define WIFI_PASS "NYValencia120"
+#define MQTT_BROKER "mqtt://192.168.3.213:1883"
 #define MQTT_TOPIC "iot/telemetry"
 
 // Tarjeta RFID MFRC522 (SPI). Pines VSPI por defecto del ESP32.
@@ -1027,26 +1024,45 @@ static void pot_init(void)
     adc_oneshot_config_channel(g_adc_handle, g_adc_channel, &chan_cfg);
 }
 
+// Filtro IIR (Exponential Moving Average) para suavizar lecturas ADC
+// Alpha: 0.0 = máximo filtrado, 1.0 = sin filtrado. Recomendado: 0.1-0.3
+#define POT_FILTER_ALPHA  0.15f
+static float g_filtered_raw = 0.0f;
+
+static int pot_apply_filter(int raw_sample)
+{
+    if (g_filtered_raw == 0.0f) {
+        g_filtered_raw = (float)raw_sample; // Inicializar en primera lectura
+    }
+    // IIR: y[n] = alpha * x[n] + (1-alpha) * y[n-1]
+    g_filtered_raw = POT_FILTER_ALPHA * raw_sample + (1.0f - POT_FILTER_ALPHA) * g_filtered_raw;
+    return (int)(g_filtered_raw + 0.5f); // Redondear
+}
+
 static int pot_raw_to_digit(int raw)
 {
     if (raw < 0) raw = 0;
     if (raw > POT_ADC_MAX_RAW) raw = POT_ADC_MAX_RAW;
-	// Deadzones: 5% al inicio y 5% al final (no válidos para input)
-	if (raw < POT_DEADZONE_RAW || raw >= (POT_ADC_MAX_RAW - POT_DEADZONE_RAW)) {
-		return POT_INVALID_DIGIT;
-	}
-	// Rango efectivo sin deadzones
-	int effective_range = POT_ADC_MAX_RAW - 2 * POT_DEADZONE_RAW; // valor > 0
-	int adjusted = raw - POT_DEADZONE_RAW; // 0 .. effective_range-1
-	// Aplicar desplazamiento manual del mapeo (positivo = hacia la izquierda)
-	int shifted = adjusted + POT_MAP_SHIFT_RAW;
-	if (shifted < 0) shifted = 0;
-	if (shifted >= effective_range) shifted = effective_range - 1;
-	// Dividir el rango efectivo en 11 partes iguales -> índices 0..10
-	// Cada parte corresponde a un número, pero el índice 10 también es deadzone.
-	int digit = (shifted * 11) / effective_range; // 0..10
-	if (digit >= 10) return POT_INVALID_DIGIT; // Última sección considerada deadzone
-	return digit; // Devuelve 0..9
+    
+    // Aplicar deadzone
+    if (raw < POT_DEADZONE_RAW || raw >= (POT_ADC_MAX_RAW - POT_DEADZONE_RAW)) {
+        return POT_INVALID_DIGIT;
+    }
+    
+    // Normalizar a rango sin deadzones
+    int effective_range = POT_ADC_MAX_RAW - 2 * POT_DEADZONE_RAW;
+    int normalized = raw - POT_DEADZONE_RAW; // 0 .. effective_range-1
+    
+    // Mapear a dígitos 0-9
+    int digit = (normalized * 10) / effective_range;
+    if (digit > 9) digit = 9; // Clamp
+    
+    // Invertir si el potenciómetro está al revés
+    if (POT_INVERT_MAPPING) {
+        digit = 9 - digit;
+    }
+    
+    return digit;
 }
 
 static void combo_reset(void)
@@ -1076,7 +1092,9 @@ static void pot_task(void *arg)
 	for (;;) {
 		int raw = 0;
 		if (adc_oneshot_read(g_adc_handle, g_adc_channel, &raw) == ESP_OK) {
-			int digit = pot_raw_to_digit(raw);
+			// Aplicar filtro IIR para suavizar ruido
+			int filtered_raw = pot_apply_filter(raw);
+			int digit = pot_raw_to_digit(filtered_raw);
 			int64_t now_us = esp_timer_get_time();
 
 			// Ignorar si estamos en deadzone (no considerar como input válido)
@@ -1095,7 +1113,8 @@ static void pot_task(void *arg)
 
 			// Log del número del potenciómetro: solo al cambiar y con anti-spam (>= POT_LOG_MIN_MS)
 			if (digit != last_digit_for_log && (now_us - g_last_pot_print_us) >= (int64_t)POT_LOG_MIN_MS*1000) {
-				ESP_LOGI(TAG, "Potenciómetro dígito actual: %d", digit);
+				// Log con formato para graficar: RAW | FILTRADO | DIGITO
+				ESP_LOGI(TAG, "POT: raw=%d filtered=%d digit=%d", raw, filtered_raw, digit);
 				g_last_pot_print_us = now_us;
 				last_digit_for_log = digit;
 			}
@@ -1375,11 +1394,11 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 				}
 			}
 			if (unlock_request) {
-				log_event("remote", true, (g_door_state==DOOR_CLOSED?"close":"open"));
+				// log_event("remote", true, (g_door_state==DOOR_CLOSED?"close":"open"));
 				xEventGroupSetBits(g_events, EVT_REMOTE_OK);
 				ESP_LOGI(TAG, "Solicitud remota de desbloqueo aceptada");
 			} else {
-				log_event("remote", false, (g_door_state==DOOR_CLOSED?"close":"open"));
+				// log_event("remote", false, (g_door_state==DOOR_CLOSED?"close":"open"));
 				ESP_LOGW(TAG, "JSON remoto no contiene accion de desbloqueo");
 			}
 			if (json) cJSON_Delete(json);
